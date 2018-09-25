@@ -2,7 +2,7 @@ module.exports = function(sequelize, DataTypes) {
   let Appointment = sequelize.define("Appointment", {
     typeOfAppointment: {
       type: DataTypes.STRING,
-      unique: true,
+      unique: false,
       allowNull: false
     },
     startDate: {

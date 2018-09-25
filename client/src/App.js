@@ -11,7 +11,7 @@ import API from "./utils/API";
 
 class App extends Component {
   state = {
-    
+    currentInfo: "AppComponent"
   };
 
 
@@ -41,7 +41,8 @@ class App extends Component {
         <div>
           <Switch>
             <Route exact path="/" component={Login} />
-            <Route exact path ="/calendar" component ={CalendarPage}/>
+            <Route exact path ="/calendar" component ={CalendarPage}
+            currentInfo="alajlkaj"/>
             <Route exact path ="/appointment" component ={Appointment}/>
           </Switch>
         </div>

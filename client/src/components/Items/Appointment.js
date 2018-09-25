@@ -5,44 +5,69 @@ import API from "../../utils/API.js";
 
 class Appointment extends Component {
   state = {
-    firstName : "",
-    lastName : "",
-    street1 : "",
-    street2 : "",
-    city : "" ,
-    state : "",
-    zipCode : "",
-    startDate : "",
-    endDate : "",
-    typeOfAppointment : ""
+    firstName: "",
+    lastName: "",
+    street1: "",
+    street2: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    startDate: "",
+    endDate: "",
+    typeOfAppointment: ""
+  };
+
+  componentDidMount() {
+    try {
+      let currentInfo = window.localStorage.getItem("currentInfo");
+      if (currentInfo !== null) {
+        currentInfo = JSON.parse(currentInfo);
+        this.setState({
+          firstName: currentInfo.info.User.firstName,
+          lastName: currentInfo.info.User.lastName,
+          street1: currentInfo.info.User.street1,
+          street2: currentInfo.info.User.street2,
+          city: currentInfo.info.User.city,
+          state: currentInfo.info.User.state,
+          zipCode: currentInfo.info.User.zipCode,
+          startDate: currentInfo.start,
+          endDate: currentInfo.end,
+          typeOfAppointment: currentInfo.info.User.typeOfAppointment
+        });
+      }
+      window.localStorage.setItem("currentInfo", null);
+    } catch (err) {
+      window.localStorage.setItem("currentInfo", null);
+    }
   }
 
   createAppointment = event => {
     event.preventDefault();
     const data = {
-      firstName : this.state.firstName,
-      lastName : this.state.lastName,
-      street1 : this.state.street1,
-      street2 : this.state.street2,
-      city : this.state.city ,
-      state : this.state.state,
-      zipCode : this.state.zipCode,
-      startDate : this.state.startDate,
-      endDate : this.state.endDate,
-      typeOfAppointment : this.state.typeOfAppointment
-    }
-    API.createAppointment(data)
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      street1: this.state.street1,
+      street2: this.state.street2,
+      city: this.state.city,
+      state: this.state.state,
+      zipCode: this.state.zipCode,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
+      typeOfAppointment: this.state.typeOfAppointment
+    };
+    API.createAppointment(data);
     //window.location.pathname = "/calendar";
   };
 
   handleOnChange = event => {
     const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    },
-    () => console.log(this.state)
-  )
-  }
+    this.setState(
+      {
+        [name]: value
+      },
+      () => console.log(this.state)
+    );
+  };
 
   render() {
     return (
@@ -61,7 +86,7 @@ class Appointment extends Component {
             className=""
             placeholder="firstName"
             required
-            pattern="^[a-zA-Z]+$"          
+            pattern="^[a-zA-Z]+$"
             value={this.state.firstName}
             onChange={this.handleOnChange}
           />
@@ -172,70 +197,70 @@ class Appointment extends Component {
             <input
               type="radio"
               name="typeOfAppointment"
-              defaultValue="MeetAndGreet"
+              //defaultValue="MeetAndGreet"
               onChange={this.handleOnChange}
               value="MeetAndGreet"
-              checked={this.state.typeOfAppointment==="MeetAndGreet"}
+              checked={this.state.typeOfAppointment === "MeetAndGreet"}
             />
             Meet And Greet
             <br />
             <input
               type="radio"
               name="typeOfAppointment"
-              defaultValue="HouseSit"
+              //defaultValue="HouseSit"
               onChange={this.handleOnChange}
               value="HouseSit"
-              checked={this.state.typeOfAppointment==="HouseSit"}
+              checked={this.state.typeOfAppointment === "HouseSit"}
             />
             House Sit
             <br />
             <input
               type="radio"
               name="typeOfAppointment"
-              defaultValue="PetOverNightSit"
+              //defaultValue="PetOverNightSit"
               onChange={this.handleOnChange}
               value="PetOverNightSit"
-              checked={this.state.typeOfAppointment==="PetOverNightSit"}
+              checked={this.state.typeOfAppointment === "PetOverNightSit"}
             />
             Pet Over Night Sit
             <br />
             <input
               type="radio"
               name="typeOfAppointment"
-              defaultValue="PetBoarding"
+              //defaultValue="PetBoarding"
               onChange={this.handleOnChange}
               value="PetBoarding"
-              checked={this.state.typeOfAppointment==="PetBoarding"}
+              checked={this.state.typeOfAppointment === "PetBoarding"}
             />
             Pet Boarding
             <br />
             <input
               type="radio"
               name="typeOfAppointment"
-              defaultValue="PetVisit"
+              //defaultValue="PetVisit"
               onChange={this.handleOnChange}
               value="PetVisit"
-              checked={this.state.typeOfAppointment==="PetVisit"}
+              checked={this.state.typeOfAppointment === "PetVisit"}
             />
             Pet Vist
             <br />
             <input
               type="radio"
               name="typeOfAppointment"
-              defaultValue="DogWalking"
+              // defaultValue="DogWalking"
               onChange={this.handleOnChange}
               value="DogWalking"
-              checked={this.state.typeOfAppointment==="DogWalking"}
+              checked={this.state.typeOfAppointment === "DogWalking"}
             />
             Dog Walking
             <br />
             <input
               type="radio"
               name="typeOfAppointment"
-              defaultValue="PetTaxiPickUpDropOff"
+              //defaultValue="PetTaxiPickUpDropOff"
               onChange={this.handleOnChange}
               value="PetTaxiPickUpDropOff"
-              checked={this.state.typeOfAppointment==="PetTaxiPickUpDropOfft"}
+              checked={this.state.typeOfAppointment === "PetTaxiPickUpDropOfft"}
             />
             Pet Taxi Pick Up/Drop Off
           </div>

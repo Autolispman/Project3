@@ -10,10 +10,13 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import Appointment from "../Items/Appointment.js";
 
 import AppointmentButton from "../Items/AppointmentButton.js";
+import API from "../../utils/API";
 
 Calendar.setLocalizer(Calendar.momentLocalizer(moment));
 
 const DnDCalendar = withDragAndDrop(Calendar);
+
+let allViews = Object.keys(Calendar.Views).map(k => Calendar.Views[k]);
 
 class CalendarPage extends Component {
   state = {
@@ -29,7 +32,21 @@ class CalendarPage extends Component {
   };
 
   componentDidMount() {
-    console.log(this.state.events[0].start)
+    let prom = API.getAllAppointments();
+    let array = [];
+    prom.then(results => {
+      for (let i = 0; i < results.data.length; i++) {
+        //console.log(results.data[i]);
+        let obj = {
+          start: results.data[i].startDate,
+          end: results.data[i].endDate,
+          title: results.data[i].typeOfAppointment + " " + results.data[i].User.firstName + " " + results.data[i].User.lastName,
+          info: results.data[i]
+        };
+        array.push(obj);
+      }
+      this.setState({ events: array });
+    });
   }
 
   onEventResize = (type, { event, start, end, allDay }) => {
@@ -45,8 +62,29 @@ class CalendarPage extends Component {
   };
 
   newAppointment = () => {
-    window.location.pathname = "/appointment";
+    window.location.pathname = "/appointment"
   };
+
+  selectedEvent = event => {
+    // this.setState(this.props.currentInfo: event),
+    // () => console.log(this.props.currentInfo)
+    console.log(event)
+    window.localStorage.setItem("currentInfo", JSON.stringify(event))
+    window.location.pathname = "/appointment"
+    // window.localStorage.setItem("currentInfo", event)
+    // window.localStorage.setItem("currentInfo", JSON.stringify({
+    //   "firstName": event.info.User.firstName
+    // }))
+      // lastName : this.state.lastName,
+      // street1 : this.state.street1,
+      // street2 : this.state.street2,
+      // city : this.state.city ,
+      // state : this.state.state,
+      // zipCode : this.state.zipCode,
+      // startDate : this.state.startDate,
+      // endDate : this.state.endDate,
+      // typeOfAppointment : this.state.typeOfAppointment
+  }
 
   render() {
     return (
@@ -60,6 +98,8 @@ class CalendarPage extends Component {
           onEventResize={this.onEventResize}
           resizable
           style={{ height: "100vh" }}
+          views={allViews}
+          onSelectEvent={this.selectedEvent}
         />
       </div>
     );
