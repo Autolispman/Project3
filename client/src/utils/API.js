@@ -28,12 +28,26 @@ function createAppointment(appointmentData) {
     endDate: appointmentData.endDate,
     typeOfAppointment: appointmentData.typeOfAppointment
     })
-    .then(function(data) {
+    .then(function(data, error) {
       window.location = "/calendar";
     })
 }
 
+function getAllAppointments() {
+  let p = new Promise(function(data, error) {
+    axios.get("/api/allAppointments").then(function(result, err) {
+      if (result) {
+        data(result);
+      } else {
+        error("");
+      }
+    })
+  })
+  return p
+}
+
 export default {
   loginUser: loginUser,
-  createAppointment: createAppointment
+  createAppointment: createAppointment,
+  getAllAppointments: getAllAppointments
 };

@@ -34,57 +34,92 @@ router.post("/login", function(req, res) {
         // res.status(422).json(err.errors[0].message);
       });
   }),
-  router.post("/createAppointment", function(req, res) {
-    console.log(req.body);
-    db.User.findOne({
-      where: { firstName: req.body.firstName, lastName: req.body.lastName }
+  router.get("/allAppointments", function(req, res) {
+    db.Appointment.findAll({
+      include: [db.User]
     }).then(function(data) {
-      if (data) {
-        db.User.update(
-          {
-            street1: req.body.street1,
-            street2: req.body.street2,
-            city: req.body.city,
-            state: req.body.state,
-            zipCode: req.body.zipCode
-          },
-          {
-            where: {
-              firstName: req.body.firstName,
-              lastName: req.body.lastName
-            }
-          }
-        ).then(function() {
-          //console.log(req.body);
-          db.Appointment.create({
-            typeofappointment: req.body.typeOfAppointment,
-            startDate: req.body.startDate,
-            endDate: req.body.endDate
-          }).catch(function(err) {
-            console.log(err);
-          });
-        });
-      } else {
-        db.User.create({
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
+      res.json(data)
+    });
+  });
+
+router.post("/createAppointment", function(req, res) {
+  //console.log(req.body);
+  db.User.findOne({
+    where: { firstName: req.body.firstName, lastName: req.body.lastName }
+  }).then(function(data) {
+    if (data) {
+      db.User.update(
+        {
           street1: req.body.street1,
           street2: req.body.street2,
           city: req.body.city,
           state: req.body.state,
           zipCode: req.body.zipCode
-        }).then(function() {
-          console.log("create");
-          db.Appointment.create({
-            typeofappointment: req.body.typeOfAppointment,
+        },
+        {
+          where: {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
+          }
+        }
+      ).then(function() {
+        //console.log(req.body);
+        db.Appointment.findOne({
+          where: {
+            typeOfAppointment: req.body.typeOfAppointment,
             startDate: req.body.startDate,
-            endDate: req.body.endDate
-          }).catch(function(err) {
-            console.log(err);
-          });
+            endDate: req.body.endDate,
+            user_id: data.id
+          }
+        }).then(function(appData) {
+          if (appData === null) {
+            db.Appointment.create({
+              typeOfAppointment: req.body.typeOfAppointment,
+              startDate: req.body.startDate,
+              endDate: req.body.endDate,
+              user_id: data.id
+            }).catch(function(err) {
+              console.log(err);
+            });
+          }
+          res.json("");
         });
-      }
-    });
+      });
+    } else {
+      db.User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        street1: req.body.street1,
+        street2: req.body.street2,
+        city: req.body.city,
+        state: req.body.state,
+        zipCode: req.body.zipCode
+      }).then(function(data) {
+        //console.log("create");
+        //console.log(data.id)
+        db.Appointment.findOne({
+          where: {
+            typeOfAppointment: req.body.typeOfAppointment,
+            startDate: req.body.startDate,
+            endDate: req.body.endDate,
+            user_id: data.id
+          }
+        }).then(function(appData) {
+          if (appData === null) {
+            db.Appointment.create({
+              typeOfAppointment: req.body.typeOfAppointment,
+              startDate: req.body.startDate,
+              endDate: req.body.endDate,
+              user_id: data.id
+            }).catch(function(err) {
+              console.log(err);
+            });
+          }
+          res.json("");
+        });
+      });
+    }
   });
+});
 
 module.exports = router;

@@ -37,7 +37,7 @@ app.use("/api", apiRoutes);
 //   console.log(`🌎 ==> Server now on port ${PORT}!`);
 // });
 
-const syncOptions = { force: true };
+const syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
