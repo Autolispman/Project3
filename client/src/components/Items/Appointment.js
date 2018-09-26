@@ -169,7 +169,7 @@ class Appointment extends Component {
           <label>Start Date (ex: 4/27/2010)</label>
           <input
             name="startDate"
-            type="text"
+            type="date"
             id="startDateId"
             className=""
             placeholder="start date"
@@ -182,7 +182,7 @@ class Appointment extends Component {
           <label>End Date (ex: 4/27/2010)</label>
           <input
             name="endDate"
-            type="text"
+            type="date"
             id="endDateId"
             className=""
             placeholder="end date"
@@ -264,16 +264,8 @@ class Appointment extends Component {
             />
             Pet Taxi Pick Up/Drop Off
           </div>
-
           <button type="text" className="">
-            {/* <Link
-        to="/"
-        // className={
-        //   window.location.pathname === "/" ? "nav-link active" : "nav-link"
-        //}
-      > */}
             Create Appointment
-            {/* </Link>  */}
           </button>
         </form>
       </div>
