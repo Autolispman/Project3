@@ -71,12 +71,13 @@ class Appointment extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <form
           method=""
           action=""
           className="sm-col-12"
           onSubmit={this.createAppointment}
+          action="#"
         >
           <label className="modalLabel">FirstName</label>
           <input
@@ -169,7 +170,7 @@ class Appointment extends Component {
           <label>Start Date (ex: 4/27/2010)</label>
           <input
             name="startDate"
-            type="text"
+            type="date"
             id="startDateId"
             className=""
             placeholder="start date"
@@ -182,7 +183,7 @@ class Appointment extends Component {
           <label>End Date (ex: 4/27/2010)</label>
           <input
             name="endDate"
-            type="text"
+            type="date"
             id="endDateId"
             className=""
             placeholder="end date"
@@ -194,6 +195,7 @@ class Appointment extends Component {
           <br />
           <label>Type of Appointment</label>
           <div>
+            <label>
             <input
               type="radio"
               name="typeOfAppointment"
@@ -202,8 +204,10 @@ class Appointment extends Component {
               value="MeetAndGreet"
               checked={this.state.typeOfAppointment === "MeetAndGreet"}
             />
-            Meet And Greet
+            <span>Meet And Greet</span>
+            </label>
             <br />
+            <label>
             <input
               type="radio"
               name="typeOfAppointment"
@@ -212,8 +216,10 @@ class Appointment extends Component {
               value="HouseSit"
               checked={this.state.typeOfAppointment === "HouseSit"}
             />
-            House Sit
+            <span>House Sit</span>
+            </label>
             <br />
+            <label>
             <input
               type="radio"
               name="typeOfAppointment"
@@ -222,8 +228,10 @@ class Appointment extends Component {
               value="PetOverNightSit"
               checked={this.state.typeOfAppointment === "PetOverNightSit"}
             />
-            Pet Over Night Sit
+            <span>Pet Over Night Sit</span>
+            </label>
             <br />
+            <label>
             <input
               type="radio"
               name="typeOfAppointment"
@@ -232,8 +240,10 @@ class Appointment extends Component {
               value="PetBoarding"
               checked={this.state.typeOfAppointment === "PetBoarding"}
             />
-            Pet Boarding
+            <span>Pet Boarding</span>
+            </label>
             <br />
+            <label>
             <input
               type="radio"
               name="typeOfAppointment"
@@ -242,8 +252,10 @@ class Appointment extends Component {
               value="PetVisit"
               checked={this.state.typeOfAppointment === "PetVisit"}
             />
-            Pet Vist
+            <span>Pet Vist</span>
+            </label>
             <br />
+            <label>
             <input
               type="radio"
               name="typeOfAppointment"
@@ -252,8 +264,10 @@ class Appointment extends Component {
               value="DogWalking"
               checked={this.state.typeOfAppointment === "DogWalking"}
             />
-            Dog Walking
+            <span>Dog Walking</span>
+            </label>
             <br />
+            <label>
             <input
               type="radio"
               name="typeOfAppointment"
@@ -262,7 +276,8 @@ class Appointment extends Component {
               value="PetTaxiPickUpDropOff"
               checked={this.state.typeOfAppointment === "PetTaxiPickUpDropOfft"}
             />
-            Pet Taxi Pick Up/Drop Off
+            <span>Pet Taxi Pick Up/Drop Off</span>
+            </label>
           </div>
 
           <button type="text" className="">
