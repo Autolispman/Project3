@@ -38,7 +38,7 @@ router.post("/login", function(req, res) {
     db.Appointment.findAll({
       include: [db.User]
     }).then(function(data) {
-      res.json(data)
+      res.send(data)
     });
   });
 

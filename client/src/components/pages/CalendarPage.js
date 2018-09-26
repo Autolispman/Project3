@@ -36,13 +36,14 @@ class CalendarPage extends Component {
     let array = [];
     prom.then(results => {
       for (let i = 0; i < results.data.length; i++) {
-        //console.log(results.data[i]);
         let obj = {
-          start: results.data[i].startDate,
-          end: results.data[i].endDate,
+          start: new Date(results.data[i].startDate),
+          end: new Date(results.data[i].endDate),
           title: results.data[i].typeOfAppointment + " " + results.data[i].User.firstName + " " + results.data[i].User.lastName,
           info: results.data[i]
         };
+        //console.log(obj);
+
         array.push(obj);
       }
       this.setState({ events: array });
