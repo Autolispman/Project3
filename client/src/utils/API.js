@@ -10,7 +10,6 @@ function loginUser(loginCredentials) {
       // If there's an error, log the error
     })
     .catch(function(err) {
-      alert("error");
       console.log(err);
     });
 }
@@ -46,8 +45,22 @@ function getAllAppointments() {
   return p
 }
 
+function deleteAppointment(appId) {
+  let p = new Promise(function(data, error) {
+    axios.delete("/api/deleteAppointment/" + appId).then(function(result, err) {
+      if (result) {
+        data(result);
+      } else {
+        error("");
+      }
+    })
+  })
+  return p
+}
+
 export default {
   loginUser: loginUser,
   createAppointment: createAppointment,
-  getAllAppointments: getAllAppointments
+  getAllAppointments: getAllAppointments,
+  deleteAppointment: deleteAppointment
 };

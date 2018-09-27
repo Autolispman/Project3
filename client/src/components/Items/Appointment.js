@@ -2,6 +2,8 @@
 import React, { Component } from "react";
 //import { Link } from "react-router-dom";
 import API from "../../utils/API.js";
+import moment from "moment";
+import { Link } from "react-router-dom";
 
 class Appointment extends Component {
   state = {
@@ -22,18 +24,28 @@ class Appointment extends Component {
       let currentInfo = window.localStorage.getItem("currentInfo");
       if (currentInfo !== null) {
         currentInfo = JSON.parse(currentInfo);
-        this.setState({
-          firstName: currentInfo.info.User.firstName,
-          lastName: currentInfo.info.User.lastName,
-          street1: currentInfo.info.User.street1,
-          street2: currentInfo.info.User.street2,
-          city: currentInfo.info.User.city,
-          state: currentInfo.info.User.state,
-          zipCode: currentInfo.info.User.zipCode,
-          startDate: currentInfo.start,
-          endDate: currentInfo.end,
-          typeOfAppointment: currentInfo.info.User.typeOfAppointment
-        });
+        //console.log(currentInfo.info.typeOfAppointment);
+        //console.log(moment(currentInfo.start).format("YYYY-MM-DDThh:mm:ss"))
+        console.log(currentInfo.start) 
+        this.setState(
+          {
+            firstName: currentInfo.info.User.firstName,
+            lastName: currentInfo.info.User.lastName,
+            street1: currentInfo.info.User.street1,
+            street2: currentInfo.info.User.street2,
+            city: currentInfo.info.User.city,
+            state: currentInfo.info.User.state,
+            zipCode: currentInfo.info.User.zipCode,
+            startDate: moment(currentInfo.start)
+              .format("YYYY-MM-DDThh:mm:ss"),
+            //startDate: "2018-09-04T12:01:00",
+            endDate: moment(currentInfo.end)
+            .format("YYYY-MM-DDThh:mm:ss"),
+            typeOfAppointment: currentInfo.info.typeOfAppointment,
+            info: currentInfo.info
+          },
+          () => console.log(this.state)
+        );
       }
       window.localStorage.setItem("currentInfo", null);
     } catch (err) {
@@ -43,6 +55,7 @@ class Appointment extends Component {
 
   createAppointment = event => {
     event.preventDefault();
+    console.log(this.state.startDate)
     const data = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -56,11 +69,25 @@ class Appointment extends Component {
       typeOfAppointment: this.state.typeOfAppointment
     };
     API.createAppointment(data);
-    //window.location.pathname = "/calendar";
+  };
+
+  deleteAppointment = () => {
+    let prom = API.deleteAppointment(this.state.info.id);
+    prom.then(data => {
+      window.location.pathname = "/calendar"
+    })
   };
 
   handleOnChange = event => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    console.log("-----");
+    console.log(name);
+    console.log(value);
+    console.log(
+      moment(value)
+        .add(1, "s")
+        .toString()
+    );
     this.setState(
       {
         [name]: value
@@ -87,7 +114,6 @@ class Appointment extends Component {
             className=""
             placeholder="firstName"
             required
-            pattern="^[a-zA-Z]+$"
             value={this.state.firstName}
             onChange={this.handleOnChange}
           />
@@ -100,7 +126,6 @@ class Appointment extends Component {
             className=""
             placeholder="lastName"
             required
-            pattern="^[a-zA-Z]+$"
             value={this.state.lastName}
             onChange={this.handleOnChange}
           />
@@ -170,11 +195,11 @@ class Appointment extends Component {
           <label>Start Date (ex: 4/27/2010)</label>
           <input
             name="startDate"
-            type="date"
+            type="datetime-local"
             id="startDateId"
             className=""
             placeholder="start date"
-            required={false}
+            required={true}
             pattern="^\d{1,2}\/\d{1,2}\/\d{4}$"
             value={this.state.startDate}
             onChange={this.handleOnChange}
@@ -183,11 +208,11 @@ class Appointment extends Component {
           <label>End Date (ex: 4/27/2010)</label>
           <input
             name="endDate"
-            type="date"
+            type="datetime-local"
             id="endDateId"
             className=""
             placeholder="end date"
-            required={false}
+            required={true}
             pattern="^\d{1,2}\/\d{1,2}\/\d{4}$"
             value={this.state.endDate}
             onChange={this.handleOnChange}
@@ -196,93 +221,104 @@ class Appointment extends Component {
           <label>Type of Appointment</label>
           <div>
             <label>
-            <input
-              type="radio"
-              name="typeOfAppointment"
-              //defaultValue="MeetAndGreet"
-              onChange={this.handleOnChange}
-              value="MeetAndGreet"
-              checked={this.state.typeOfAppointment === "MeetAndGreet"}
-            />
-            <span>Meet And Greet</span>
+              <input
+                type="radio"
+                name="typeOfAppointment"
+                //defaultValue="MeetAndGreet"
+                onChange={this.handleOnChange}
+                value="MeetAndGreet"
+                checked={this.state.typeOfAppointment === "MeetAndGreet"}
+                required={true}
+              />
+              <span>Meet And Greet</span>
             </label>
             <br />
             <label>
-            <input
-              type="radio"
-              name="typeOfAppointment"
-              //defaultValue="HouseSit"
-              onChange={this.handleOnChange}
-              value="HouseSit"
-              checked={this.state.typeOfAppointment === "HouseSit"}
-            />
-            <span>House Sit</span>
+              <input
+                type="radio"
+                name="typeOfAppointment"
+                //defaultValue="HouseSit"
+                onChange={this.handleOnChange}
+                value="HouseSit"
+                checked={this.state.typeOfAppointment === "HouseSit"}
+                required={true}
+              />
+              <span>House Sit</span>
             </label>
             <br />
             <label>
-            <input
-              type="radio"
-              name="typeOfAppointment"
-              //defaultValue="PetOverNightSit"
-              onChange={this.handleOnChange}
-              value="PetOverNightSit"
-              checked={this.state.typeOfAppointment === "PetOverNightSit"}
-            />
-            <span>Pet Over Night Sit</span>
+              <input
+                type="radio"
+                name="typeOfAppointment"
+                //defaultValue="PetOverNightSit"
+                onChange={this.handleOnChange}
+                value="PetOverNightSit"
+                checked={this.state.typeOfAppointment === "PetOverNightSit"}
+                required={true}
+              />
+              <span>Pet Over Night Sit</span>
             </label>
             <br />
             <label>
-            <input
-              type="radio"
-              name="typeOfAppointment"
-              //defaultValue="PetBoarding"
-              onChange={this.handleOnChange}
-              value="PetBoarding"
-              checked={this.state.typeOfAppointment === "PetBoarding"}
-            />
-            <span>Pet Boarding</span>
+              <input
+                type="radio"
+                name="typeOfAppointment"
+                //defaultValue="PetBoarding"
+                onChange={this.handleOnChange}
+                value="PetBoarding"
+                checked={this.state.typeOfAppointment === "PetBoarding"}
+                required={true}
+              />
+              <span>Pet Boarding</span>
             </label>
             <br />
             <label>
-            <input
-              type="radio"
-              name="typeOfAppointment"
-              //defaultValue="PetVisit"
-              onChange={this.handleOnChange}
-              value="PetVisit"
-              checked={this.state.typeOfAppointment === "PetVisit"}
-            />
-            <span>Pet Vist</span>
+              <input
+                type="radio"
+                name="typeOfAppointment"
+                //defaultValue="PetVisit"
+                onChange={this.handleOnChange}
+                value="PetVisit"
+                checked={this.state.typeOfAppointment === "PetVisit"}
+                required={true}
+              />
+              <span>Pet Vist</span>
             </label>
             <br />
             <label>
-            <input
-              type="radio"
-              name="typeOfAppointment"
-              // defaultValue="DogWalking"
-              onChange={this.handleOnChange}
-              value="DogWalking"
-              checked={this.state.typeOfAppointment === "DogWalking"}
-            />
-            <span>Dog Walking</span>
+              <input
+                type="radio"
+                name="typeOfAppointment"
+                // defaultValue="DogWalking"
+                onChange={this.handleOnChange}
+                value="DogWalking"
+                checked={this.state.typeOfAppointment === "DogWalking"}
+                required={true}
+              />
+              <span>Dog Walking</span>
             </label>
             <br />
             <label>
-            <input
-              type="radio"
-              name="typeOfAppointment"
-              //defaultValue="PetTaxiPickUpDropOff"
-              onChange={this.handleOnChange}
-              value="PetTaxiPickUpDropOff"
-              checked={this.state.typeOfAppointment === "PetTaxiPickUpDropOfft"}
-            />
-            <span>Pet Taxi Pick Up/Drop Off</span>
+              <input
+                type="radio"
+                name="typeOfAppointment"
+                //defaultValue="PetTaxiPickUpDropOff"
+                onChange={this.handleOnChange}
+                value="PetTaxiPickUpDropOff"
+                checked={this.state.typeOfAppointment === "PetTaxiPickUpDropOfft"}
+                required={true}
+              />
+              <span>Pet Taxi Pick Up/Drop Off</span>
             </label>
           </div>
           <button type="text" className="">
-            Create Appointment
+            Create/Update Appointment
           </button>
         </form>
+        <button type="text" className="" onClick={this.deleteAppointment}>
+          Delete Appointment
+        </button>
+        <Link to="/calendar">Cancel</Link>
       </div>
     );
   }

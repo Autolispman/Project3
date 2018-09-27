@@ -122,4 +122,20 @@ router.post("/createAppointment", function(req, res) {
   });
 });
 
+router.delete("/deleteAppointment/:id", function(req, res) {
+  console.log(req.params.id)
+  db.Appointment.destroy({
+    where: {id: req.params.id}
+  }).then(function(data, error) {
+    console.log(data)
+    if(data) {
+      res.json(data)
+    }
+    else {
+      console.log("delete error")
+      res.json(error)
+    }   
+  })
+});
+
 module.exports = router;
