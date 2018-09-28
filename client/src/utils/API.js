@@ -45,9 +45,9 @@ function getAllAppointments() {
   return p
 }
 
-function deleteAppointment(appId) {
+function deleteAppointment(appointId) {
   let p = new Promise(function(data, error) {
-    axios.delete("/api/deleteAppointment/" + appId).then(function(result, err) {
+    axios.delete("/api/deleteAppointment/" + appointId).then(function(result, err) {
       if (result) {
         data(result);
       } else {
@@ -58,9 +58,25 @@ function deleteAppointment(appId) {
   return p
 }
 
+function getUserByFirstAndLastName(firstAndLastName) {
+  //console.log(firstAndLastName)
+  let p = new Promise(function(data, error) {
+    axios.post("/api/getUserByFirstAndLastName", firstAndLastName).then(function(result, err) {
+      if (result) {
+        data(result);
+      } else {
+        error("");
+      }
+    })
+  })
+  return p
+}
+
+
 export default {
   loginUser: loginUser,
   createAppointment: createAppointment,
   getAllAppointments: getAllAppointments,
-  deleteAppointment: deleteAppointment
+  deleteAppointment: deleteAppointment,
+  getUserByFirstAndLastName: getUserByFirstAndLastName
 };

@@ -38,7 +38,11 @@ router.post("/login", function(req, res) {
     db.Appointment.findAll({
       include: [db.User]
     }).then(function(data) {
-      res.send(data)
+      if (data) {
+        res.send(data);
+      } else {
+        res.send("error");
+      }
     });
   });
 
@@ -123,19 +127,31 @@ router.post("/createAppointment", function(req, res) {
 });
 
 router.delete("/deleteAppointment/:id", function(req, res) {
-  console.log(req.params.id)
+  //console.log(req.params.id);
   db.Appointment.destroy({
-    where: {id: req.params.id}
+    where: { id: req.params.id }
   }).then(function(data, error) {
-    console.log(data)
-    if(data) {
-      res.json(data)
+    console.log(data);
+    if (data) {
+      res.json(data);
+    } else {
+      console.log("delete error");
+      res.json(error);
     }
-    else {
-      console.log("delete error")
-      res.json(error)
-    }   
-  })
+  });
+});
+
+router.post("/getUserByFirstAndLastName", function(req, res) {
+  console.log(req.body)
+  db.User.findOne({
+    where: {firstName: req.body.firstName, lastName: req.body.lastName}
+  }).then(function(data) {
+    if (data) {
+      res.send(data);
+    } else {
+      res.send("error");
+    }
+  });
 });
 
 module.exports = router;

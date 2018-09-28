@@ -7,7 +7,6 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import Login from "./components/pages/Login.js"
 import CalendarPage from "./components/pages/CalendarPage.js"
 import Appointment from "./components/Items/Appointment.js"
-import API from "./utils/API";
 
 class App extends Component {
   state = {
@@ -41,8 +40,7 @@ class App extends Component {
         <div>
           <Switch>
             <Route exact path="/" component={Login} />
-            <Route exact path ="/calendar" component ={CalendarPage}
-            currentInfo="alajlkaj"/>
+            <Route exact path ="/calendar" component ={CalendarPage}/>
             <Route exact path ="/appointment" component ={Appointment}/>
           </Switch>
         </div>

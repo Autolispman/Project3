@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import Calendar from "react-big-calendar";
 import moment from "moment";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+//import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import "../../App.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import Appointment from "../Items/Appointment.js";
+//import Appointment from "../Items/Appointment.js";
 
 import AppointmentButton from "../Items/AppointmentButton.js";
 import API from "../../utils/API";
@@ -63,6 +63,14 @@ class CalendarPage extends Component {
   };
 
   newAppointment = () => {
+    let curDate = moment(Date.now())
+    .format("YYYY-MM-DDTHH:mm:ss") + ".000Z"
+    let currentInfo = {
+      //start: "2018-09-27T00:00:00.000Z",
+      start: new Date(Date.now()),
+      end: curDate
+    }
+    window.localStorage.setItem("currentInfo", JSON.stringify(currentInfo))
     window.location.pathname = "/appointment"
   };
 
@@ -85,6 +93,7 @@ class CalendarPage extends Component {
       // startDate : this.state.startDate,
       // endDate : this.state.endDate,
       // typeOfAppointment : this.state.typeOfAppointment
+      //console.log(event)
   }
 
   render() {
