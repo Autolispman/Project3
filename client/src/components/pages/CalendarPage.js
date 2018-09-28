@@ -89,6 +89,7 @@ class CalendarPage extends Component {
 
   render() {
     return (
+      <div className="container">
       <div>
         <AppointmentButton newAppointment={this.newAppointment} />
         <DnDCalendar
@@ -102,6 +103,7 @@ class CalendarPage extends Component {
           views={allViews}
           onSelectEvent={this.selectedEvent}
         />
+      </div>
       </div>
     );
   }
