@@ -38,6 +38,7 @@ class Login extends Component {
 
   render() {
     return (
+      
       <div>
         <LoginItem
           processAdminLogin={this.processAdminLogin}
@@ -45,8 +46,11 @@ class Login extends Component {
           adminPW={this.state.adminPW}
           handleLoginChange={this.handleLoginChange}
           message={this.state.message}
+        
+          
         />
       </div>
+      
     );
   }
 }

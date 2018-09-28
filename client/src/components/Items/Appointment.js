@@ -331,14 +331,14 @@ class Appointment extends Component {
               <span>Pet Taxi Pick Up/Drop Off</span>
             </label>
           </div>
-          <button type="text" className="">
+          <button type="text" className="btn waves-effect waves-light">
             Create/Update Appointment
           </button>
         </form>
-        <button type="text" className="" onClick={this.deleteAppointment}>
+        <button type="text" className="btn waves-effect waves-light" onClick={this.deleteAppointment}>
           Delete Appointment
         </button>
-        <Link to="/calendar">Cancel</Link>
+        <Link to="/calendar">Disregard Changes</Link>
       </div>
     );
   }
