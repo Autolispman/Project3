@@ -27,6 +27,7 @@ const LoginItem = props => (
 
   //   </form>
   // </div>
+  <div className="container">
   <div>
     <label>{props.message}</label>
     <form className="col s12" onSubmit={props.processAdminLogin}>
@@ -40,8 +41,9 @@ const LoginItem = props => (
           <label htmlFor="password">Password</label>
         </div>
       </div>
-      <button id="adminSubBtn">Log in</button>
+      <button className="btn waves-effect waves-light" id="adminSubBtn">Log in</button>
     </form>
+  </div>
   </div>
 );
 
