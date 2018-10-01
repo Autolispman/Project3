@@ -4,6 +4,8 @@
   "private": true,
   "proxy": "http://localhost:3001/",
   "dependencies": {
+    "express-http-proxy": "^1.4.0",
+    "firebase": "^5.5.2",
     "moment": "2.22.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",

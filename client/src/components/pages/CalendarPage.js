@@ -7,9 +7,9 @@ import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import "../../App.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-//import Appointment from "../Items/Appointment.js";
 
 import AppointmentButton from "../Items/AppointmentButton.js";
+import Logout from "../Items/Logout.js"
 import API from "../../utils/API";
 
 Calendar.setLocalizer(Calendar.momentLocalizer(moment));
@@ -42,7 +42,7 @@ class CalendarPage extends Component {
           title: results.data[i].typeOfAppointment + " " + results.data[i].User.firstName + " " + results.data[i].User.lastName,
           info: results.data[i]
         };
-        //console.log(obj);
+        console.log(obj);
 
         array.push(obj);
       }
@@ -80,26 +80,13 @@ class CalendarPage extends Component {
     console.log(event)
     window.localStorage.setItem("currentInfo", JSON.stringify(event))
     window.location.pathname = "/appointment"
-    // window.localStorage.setItem("currentInfo", event)
-    // window.localStorage.setItem("currentInfo", JSON.stringify({
-    //   "firstName": event.info.User.firstName
-    // }))
-      // lastName : this.state.lastName,
-      // street1 : this.state.street1,
-      // street2 : this.state.street2,
-      // city : this.state.city ,
-      // state : this.state.state,
-      // zipCode : this.state.zipCode,
-      // startDate : this.state.startDate,
-      // endDate : this.state.endDate,
-      // typeOfAppointment : this.state.typeOfAppointment
-      //console.log(event)
   }
 
   render() {
     return (
       <div className="container">
       <div>
+        <Logout />
         <AppointmentButton newAppointment={this.newAppointment} />
         <DnDCalendar
           defaultDate={new Date()}

@@ -1,6 +1,23 @@
 import axios from "axios";
 
+function signUpAdmin(loginCredentials) {
+  console.log(loginCredentials)
+  axios
+    .post("/api/signup", {
+      username: loginCredentials.username,
+      password: loginCredentials.password
+    })
+    .then(function(data) {
+      window.location = "/";
+      // If there's an error, log the error
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+}
+
 function loginUser(loginCredentials) {
+  console.log(loginCredentials)
   axios
     .post("/api/login", {
       loginCredentials
@@ -15,7 +32,8 @@ function loginUser(loginCredentials) {
 }
 
 function createAppointment(appointmentData) {
-  axios.post("/api/createAppointment", {    
+  axios.post("/api/createAppointment", {
+    id: appointmentData.id,
     firstName: appointmentData.firstName,
     lastName: appointmentData.lastName,
     street1: appointmentData.street1,
@@ -78,5 +96,6 @@ export default {
   createAppointment: createAppointment,
   getAllAppointments: getAllAppointments,
   deleteAppointment: deleteAppointment,
-  getUserByFirstAndLastName: getUserByFirstAndLastName
+  getUserByFirstAndLastName: getUserByFirstAndLastName,
+  signUpAdmin: signUpAdmin
 };

@@ -1,6 +1,4 @@
-//import React from "react";
 import React, { Component } from "react";
-//import { Link } from "react-router-dom";
 import API from "../../utils/API.js";
 import moment from "moment";
 import { Link } from "react-router-dom";
@@ -16,7 +14,8 @@ class Appointment extends Component {
     zipCode: "",
     startDate: "",
     endDate: "",
-    typeOfAppointment: ""
+    typeOfAppointment: "",
+    info: ""
   };
 
   componentDidMount() {
@@ -54,8 +53,9 @@ class Appointment extends Component {
 
   createAppointment = event => {
     event.preventDefault();
-    //console.log(this.state.startDate)
+    //console.log(this.state.id)
     const data = {
+      id: this.state.info.id,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       street1: this.state.street1,
@@ -102,15 +102,17 @@ class Appointment extends Component {
           this.setState({ zipCode: results.data.zipCode });
         }
       }
-    });
-  };
+    })
+  }
 
   handleOnChange = event => {
+    console.log(this.state.info)
+    console.log(this.state.id)
     let { name, value } = event.target;
 
     this.setState({
       [name]: value
-    });
+    })
   };
 
   render() {
