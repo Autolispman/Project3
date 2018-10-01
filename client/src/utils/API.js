@@ -1,6 +1,23 @@
 import axios from "axios";
 
+function signUpAdmin(loginCredentials) {
+  console.log(loginCredentials)
+  axios
+    .post("/api/signup", {
+      username: loginCredentials.username,
+      password: loginCredentials.password
+    })
+    .then(function(data) {
+      window.location = "/";
+      // If there's an error, log the error
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+}
+
 function loginUser(loginCredentials) {
+  console.log(loginCredentials)
   axios
     .post("/api/login", {
       loginCredentials
@@ -15,7 +32,8 @@ function loginUser(loginCredentials) {
 }
 
 function createAppointment(appointmentData) {
-  axios.post("/api/createAppointment", {    
+  axios.post("/api/createAppointment", {
+    id: appointmentData.id,
     firstName: appointmentData.firstName,
     lastName: appointmentData.lastName,
     street1: appointmentData.street1,
@@ -45,9 +63,9 @@ function getAllAppointments() {
   return p
 }
 
-function deleteAppointment(appId) {
+function deleteAppointment(appointId) {
   let p = new Promise(function(data, error) {
-    axios.delete("/api/deleteAppointment/" + appId).then(function(result, err) {
+    axios.delete("/api/deleteAppointment/" + appointId).then(function(result, err) {
       if (result) {
         data(result);
       } else {
@@ -58,9 +76,26 @@ function deleteAppointment(appId) {
   return p
 }
 
+function getUserByFirstAndLastName(firstAndLastName) {
+  //console.log(firstAndLastName)
+  let p = new Promise(function(data, error) {
+    axios.post("/api/getUserByFirstAndLastName", firstAndLastName).then(function(result, err) {
+      if (result) {
+        data(result);
+      } else {
+        error("");
+      }
+    })
+  })
+  return p
+}
+
+
 export default {
   loginUser: loginUser,
   createAppointment: createAppointment,
   getAllAppointments: getAllAppointments,
-  deleteAppointment: deleteAppointment
+  deleteAppointment: deleteAppointment,
+  getUserByFirstAndLastName: getUserByFirstAndLastName,
+  signUpAdmin: signUpAdmin
 };

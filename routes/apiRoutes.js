@@ -1,49 +1,42 @@
-const axios = require("axios");
 const router = require("express").Router();
-var passport = require("../services/passportStrategy");
 var db = require("../models");
 
-// router.get("/recipes", (req, res) => {
-//   axios
-//     .get("http://www.recipepuppy.com/api/", { params: req.query })
-//     .then(({ data: { results } }) => res.json(results))
-//     .catch(err => res.status(422).json(err));
-// });
-
-// router.post("/login", passport.authenticate("local"), function(req, res) {
-//   console.log(res)
-//   //send the user the route so it'll be redirected in the front end (can't post into a GET request from a POST)
-//   res.json("");
-// }),
-
 router.post("/login", function(req, res) {
+  console.log(req.body)
   //send the user the route so it'll be redirected in the front end (can't post into a GET request from a POST)
-  res.json("");
+  res.json("/calendar");
 }),
-  router.post("/signup", function(req, res) {
-    db.Admin.create({
-      username: req.body.username,
-      password: req.body.password
+
+router.post("/signup", function(req, res) {
+  console.log(req.body.username)
+  console.log(req.body.password)
+  db.Admin.create({
+    username: req.body.username,
+    password: req.body.password
+  })
+    .then(function() {
+      //res.redirect(307, "/");
+      res.send("Success")
     })
-      .then(function() {
-        res.redirect(307, "/api/login");
-      })
-      .catch(function(err) {
-        console.log(err);
-        res.json(err);
-        // res.status(422).json(err.errors[0].message);
-      });
-  }),
-  router.get("/allAppointments", function(req, res) {
-    db.Appointment.findAll({
-      include: [db.User]
-    }).then(function(data) {
-      res.send(data)
+    .catch(function(err) {
+      res.json(err);
     });
+});
+
+router.get("/allAppointments", function(req, res) {
+  console.log("hello")
+  db.Appointment.findAll({
+    include: [db.User]
+  }).then(function(data) {
+    if (data) {
+      res.send(data);
+    } else {
+      res.send("error");
+    }
   });
+});
 
 router.post("/createAppointment", function(req, res) {
-  //console.log(req.body);
   db.User.findOne({
     where: { firstName: req.body.firstName, lastName: req.body.lastName }
   }).then(function(data) {
@@ -63,27 +56,31 @@ router.post("/createAppointment", function(req, res) {
           }
         }
       ).then(function() {
-        //console.log(req.body);
-        db.Appointment.findOne({
-          where: {
-            typeOfAppointment: req.body.typeOfAppointment,
-            startDate: req.body.startDate,
-            endDate: req.body.endDate,
-            user_id: data.id
-          }
-        }).then(function(appData) {
-          if (appData === null) {
-            db.Appointment.create({
+        if (req.body.id !== undefined) {
+          db.Appointment.update(
+            {
               typeOfAppointment: req.body.typeOfAppointment,
               startDate: req.body.startDate,
               endDate: req.body.endDate,
               user_id: data.id
-            }).catch(function(err) {
-              console.log(err);
-            });
-          }
-          res.json("");
-        });
+            },
+            {
+              where: {
+                id: req.body.id
+              }
+            }
+          );
+        } else {
+          db.Appointment.create({
+            typeOfAppointment: req.body.typeOfAppointment,
+            startDate: req.body.startDate,
+            endDate: req.body.endDate,
+            user_id: data.id
+          }).catch(function(err) {
+            console.log(err);
+          });
+        }
+        res.json("");
       });
     } else {
       db.User.create({
@@ -95,47 +92,58 @@ router.post("/createAppointment", function(req, res) {
         state: req.body.state,
         zipCode: req.body.zipCode
       }).then(function(data) {
-        //console.log("create");
-        //console.log(data.id)
-        db.Appointment.findOne({
-          where: {
-            typeOfAppointment: req.body.typeOfAppointment,
-            startDate: req.body.startDate,
-            endDate: req.body.endDate,
-            user_id: data.id
-          }
-        }).then(function(appData) {
-          if (appData === null) {
-            db.Appointment.create({
+        if (req.body.id !== undefined) {
+          db.Appointment.update(
+            {
               typeOfAppointment: req.body.typeOfAppointment,
               startDate: req.body.startDate,
               endDate: req.body.endDate,
               user_id: data.id
-            }).catch(function(err) {
-              console.log(err);
-            });
-          }
-          res.json("");
-        });
+            },
+            {
+              where: {
+                id: req.body.id
+              }
+            }
+          );
+        } else {
+          db.Appointment.create({
+            typeOfAppointment: req.body.typeOfAppointment,
+            startDate: req.body.startDate,
+            endDate: req.body.endDate,
+            user_id: data.id
+          }).catch(function(err) {
+            res.json(err);
+          });
+        }
       });
+      res.send("");
     }
   });
 });
 
 router.delete("/deleteAppointment/:id", function(req, res) {
-  console.log(req.params.id)
   db.Appointment.destroy({
-    where: {id: req.params.id}
+    where: { id: req.params.id }
   }).then(function(data, error) {
-    console.log(data)
-    if(data) {
-      res.json(data)
+    if (data) {
+      res.json(data);
+    } else {
+      res.json(error);
     }
-    else {
-      console.log("delete error")
-      res.json(error)
-    }   
-  })
+  });
+});
+
+router.post("/getUserByFirstAndLastName", function(req, res) {
+  db.User.findOne({
+    where: { firstName: req.body.firstName, lastName: req.body.lastName }
+  }).then(function(data) {
+    if (data) {
+      res.send(data);
+    } else {
+      res.send("error");
+    }
+  });
 });
 
 module.exports = router;

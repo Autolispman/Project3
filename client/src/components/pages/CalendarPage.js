@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import Calendar from "react-big-calendar";
 import moment from "moment";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+//import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import "../../App.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import Appointment from "../Items/Appointment.js";
 
 import AppointmentButton from "../Items/AppointmentButton.js";
+import Logout from "../Items/Logout.js"
 import API from "../../utils/API";
 
 Calendar.setLocalizer(Calendar.momentLocalizer(moment));
@@ -42,7 +42,7 @@ class CalendarPage extends Component {
           title: results.data[i].typeOfAppointment + " " + results.data[i].User.firstName + " " + results.data[i].User.lastName,
           info: results.data[i]
         };
-        //console.log(obj);
+        console.log(obj);
 
         array.push(obj);
       }
@@ -63,6 +63,14 @@ class CalendarPage extends Component {
   };
 
   newAppointment = () => {
+    let curDate = moment(Date.now())
+    .format("YYYY-MM-DDTHH:mm:ss") + ".000Z"
+    let currentInfo = {
+      //start: "2018-09-27T00:00:00.000Z",
+      start: new Date(Date.now()),
+      end: curDate
+    }
+    window.localStorage.setItem("currentInfo", JSON.stringify(currentInfo))
     window.location.pathname = "/appointment"
   };
 
@@ -72,25 +80,13 @@ class CalendarPage extends Component {
     console.log(event)
     window.localStorage.setItem("currentInfo", JSON.stringify(event))
     window.location.pathname = "/appointment"
-    // window.localStorage.setItem("currentInfo", event)
-    // window.localStorage.setItem("currentInfo", JSON.stringify({
-    //   "firstName": event.info.User.firstName
-    // }))
-      // lastName : this.state.lastName,
-      // street1 : this.state.street1,
-      // street2 : this.state.street2,
-      // city : this.state.city ,
-      // state : this.state.state,
-      // zipCode : this.state.zipCode,
-      // startDate : this.state.startDate,
-      // endDate : this.state.endDate,
-      // typeOfAppointment : this.state.typeOfAppointment
   }
 
   render() {
     return (
       <div className="container">
       <div>
+        <Logout />
         <AppointmentButton newAppointment={this.newAppointment} />
         <DnDCalendar
           defaultDate={new Date()}

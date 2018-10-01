@@ -1,20 +1,10 @@
 require("dotenv").config();
-const session = require("express-session");
-var passport = require("./services/passportStrategy");
 const express = require("express");
-const path = require("path");
 const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 3001;
 const app = express();
 const apiRoutes = require("./routes/apiRoutes");
 const db = require("./models");
-
-//Admin login
-app.use(
-  session({ secret: "ALYSSA'S_SECRET", resave: true, saveUninitialized: true })
-);
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,16 +16,6 @@ if (process.env.NODE_ENV === "production") {
 
 // Use apiRoutes
 app.use("/api", apiRoutes);
-
-// Send every request to the React app
-// Define any API routes before this runs
-// app.get("*", function(req, res) {
-//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
-// });
-
-// app.listen(PORT, function() {
-//   console.log(`🌎 ==> Server now on port ${PORT}!`);
-// });
 
 const syncOptions = { force: false };
 
@@ -56,4 +36,3 @@ db.sequelize.sync({ syncOptions }).then(function() {
 });
 
 module.exports = app;
-
