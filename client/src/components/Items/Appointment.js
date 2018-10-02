@@ -1,6 +1,4 @@
-//import React from "react";
 import React, { Component } from "react";
-//import { Link } from "react-router-dom";
 import API from "../../utils/API.js";
 import moment from "moment";
 import { Link } from "react-router-dom";
@@ -16,47 +14,48 @@ class Appointment extends Component {
     zipCode: "",
     startDate: "",
     endDate: "",
-    typeOfAppointment: ""
+    typeOfAppointment: "",
+    info: ""
   };
 
   componentDidMount() {
+    this.setStateHelper();
+  }
+
+  setStateHelper = () => {
     try {
       let currentInfo = window.localStorage.getItem("currentInfo");
       if (currentInfo !== null) {
         currentInfo = JSON.parse(currentInfo);
         //console.log(currentInfo.info.typeOfAppointment);
-        //console.log(moment(currentInfo.start).format("YYYY-MM-DDThh:mm:ss"))
-        console.log(currentInfo.start) 
-        this.setState(
-          {
-            firstName: currentInfo.info.User.firstName,
-            lastName: currentInfo.info.User.lastName,
-            street1: currentInfo.info.User.street1,
-            street2: currentInfo.info.User.street2,
-            city: currentInfo.info.User.city,
-            state: currentInfo.info.User.state,
-            zipCode: currentInfo.info.User.zipCode,
-            startDate: moment(currentInfo.start)
-              .format("YYYY-MM-DDThh:mm:ss"),
-            //startDate: "2018-09-04T12:01:00",
-            endDate: moment(currentInfo.end)
-            .format("YYYY-MM-DDThh:mm:ss"),
-            typeOfAppointment: currentInfo.info.typeOfAppointment,
-            info: currentInfo.info
-          },
-          () => console.log(this.state)
-        );
+        //console.log(moment(currentInfo.start).format("YYYY-MM-DDTHH:mm"))
+        //console.log(currentInfo.start)
+        this.setState({
+          firstName: currentInfo.info.User.firstName,
+          lastName: currentInfo.info.User.lastName,
+          street1: currentInfo.info.User.street1,
+          street2: currentInfo.info.User.street2,
+          city: currentInfo.info.User.city,
+          state: currentInfo.info.User.state,
+          zipCode: currentInfo.info.User.zipCode,
+          startDate: moment(currentInfo.start).format("YYYY-MM-DDTHH:mm"),
+          //startDate: "2018-09-04T00:01",
+          endDate: moment(currentInfo.end).format("YYYY-MM-DDTHH:mm"),
+          typeOfAppointment: currentInfo.info.typeOfAppointment,
+          info: currentInfo.info
+        });
       }
       window.localStorage.setItem("currentInfo", null);
     } catch (err) {
       window.localStorage.setItem("currentInfo", null);
     }
-  }
+  };
 
   createAppointment = event => {
     event.preventDefault();
-    console.log(this.state.startDate)
+    //console.log(this.state.id)
     const data = {
+      id: this.state.info.id,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       street1: this.state.street1,
@@ -74,26 +73,46 @@ class Appointment extends Component {
   deleteAppointment = () => {
     let prom = API.deleteAppointment(this.state.info.id);
     prom.then(data => {
-      window.location.pathname = "/calendar"
-    })
+      window.location.pathname = "/calendar";
+    });
   };
 
+  queryForRepeatClient = () => {
+    let firstLastName = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName
+    };
+
+    let prom = API.getUserByFirstAndLastName(firstLastName);
+    prom.then(results => {
+      if (this.state.firstName !== "" && this.state.lastName !== "") {
+        if (this.state.street1 === "" || this.state.street1 === undefined) {
+          this.setState({ street1: results.data.street1 });
+        }
+        if (this.state.street2 === "" || this.state.street2 === undefined) {
+          this.setState({ street2: results.data.street2 });
+        }
+        if (this.state.city === "" || this.state.city === undefined) {
+          this.setState({ city: results.data.city });
+        }
+        if (this.state.state === "" || this.state.state === undefined) {
+          this.setState({ state: results.data.state });
+        }
+        if (this.state.zipCode === "" || this.state.ZipCode === undefined) {
+          this.setState({ zipCode: results.data.zipCode });
+        }
+      }
+    })
+  }
+
   handleOnChange = event => {
+    console.log(this.state.info)
+    console.log(this.state.id)
     let { name, value } = event.target;
-    console.log("-----");
-    console.log(name);
-    console.log(value);
-    console.log(
-      moment(value)
-        .add(1, "s")
-        .toString()
-    );
-    this.setState(
-      {
-        [name]: value
-      },
-      () => console.log(this.state)
-    );
+
+    this.setState({
+      [name]: value
+    })
   };
 
   render() {
@@ -110,7 +129,6 @@ class Appointment extends Component {
           action=""
           className="sm-col-12"
           onSubmit={this.createAppointment}
-          action="#"
         >
           <label className="modalLabel">FirstName</label>
           <input
@@ -122,6 +140,7 @@ class Appointment extends Component {
             required
             value={this.state.firstName}
             onChange={this.handleOnChange}
+            onBlur={this.queryForRepeatClient}
           />
           <br />
           <label className="modalLabel">Last Name</label>
@@ -134,6 +153,7 @@ class Appointment extends Component {
             required
             value={this.state.lastName}
             onChange={this.handleOnChange}
+            onBlur={this.queryForRepeatClient}
           />
           <br />
           <label>Address</label>
@@ -311,7 +331,9 @@ class Appointment extends Component {
                 //defaultValue="PetTaxiPickUpDropOff"
                 onChange={this.handleOnChange}
                 value="PetTaxiPickUpDropOff"
-                checked={this.state.typeOfAppointment === "PetTaxiPickUpDropOfft"}
+                checked={
+                  this.state.typeOfAppointment === "PetTaxiPickUpDropOfft"
+                }
                 required={true}
               />
               <span>Pet Taxi Pick Up/Drop Off</span>

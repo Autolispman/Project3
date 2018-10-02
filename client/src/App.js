@@ -7,12 +7,28 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import Login from "./components/pages/Login.js"
 import CalendarPage from "./components/pages/CalendarPage.js"
 import Appointment from "./components/Items/Appointment.js"
-import API from "./utils/API";
+import firebase from "./config/firebase.js"
 
 class App extends Component {
   state = {
-    currentInfo: "AppComponent"
+    currentInfo: "AppComponent",
+    user: {}
   };
+
+  componentDidMount() {
+    this.authListener()
+  }
+
+  authListener() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user) {
+        this.setState({user})
+      }
+      else {
+        this.setState({user: null})
+      }
+    })
+  }
 
 
   // handleInputChange = event => {
@@ -37,16 +53,18 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <div>
+        {this.state.user ? 
+      (<Router>
         <div>
           <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path ="/calendar" component ={CalendarPage}
-            currentInfo="alajlkaj"/>
+            <Route exact path="/" component={CalendarPage} />
+            <Route exact path ="/calendar" component ={CalendarPage}/>
             <Route exact path ="/appointment" component ={Appointment}/>
           </Switch>
         </div>
-      </Router>
+        </Router>) : (<Login/>)}
+      </div>
     );
   }
 }
