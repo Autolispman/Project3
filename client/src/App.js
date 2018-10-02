@@ -58,8 +58,8 @@ class App extends Component {
       (<Router>
           <Switch>
             <Route exact path="/" component={CalendarPage} />
-            <Route exact path ="/calendar" component ={CalendarPage}/>
-            <Route exact path ="/appointment" component ={Appointment}/>
+            <Route path ="/calendar" component ={CalendarPage}/>
+            <Route path ="/appointment" component ={Appointment}/>
           </Switch>
         </Router>) : (<Login/>)}
       </div>
