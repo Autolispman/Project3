@@ -2,8 +2,6 @@
     "root": "client/build/",
     "clean_urls": false,
     "routes": {
-        "/**": "index.html",
-        "/calendar" : "index.html",
-        "/appointment": "index.html"
+        "/**": "index.html"
     }
 }
