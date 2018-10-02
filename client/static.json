@@ -3,7 +3,7 @@
     "clean_urls": false,
     "routes": {
         "/**": "index.html",
-        "/calendar" : "CalendarPage.js",
-        "/appointment": "Appointment.js"
+        "/calendar" : "index.html",
+        "/appointment": "index.html"
     }
 }
