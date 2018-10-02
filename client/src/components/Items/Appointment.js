@@ -117,6 +117,12 @@ class Appointment extends Component {
 
   render() {
     return (
+      <div>
+         <nav>
+            <div className="nav-wrapper indigo lighten-2">
+            <a href="#" className="brand-logo center"><h5>Sam's Pet Care</h5></a>
+            </div>
+          </nav>
       <div className="container">
         <form
           method=""
@@ -341,6 +347,7 @@ class Appointment extends Component {
           Delete Appointment
         </button>
         <Link to="/calendar">Disregard Changes</Link>
+      </div>
       </div>
     );
   }

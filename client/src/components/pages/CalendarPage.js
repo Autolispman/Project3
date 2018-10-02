@@ -84,7 +84,6 @@ class CalendarPage extends Component {
 
   render() {
     return (
-      <div className="container">
       <div>
         <Logout />
         <AppointmentButton newAppointment={this.newAppointment} />
@@ -99,8 +98,7 @@ class CalendarPage extends Component {
           views={allViews}
           onSelectEvent={this.selectedEvent}
         />
-      </div>
-      </div>
+      </div >
     );
   }
 }
