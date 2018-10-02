@@ -76,22 +76,24 @@ class CalendarPage extends Component {
     // window.localStorage.setItem("currentInfo", JSON.stringify({
     //   "firstName": event.info.User.firstName
     // }))
-      // lastName : this.state.lastName,
-      // street1 : this.state.street1,
-      // street2 : this.state.street2,
-      // city : this.state.city ,
-      // state : this.state.state,
-      // zipCode : this.state.zipCode,
-      // startDate : this.state.startDate,
-      // endDate : this.state.endDate,
-      // typeOfAppointment : this.state.typeOfAppointment
+    // lastName : this.state.lastName,
+    // street1 : this.state.street1,
+    // street2 : this.state.street2,
+    // city : this.state.city ,
+    // state : this.state.state,
+    // zipCode : this.state.zipCode,
+    // startDate : this.state.startDate,
+    // endDate : this.state.endDate,
+    // typeOfAppointment : this.state.typeOfAppointment
   }
 
   render() {
     return (
-      <div className="container">
       <div>
-        <AppointmentButton newAppointment={this.newAppointment} />
+              <AppointmentButton newAppointment={this.newAppointment} />
+      
+  
+
         <DnDCalendar
           defaultDate={new Date()}
           defaultView="month"
@@ -103,8 +105,7 @@ class CalendarPage extends Component {
           views={allViews}
           onSelectEvent={this.selectedEvent}
         />
-      </div>
-      </div>
+      </div >
     );
   }
 }

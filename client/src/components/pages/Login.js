@@ -27,10 +27,10 @@ class Login extends Component {
       password: this.state.adminPW
     };
     if (!samLogsIn.username || !samLogsIn.password) {
-      this.setState({message: "Username and password are required"})
+      this.setState({ message: "Username and password are required" })
       return;
     }
-  
+
     API.loginUser(samLogsIn);
     this.setState({ adminUserName: "" });
     this.setState({ adminPW: "" });
@@ -38,19 +38,21 @@ class Login extends Component {
 
   render() {
     return (
-      
       <div>
+        <nav>
+          <div className="nav-wrapper indigo lighten-2">
+            <a href="#" className="brand-logo center"><h5>Sam's Pet Care</h5></a>
+          </div>
+        </nav>
         <LoginItem
           processAdminLogin={this.processAdminLogin}
           adminUserName={this.state.adminUserName}
           adminPW={this.state.adminPW}
           handleLoginChange={this.handleLoginChange}
           message={this.state.message}
-        
-          
         />
       </div>
-      
+
     );
   }
 }
