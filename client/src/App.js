@@ -57,9 +57,9 @@ class App extends Component {
         {this.state.user ? 
       (<Router>
           <Switch>
-            <Route exact path="~/" component={CalendarPage} />
-            <Route exact path ="~/calendar" component ={CalendarPage}/>
-            <Route exact path ="~/appointment" component ={Appointment}/>
+            <Route exact path="/" component={CalendarPage} />
+            <Route exact path ="*/calendar" component ={CalendarPage}/>
+            <Route exact path ="*/appointment" component ={Appointment}/>
           </Switch>
         </Router>) : (<Login/>)}
       </div>
