@@ -65,13 +65,13 @@ class Appointment extends Component {
     //   zipCode: this.state.zipCode
     // };
 
-    const appointmentData = {
-      //id: this.state.info.id,
-      id: 1,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate,
-      typeOfAppointment: this.state.typeOfAppointment
-     };
+    // const appointmentData = {
+    //   //id: this.state.info.id,
+    //   id: 1,
+    //   startDate: this.state.startDate,
+    //   endDate: this.state.endDate,
+    //   typeOfAppointment: this.state.typeOfAppointment
+    //  };
     // let prom = API.updateUser(userData);
     // prom.then(result => {
     //   console.log(result.data.id);
@@ -81,6 +81,15 @@ class Appointment extends Component {
     //     window.location = "/calendar";
     //   })
     // });
+
+    const appointmentData = {
+      //id: this.state.info.id,
+      id: 1,
+      startDate: Date.now(),
+      endDate: Date.now(),
+      typeOfAppointment: this.state.typeOfAppointment
+     };
+
     API.updateAppointment(appointmentData)
   };
 
@@ -134,7 +143,7 @@ class Appointment extends Component {
         <nav>
           <div className="nav-wrapper indigo lighten-2">
             <a href="#!" className="brand-logo center">
-              <h5>Sam's Pet Care!!</h5>
+              <h5>Sam's Pet Care!</h5>
             </a>
           </div>
         </nav>
