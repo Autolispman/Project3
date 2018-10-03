@@ -54,16 +54,16 @@ class Appointment extends Component {
   createAppointment = event => {
     event.preventDefault();
     // console.log(this.state.zipCode);
-    // const userData = {
-    //   id: this.state.info.id,
-    //   firstName: this.state.firstName,
-    //   lastName: this.state.lastName,
-    //   street1: this.state.street1,
-    //   street2: this.state.street2,
-    //   city: this.state.city,
-    //   state: this.state.state,
-    //   zipCode: this.state.zipCode
-    // };
+    const userData = {
+      id: this.state.info.id,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      street1: this.state.street1,
+      street2: this.state.street2,
+      city: this.state.city,
+      state: this.state.state,
+      zipCode: this.state.zipCode
+    };
 
     const appointmentData = {
       //id: this.state.info.id,
@@ -72,16 +72,16 @@ class Appointment extends Component {
       endDate: this.state.endDate,
       typeOfAppointment: this.state.typeOfAppointment
      };
-    // let prom = API.updateUser(userData);
-    // prom.then(result => {
-    //   console.log(result.data.id);
-    //   appointmentData.id = result.data.id;
-    //   let prom2 = API.updateAppointment(appointmentData);
-    //   prom2.then(() => {
-    //     window.location = "/calendar";
-    //   })
-    // });
-    API.updateAppointment(appointmentData)
+    let prom = API.updateUser(userData);
+    prom.then(result => {
+      console.log(result.data.id);
+      appointmentData.id = result.data.id;
+      let prom2 = API.updateAppointment(appointmentData);
+      prom2.then(() => {
+        window.location = "/calendar";
+      })
+    });
+    //API.updateAppointment(appointmentData)
   };
 
   deleteAppointment = () => {
