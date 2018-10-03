@@ -21,11 +21,11 @@ class App extends Component {
 
   authListener() {
     firebase.auth().onAuthStateChanged((user) => {
-      if(user) {
-        this.setState({user})
+      if (user) {
+        this.setState({ user })
       }
       else {
-        this.setState({user: null})
+        this.setState({ user: null })
       }
     })
   }
@@ -54,16 +54,16 @@ class App extends Component {
   render() {
     return (
       <div>
-        {this.state.user ? 
-      (<Router>
-        <div>
-          <Switch>
-            <Route exact path="/" component={CalendarPage} />
-            <Route exact path ="/calendar" component ={CalendarPage}/>
-            <Route exact path ="/appointment" component ={Appointment}/>
-          </Switch>
-        </div>
-        </Router>) : (<Login/>)}
+        {this.state.user ?
+          (<Router>
+            <div>
+              <Switch>
+                <Route exact path="/" component={CalendarPage} />
+                <Route exact path="/calendar" component={CalendarPage} />
+                <Route exact path="/appointment" component={Appointment} />
+              </Switch>
+            </div>
+          </Router>) : (<Login />)}
       </div>
     );
   }

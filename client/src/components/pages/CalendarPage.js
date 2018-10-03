@@ -64,7 +64,7 @@ class CalendarPage extends Component {
 
   newAppointment = () => {
     let curDate = moment(Date.now())
-    .format("YYYY-MM-DDTHH:mm:ss") + ".000Z"
+      .format("YYYY-MM-DDTHH:mm:ss") + ".000Z"
     let currentInfo = {
       //start: "2018-09-27T00:00:00.000Z",
       start: new Date(Date.now()),
@@ -84,21 +84,32 @@ class CalendarPage extends Component {
 
   render() {
     return (
+
       <div>
-        <Logout />
-        <AppointmentButton newAppointment={this.newAppointment} />
-        <DnDCalendar
-          defaultDate={new Date()}
-          defaultView="month"
-          events={this.state.events}
-          onEventDrop={this.onEventDrop}
-          onEventResize={this.onEventResize}
-          resizable
-          style={{ height: "100vh" }}
-          views={allViews}
-          onSelectEvent={this.selectedEvent}
-        />
-      </div >
+        <nav>
+          <div className="indigo lighten-2">
+            <div className="grid-example col s12 m6">
+              <a href="#" className="brand-logo center"><h5>Sam's Pet Care</h5></a>
+             <a><Logout /></a>
+  
+              <a><AppointmentButton newAppointment={this.newAppointment} /></a>
+            </div>
+          </div>
+        </nav>
+        <div className="container">
+          <DnDCalendar
+            defaultDate={new Date()}
+            defaultView="month"
+            events={this.state.events}
+            onEventDrop={this.onEventDrop}
+            onEventResize={this.onEventResize}
+            resizable
+            style={{ height: "100vh" }}
+            views={allViews}
+            onSelectEvent={this.selectedEvent}
+          />
+        </div>
+      </div>
     );
   }
 }
