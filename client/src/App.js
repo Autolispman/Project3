@@ -56,7 +56,11 @@ class App extends Component {
       <div>
       <Router>
             <Route exact path="/" component={CalendarPage} />
+            </Router>
+            <Router>
             <Route exact path ="/calendar" component ={CalendarPage}/>
+            </Router>
+            <Router>
             <Route exact path ="/appointment" component ={Appointment}/>
         </Router>
       </div>
