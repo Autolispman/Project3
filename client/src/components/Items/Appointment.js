@@ -54,7 +54,7 @@ class Appointment extends Component {
   createAppointment = event => {
     event.preventDefault();
     //console.log(this.state.id)
-    const data = {
+    const userData = {
       id: this.state.info.id,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -63,11 +63,19 @@ class Appointment extends Component {
       city: this.state.city,
       state: this.state.state,
       zipCode: this.state.zipCode,
+    };
+
+    const appointmentData = {
+      id: this.state.info.id,
       startDate: this.state.startDate,
       endDate: this.state.endDate,
       typeOfAppointment: this.state.typeOfAppointment
     };
-    API.createAppointment(data);
+    let prom = API.updateUser(userData)
+    prom.then((data) => {
+      console.log(data)
+      //API.createAppointment(appointmentData);
+    })    
   };
 
   deleteAppointment = () => {
@@ -106,8 +114,8 @@ class Appointment extends Component {
   }
 
   handleOnChange = event => {
-    console.log(this.state.info)
-    console.log(this.state.id)
+    //console.log(this.state.info)
+    //console.log(this.state.id)
     let { name, value } = event.target;
 
     this.setState({
