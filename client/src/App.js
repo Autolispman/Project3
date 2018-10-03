@@ -55,13 +55,11 @@ class App extends Component {
     return (
       <div>
       <Router>
+          <Switch>
             <Route exact path="/" component={CalendarPage} />
-            </Router>
-            <Router>
             <Route exact path ="/calendar" component ={CalendarPage}/>
-            </Router>
-            <Router>
             <Route exact path ="/appointment" component ={Appointment}/>
+          </Switch>
         </Router>
       </div>
     );

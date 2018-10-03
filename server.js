@@ -17,6 +17,10 @@ if (process.env.NODE_ENV === "production") {
 // Use apiRoutes
 app.use("/api", apiRoutes);
 
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
 const syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
