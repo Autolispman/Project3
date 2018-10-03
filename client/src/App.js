@@ -54,13 +54,14 @@ class App extends Component {
   render() {
     return (
       <div>
-      <Router>
+        {this.state.user ? 
+      (<Router>
           <Switch>
             <Route exact path="/" component={CalendarPage} />
             <Route exact path ="/calendar" component ={CalendarPage}/>
             <Route exact path ="/appointment" component ={Appointment}/>
           </Switch>
-        </Router>
+        </Router>) : (<Login/>)}
       </div>
     );
   }
