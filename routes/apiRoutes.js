@@ -88,7 +88,8 @@ router.post("/updateAppointment", function(req, res) {
     where: { id: req.body.id }
   }).then(data => {
     if (data) {
-      data.update({
+      console.log("update")
+      data.update({        
         typeOfAppointment: req.body.typeOfAppointment,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
@@ -96,14 +97,14 @@ router.post("/updateAppointment", function(req, res) {
       });
       res.json(data);
     } else {
-      res.send(
+      console.log("create")
         db.Appointment.create({
           typeOfAppointment: req.body.typeOfAppointment,
           startDate: req.body.startDate,
           endDate: req.body.endDate,
           user_id: req.body.id
-        })
-      );
+        });
+        res.json("")
     }
   });
 });
