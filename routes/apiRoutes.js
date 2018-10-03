@@ -102,7 +102,7 @@ router.post("/updateAppointment", function(req, res) {
           typeOfAppointment: req.body.typeOfAppointment,
           startDate: req.body.startDate,
           endDate: req.body.endDate,
-          User_Id: req.body.id
+          UserId: req.body.id
         });
         res.json("")
     }
