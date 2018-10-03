@@ -53,7 +53,7 @@ class Appointment extends Component {
 
   createAppointment = event => {
     event.preventDefault();
-    //console.log(this.state.id)
+    console.log(this.state.zipCode);
     const userData = {
       id: this.state.info.id,
       firstName: this.state.firstName,
@@ -62,7 +62,7 @@ class Appointment extends Component {
       street2: this.state.street2,
       city: this.state.city,
       state: this.state.state,
-      zipCode: this.state.zipCode,
+      zipCode: this.state.zipCode
     };
 
     const appointmentData = {
@@ -71,11 +71,15 @@ class Appointment extends Component {
       endDate: this.state.endDate,
       typeOfAppointment: this.state.typeOfAppointment
     };
-    let prom = API.updateUser(userData)
-    prom.then((data) => {
-      console.log(data)
-      //API.createAppointment(appointmentData);
-    })    
+    let prom = API.updateUser(userData);
+    prom.then(result => {
+      console.log(result.data.id);
+      appointmentData.id = result.data.id;
+      let prom2 = API.updateAppointment(appointmentData);
+      prom2.then(() => {
+        window.location = "/calendar";
+      })
+    });
   };
 
   deleteAppointment = () => {
@@ -86,32 +90,31 @@ class Appointment extends Component {
   };
 
   queryForRepeatClient = () => {
-    let firstLastName = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName
-    };
-
-    let prom = API.getUserByFirstAndLastName(firstLastName);
-    prom.then(results => {
-      if (this.state.firstName !== "" && this.state.lastName !== "") {
-        if (this.state.street1 === "" || this.state.street1 === undefined) {
-          this.setState({ street1: results.data.street1 });
-        }
-        if (this.state.street2 === "" || this.state.street2 === undefined) {
-          this.setState({ street2: results.data.street2 });
-        }
-        if (this.state.city === "" || this.state.city === undefined) {
-          this.setState({ city: results.data.city });
-        }
-        if (this.state.state === "" || this.state.state === undefined) {
-          this.setState({ state: results.data.state });
-        }
-        if (this.state.zipCode === "" || this.state.ZipCode === undefined) {
-          this.setState({ zipCode: results.data.zipCode });
-        }
-      }
-    })
-  }
+    // let firstLastName = {
+    //   firstName: this.state.firstName,
+    //   lastName: this.state.lastName
+    // };
+    // let prom = API.getUserByFirstAndLastName(firstLastName);
+    // prom.then(results => {
+    //   if (this.state.firstName !== "" && this.state.lastName !== "") {
+    //     if (this.state.street1 === "" || this.state.street1 === undefined) {
+    //       this.setState({ street1: results.data.street1 });
+    //     }
+    //     if (this.state.street2 === "" || this.state.street2 === undefined) {
+    //       this.setState({ street2: results.data.street2 });
+    //     }
+    //     if (this.state.city === "" || this.state.city === undefined) {
+    //       this.setState({ city: results.data.city });
+    //     }
+    //     if (this.state.state === "" || this.state.state === undefined) {
+    //       this.setState({ state: results.data.state });
+    //     }
+    //     if (this.state.zipCode === "" || this.state.ZipCode === undefined) {
+    //       this.setState({ zipCode: results.data.zipCode });
+    //     }
+    //   }
+    // })
+  };
 
   handleOnChange = event => {
     //console.log(this.state.info)
@@ -120,242 +123,248 @@ class Appointment extends Component {
 
     this.setState({
       [name]: value
-    })
+    });
   };
 
   render() {
     return (
       <div>
-         <nav>
-            <div className="nav-wrapper indigo lighten-2">
-            <a href="#!" className="brand-logo center"><h5>Sam's Pet Care</h5></a>
-            </div>
-          </nav>
-      <div className="container">
-        <form
-          method=""
-          action=""
-          className="sm-col-12"
-          onSubmit={this.createAppointment}
-        >
-          <label className="modalLabel">FirstName</label>
-          <input
-            name="firstName"
-            type="text"
-            id="firstNameInputId"
-            className=""
-            placeholder="firstName"
-            required
-            value={this.state.firstName}
-            onChange={this.handleOnChange}
-            onBlur={this.queryForRepeatClient}
-          />
-          <br />
-          <label className="modalLabel">Last Name</label>
-          <input
-            name="lastName"
-            type="text"
-            id="lastNameInputId"
-            className=""
-            placeholder="lastName"
-            required
-            value={this.state.lastName}
-            onChange={this.handleOnChange}
-            onBlur={this.queryForRepeatClient}
-          />
-          <br />
-          <label>Address</label>
-          <label>Street1</label>
-          <input
-            name="street1"
-            type="text"
-            id="street1InputId"
-            className=""
-            placeholder="street1"
-            required={false}
-            value={this.state.street1}
-            onChange={this.handleOnChange}
-          />
-          <br />
-          <label>Street2</label>
-          <input
-            name="street2"
-            type="text"
-            id="street2InputId"
-            className=""
-            placeholder="street2"
-            required={false}
-            value={this.state.street2}
-            onChange={this.handleOnChange}
-          />
-          <br />
-          <label>City</label>
-          <input
-            name="city"
-            type="text"
-            id="cityInputId"
-            className=""
-            placeholder="city"
-            required={false}
-            value={this.state.city}
-            onChange={this.handleOnChange}
-          />
-          <br />
-          <label>State</label>
-          <input
-            name="state"
-            type="text"
-            id="stateInputId"
-            className=""
-            placeholder="state"
-            required={false}
-            value={this.state.state}
-            onChange={this.handleOnChange}
-          />
-          <br />
-          <label>Zip code</label>
-          <input
-            name="zipCode"
-            type="text"
-            id="zipCodeId"
-            className=""
-            placeholder="zipcode"
-            required={false}
-            pattern="^\d{5}$|^\d{5}-\d{4}$"
-            value={this.state.zipCode}
-            onChange={this.handleOnChange}
-          />
-          <br />
-          <label>Start Date (ex: 4/27/2010)</label>
-          <input
-            name="startDate"
-            type="datetime-local"
-            id="startDateId"
-            className=""
-            placeholder="start date"
-            required={true}
-            pattern="^\d{1,2}\/\d{1,2}\/\d{4}$"
-            value={this.state.startDate}
-            onChange={this.handleOnChange}
-          />
-          <br />
-          <label>End Date (ex: 4/27/2010)</label>
-          <input
-            name="endDate"
-            type="datetime-local"
-            id="endDateId"
-            className=""
-            placeholder="end date"
-            required={true}
-            pattern="^\d{1,2}\/\d{1,2}\/\d{4}$"
-            value={this.state.endDate}
-            onChange={this.handleOnChange}
-          />
-          <br />
-          <label>Type of Appointment</label>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="typeOfAppointment"
-                //defaultValue="MeetAndGreet"
-                onChange={this.handleOnChange}
-                value="MeetAndGreet"
-                checked={this.state.typeOfAppointment === "MeetAndGreet"}
-                required={true}
-              />
-              <span>Meet And Greet</span>
-            </label>
-            <br />
-            <label>
-              <input
-                type="radio"
-                name="typeOfAppointment"
-                //defaultValue="HouseSit"
-                onChange={this.handleOnChange}
-                value="HouseSit"
-                checked={this.state.typeOfAppointment === "HouseSit"}
-                required={true}
-              />
-              <span>House Sit</span>
-            </label>
-            <br />
-            <label>
-              <input
-                type="radio"
-                name="typeOfAppointment"
-                //defaultValue="PetOverNightSit"
-                onChange={this.handleOnChange}
-                value="PetOverNightSit"
-                checked={this.state.typeOfAppointment === "PetOverNightSit"}
-                required={true}
-              />
-              <span>Pet Over Night Sit</span>
-            </label>
-            <br />
-            <label>
-              <input
-                type="radio"
-                name="typeOfAppointment"
-                //defaultValue="PetBoarding"
-                onChange={this.handleOnChange}
-                value="PetBoarding"
-                checked={this.state.typeOfAppointment === "PetBoarding"}
-                required={true}
-              />
-              <span>Pet Boarding</span>
-            </label>
-            <br />
-            <label>
-              <input
-                type="radio"
-                name="typeOfAppointment"
-                //defaultValue="PetVisit"
-                onChange={this.handleOnChange}
-                value="PetVisit"
-                checked={this.state.typeOfAppointment === "PetVisit"}
-                required={true}
-              />
-              <span>Pet Vist</span>
-            </label>
-            <br />
-            <label>
-              <input
-                type="radio"
-                name="typeOfAppointment"
-                // defaultValue="DogWalking"
-                onChange={this.handleOnChange}
-                value="DogWalking"
-                checked={this.state.typeOfAppointment === "DogWalking"}
-                required={true}
-              />
-              <span>Dog Walking</span>
-            </label>
-            <br />
-            <label>
-              <input
-                type="radio"
-                name="typeOfAppointment"
-                //defaultValue="PetTaxiPickUpDropOff"
-                onChange={this.handleOnChange}
-                value="PetTaxiPickUpDropOff"
-                checked={
-                  this.state.typeOfAppointment === "PetTaxiPickUpDropOfft"
-                }
-                required={true}
-              />
-              <span>Pet Taxi Pick Up/Drop Off</span>
-            </label>
+        <nav>
+          <div className="nav-wrapper indigo lighten-2">
+            <a href="#!" className="brand-logo center">
+              <h5>Sam's Pet Care</h5>
+            </a>
           </div>
-          <button type="text" className="btn waves-effect waves-light">
-            Create/Update Appointment
+        </nav>
+        <div className="container">
+          <form
+            method=""
+            action=""
+            className="sm-col-12"
+            onSubmit={this.createAppointment}
+          >
+            <label className="modalLabel">FirstName</label>
+            <input
+              name="firstName"
+              type="text"
+              id="firstNameInputId"
+              className=""
+              placeholder="firstName"
+              required
+              value={this.state.firstName}
+              onChange={this.handleOnChange}
+              onBlur={this.queryForRepeatClient}
+            />
+            <br />
+            <label className="modalLabel">Last Name</label>
+            <input
+              name="lastName"
+              type="text"
+              id="lastNameInputId"
+              className=""
+              placeholder="lastName"
+              required
+              value={this.state.lastName}
+              onChange={this.handleOnChange}
+              onBlur={this.queryForRepeatClient}
+            />
+            <br />
+            <label>Address</label>
+            <label>Street1</label>
+            <input
+              name="street1"
+              type="text"
+              id="street1InputId"
+              className=""
+              placeholder="street1"
+              required={false}
+              value={this.state.street1}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Street2</label>
+            <input
+              name="street2"
+              type="text"
+              id="street2InputId"
+              className=""
+              placeholder="street2"
+              required={false}
+              value={this.state.street2}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>City</label>
+            <input
+              name="city"
+              type="text"
+              id="cityInputId"
+              className=""
+              placeholder="city"
+              required={false}
+              value={this.state.city}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>State</label>
+            <input
+              name="state"
+              type="text"
+              id="stateInputId"
+              className=""
+              placeholder="state"
+              required={false}
+              value={this.state.state}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Zip code</label>
+            <input
+              name="zipCode"
+              type="text"
+              id="zipCodeId"
+              className=""
+              placeholder="zipcode"
+              required={false}
+              pattern="^\d{5}$|^\d{5}-\d{4}$"
+              value={this.state.zipCode}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Start Date (ex: 4/27/2010)</label>
+            <input
+              name="startDate"
+              type="datetime-local"
+              id="startDateId"
+              className=""
+              placeholder="start date"
+              required={true}
+              pattern="^\d{1,2}\/\d{1,2}\/\d{4}$"
+              value={this.state.startDate}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>End Date (ex: 4/27/2010)</label>
+            <input
+              name="endDate"
+              type="datetime-local"
+              id="endDateId"
+              className=""
+              placeholder="end date"
+              required={true}
+              pattern="^\d{1,2}\/\d{1,2}\/\d{4}$"
+              value={this.state.endDate}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Type of Appointment</label>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="typeOfAppointment"
+                  //defaultValue="MeetAndGreet"
+                  onChange={this.handleOnChange}
+                  value="MeetAndGreet"
+                  checked={this.state.typeOfAppointment === "MeetAndGreet"}
+                  required={true}
+                />
+                <span>Meet And Greet</span>
+              </label>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="typeOfAppointment"
+                  //defaultValue="HouseSit"
+                  onChange={this.handleOnChange}
+                  value="HouseSit"
+                  checked={this.state.typeOfAppointment === "HouseSit"}
+                  required={true}
+                />
+                <span>House Sit</span>
+              </label>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="typeOfAppointment"
+                  //defaultValue="PetOverNightSit"
+                  onChange={this.handleOnChange}
+                  value="PetOverNightSit"
+                  checked={this.state.typeOfAppointment === "PetOverNightSit"}
+                  required={true}
+                />
+                <span>Pet Over Night Sit</span>
+              </label>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="typeOfAppointment"
+                  //defaultValue="PetBoarding"
+                  onChange={this.handleOnChange}
+                  value="PetBoarding"
+                  checked={this.state.typeOfAppointment === "PetBoarding"}
+                  required={true}
+                />
+                <span>Pet Boarding</span>
+              </label>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="typeOfAppointment"
+                  //defaultValue="PetVisit"
+                  onChange={this.handleOnChange}
+                  value="PetVisit"
+                  checked={this.state.typeOfAppointment === "PetVisit"}
+                  required={true}
+                />
+                <span>Pet Vist</span>
+              </label>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="typeOfAppointment"
+                  // defaultValue="DogWalking"
+                  onChange={this.handleOnChange}
+                  value="DogWalking"
+                  checked={this.state.typeOfAppointment === "DogWalking"}
+                  required={true}
+                />
+                <span>Dog Walking</span>
+              </label>
+              <br />
+              <label>
+                <input
+                  type="radio"
+                  name="typeOfAppointment"
+                  //defaultValue="PetTaxiPickUpDropOff"
+                  onChange={this.handleOnChange}
+                  value="PetTaxiPickUpDropOff"
+                  checked={
+                    this.state.typeOfAppointment === "PetTaxiPickUpDropOfft"
+                  }
+                  required={true}
+                />
+                <span>Pet Taxi Pick Up/Drop Off</span>
+              </label>
+            </div>
+            <button type="text" className="btn waves-effect waves-light">
+              Create/Update Appointment
+            </button>
+          </form>
+          <button
+            type="text"
+            className="btn waves-effect waves-light"
+            onClick={this.deleteAppointment}
+          >
+            Delete Appointment
           </button>
-        </form>
-        <button type="text" className="btn waves-effect waves-light" onClick={this.deleteAppointment}>
-          Delete Appointment
-        </button>
-        <Link to="/calendar">Disregard Changes</Link>
-      </div>
+          <Link to="/calendar">Disregard Changes</Link>
+        </div>
       </div>
     );
   }
