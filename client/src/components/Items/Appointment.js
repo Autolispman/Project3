@@ -53,33 +53,35 @@ class Appointment extends Component {
 
   createAppointment = event => {
     event.preventDefault();
-    console.log(this.state.zipCode);
-    const userData = {
-      id: this.state.info.id,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      street1: this.state.street1,
-      street2: this.state.street2,
-      city: this.state.city,
-      state: this.state.state,
-      zipCode: this.state.zipCode
-    };
+    // console.log(this.state.zipCode);
+    // const userData = {
+    //   id: this.state.info.id,
+    //   firstName: this.state.firstName,
+    //   lastName: this.state.lastName,
+    //   street1: this.state.street1,
+    //   street2: this.state.street2,
+    //   city: this.state.city,
+    //   state: this.state.state,
+    //   zipCode: this.state.zipCode
+    // };
 
     const appointmentData = {
-      id: this.state.info.id,
+      //id: this.state.info.id,
+      id: 1,
       startDate: this.state.startDate,
       endDate: this.state.endDate,
       typeOfAppointment: this.state.typeOfAppointment
-    };
-    let prom = API.updateUser(userData);
-    prom.then(result => {
-      console.log(result.data.id);
-      appointmentData.id = result.data.id;
-      let prom2 = API.updateAppointment(appointmentData);
-      prom2.then(() => {
-        window.location = "/calendar";
-      })
-    });
+     };
+    // let prom = API.updateUser(userData);
+    // prom.then(result => {
+    //   console.log(result.data.id);
+    //   appointmentData.id = result.data.id;
+    //   let prom2 = API.updateAppointment(appointmentData);
+    //   prom2.then(() => {
+    //     window.location = "/calendar";
+    //   })
+    // });
+    API.updateAppointment(appointmentData)
   };
 
   deleteAppointment = () => {
@@ -132,7 +134,7 @@ class Appointment extends Component {
         <nav>
           <div className="nav-wrapper indigo lighten-2">
             <a href="#!" className="brand-logo center">
-              <h5>Sam's Pet Care</h5>
+              <h5>Sam's Pet Care!</h5>
             </a>
           </div>
         </nav>
