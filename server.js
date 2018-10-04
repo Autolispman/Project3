@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const apiRoutes = require("./routes/apiRoutes");
 const db = require("./models");
+const path = require("path")
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,6 +18,10 @@ if (process.env.NODE_ENV === "production") {
 // Use apiRoutes
 app.use("/api", apiRoutes);
 
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
 const syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
@@ -25,7 +30,7 @@ if (process.env.NODE_ENV === "test") {
   syncOptions.force = false;
 }
 // Starting the server, syncing our models ------------------------------------/
-db.sequelize.sync({ syncOptions }).then(function() {
+db.sequelize.sync({}).then(function() {
   app.listen(PORT, function() {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",

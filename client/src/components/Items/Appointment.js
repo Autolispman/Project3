@@ -29,7 +29,7 @@ class Appointment extends Component {
         currentInfo = JSON.parse(currentInfo);
         //console.log(currentInfo.info.typeOfAppointment);
         //console.log(moment(currentInfo.start).format("YYYY-MM-DDTHH:mm"))
-        //console.log(currentInfo.start)
+        //console.log(currentInfo.info)
         this.setState({
           firstName: currentInfo.info.User.firstName,
           lastName: currentInfo.info.User.lastName,
@@ -46,6 +46,7 @@ class Appointment extends Component {
         });
       }
       window.localStorage.setItem("currentInfo", null);
+      //console.log(this.state.info)
     } catch (err) {
       window.localStorage.setItem("currentInfo", null);
     }
@@ -53,8 +54,7 @@ class Appointment extends Component {
 
   createAppointment = event => {
     event.preventDefault();
-    //console.log(this.state.id)
-    const data = {
+    const userData = {
       id: this.state.info.id,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -62,12 +62,34 @@ class Appointment extends Component {
       street2: this.state.street2,
       city: this.state.city,
       state: this.state.state,
-      zipCode: this.state.zipCode,
+      zipCode: this.state.zipCode
+    };
+
+    const appointmentData = {
+      id: this.state.info.id,
       startDate: this.state.startDate,
       endDate: this.state.endDate,
       typeOfAppointment: this.state.typeOfAppointment
-    };
-    API.createAppointment(data);
+     };
+
+    let prom = API.updateUser(userData);
+    prom.then(result => {
+      appointmentData.user_id = result.data.id
+      let prom2 = API.updateAppointment(appointmentData);
+      prom2.then(() => {
+        window.location = "/calendar";
+      })
+    });
+
+    // const appointmentData = {
+    //   //id: this.state.info.id,
+    //   id: 1,
+    //   startDate: Date.now(),
+    //   endDate: Date.now(),
+    //   typeOfAppointment: this.state.typeOfAppointment
+    //  };
+
+    // API.updateAppointment(appointmentData)
   };
 
   deleteAppointment = () => {
@@ -82,7 +104,6 @@ class Appointment extends Component {
       firstName: this.state.firstName,
       lastName: this.state.lastName
     };
-
     let prom = API.getUserByFirstAndLastName(firstLastName);
     prom.then(results => {
       if (this.state.firstName !== "" && this.state.lastName !== "") {
@@ -103,16 +124,16 @@ class Appointment extends Component {
         }
       }
     })
-  }
+  };
 
   handleOnChange = event => {
-    console.log(this.state.info)
-    console.log(this.state.id)
+    //console.log(this.state.info)
+    //console.log(this.state.id)
     let { name, value } = event.target;
 
     this.setState({
       [name]: value
-    })
+    });
   };
 
   render() {
@@ -120,7 +141,9 @@ class Appointment extends Component {
       <div>
         <nav>
           <div className="nav-wrapper indigo lighten-2">
-            <a href="#" className="brand-logo center"><h5>Sam's Pet Care</h5></a>
+            <a href="#!" className="brand-logo center">
+              <h5>Sam's Pet Care</h5>
+            </a>
           </div>
         </nav>
         <div className="container">
@@ -332,24 +355,25 @@ class Appointment extends Component {
                   onChange={this.handleOnChange}
                   value="PetTaxiPickUpDropOff"
                   checked={
-                    this.state.typeOfAppointment === "PetTaxiPickUpDropOfft"
+                    this.state.typeOfAppointment === "PetTaxiPickUpDropOff"
                   }
                   required={true}
                 />
                 <span>Pet Taxi Pick Up/Drop Off</span>
               </label>
             </div>
-          </form>
-          <div className="grid-example col s12 m6">
             <button type="text" className="btn waves-effect waves-light">
               Create/Update Appointment
             </button>
-
-            <button type="text" className="btn waves-effect waves-light" onClick={this.deleteAppointment}>
-              Delete Appointment
-            </button>
-            <Link to="/calendar" className="btn waves-effect waves-light">Disregard Changes</Link>
-          </div>
+          </form>
+          <button
+            type="text"
+            className="btn waves-effect waves-light"
+            onClick={this.deleteAppointment}
+          >
+            Delete Appointment
+          </button>
+          <Link to="/calendar">Disregard Changes</Link>
         </div>
       </div>
     );
