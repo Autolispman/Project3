@@ -29,7 +29,7 @@ class Appointment extends Component {
         currentInfo = JSON.parse(currentInfo);
         //console.log(currentInfo.info.typeOfAppointment);
         //console.log(moment(currentInfo.start).format("YYYY-MM-DDTHH:mm"))
-        //console.log(currentInfo.start)
+        //console.log(currentInfo.info)
         this.setState({
           firstName: currentInfo.info.User.firstName,
           lastName: currentInfo.info.User.lastName,
@@ -46,6 +46,7 @@ class Appointment extends Component {
         });
       }
       window.localStorage.setItem("currentInfo", null);
+      //console.log(this.state.info)
     } catch (err) {
       window.localStorage.setItem("currentInfo", null);
     }
@@ -53,44 +54,42 @@ class Appointment extends Component {
 
   createAppointment = event => {
     event.preventDefault();
-    // console.log(this.state.zipCode);
-    // const userData = {
-    //   id: this.state.info.id,
-    //   firstName: this.state.firstName,
-    //   lastName: this.state.lastName,
-    //   street1: this.state.street1,
-    //   street2: this.state.street2,
-    //   city: this.state.city,
-    //   state: this.state.state,
-    //   zipCode: this.state.zipCode
-    // };
+    const userData = {
+      id: this.state.info.id,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      street1: this.state.street1,
+      street2: this.state.street2,
+      city: this.state.city,
+      state: this.state.state,
+      zipCode: this.state.zipCode
+    };
+
+    const appointmentData = {
+      id: this.state.info.id,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
+      typeOfAppointment: this.state.typeOfAppointment
+     };
+
+    let prom = API.updateUser(userData);
+    prom.then(result => {
+      appointmentData.user_id = result.data.id
+      let prom2 = API.updateAppointment(appointmentData);
+      prom2.then(() => {
+        window.location = "/calendar";
+      })
+    });
 
     // const appointmentData = {
     //   //id: this.state.info.id,
     //   id: 1,
-    //   startDate: this.state.startDate,
-    //   endDate: this.state.endDate,
+    //   startDate: Date.now(),
+    //   endDate: Date.now(),
     //   typeOfAppointment: this.state.typeOfAppointment
     //  };
-    // let prom = API.updateUser(userData);
-    // prom.then(result => {
-    //   console.log(result.data.id);
-    //   appointmentData.id = result.data.id;
-    //   let prom2 = API.updateAppointment(appointmentData);
-    //   prom2.then(() => {
-    //     window.location = "/calendar";
-    //   })
-    // });
 
-    const appointmentData = {
-      //id: this.state.info.id,
-      id: 1,
-      startDate: Date.now(),
-      endDate: Date.now(),
-      typeOfAppointment: this.state.typeOfAppointment
-     };
-
-    API.updateAppointment(appointmentData)
+    // API.updateAppointment(appointmentData)
   };
 
   deleteAppointment = () => {
@@ -101,30 +100,30 @@ class Appointment extends Component {
   };
 
   queryForRepeatClient = () => {
-    // let firstLastName = {
-    //   firstName: this.state.firstName,
-    //   lastName: this.state.lastName
-    // };
-    // let prom = API.getUserByFirstAndLastName(firstLastName);
-    // prom.then(results => {
-    //   if (this.state.firstName !== "" && this.state.lastName !== "") {
-    //     if (this.state.street1 === "" || this.state.street1 === undefined) {
-    //       this.setState({ street1: results.data.street1 });
-    //     }
-    //     if (this.state.street2 === "" || this.state.street2 === undefined) {
-    //       this.setState({ street2: results.data.street2 });
-    //     }
-    //     if (this.state.city === "" || this.state.city === undefined) {
-    //       this.setState({ city: results.data.city });
-    //     }
-    //     if (this.state.state === "" || this.state.state === undefined) {
-    //       this.setState({ state: results.data.state });
-    //     }
-    //     if (this.state.zipCode === "" || this.state.ZipCode === undefined) {
-    //       this.setState({ zipCode: results.data.zipCode });
-    //     }
-    //   }
-    // })
+    let firstLastName = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName
+    };
+    let prom = API.getUserByFirstAndLastName(firstLastName);
+    prom.then(results => {
+      if (this.state.firstName !== "" && this.state.lastName !== "") {
+        if (this.state.street1 === "" || this.state.street1 === undefined) {
+          this.setState({ street1: results.data.street1 });
+        }
+        if (this.state.street2 === "" || this.state.street2 === undefined) {
+          this.setState({ street2: results.data.street2 });
+        }
+        if (this.state.city === "" || this.state.city === undefined) {
+          this.setState({ city: results.data.city });
+        }
+        if (this.state.state === "" || this.state.state === undefined) {
+          this.setState({ state: results.data.state });
+        }
+        if (this.state.zipCode === "" || this.state.ZipCode === undefined) {
+          this.setState({ zipCode: results.data.zipCode });
+        }
+      }
+    })
   };
 
   handleOnChange = event => {

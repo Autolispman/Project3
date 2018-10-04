@@ -84,16 +84,19 @@ router.post("/updateUser", function(req, res) {
 });
 
 router.post("/updateAppointment", function(req, res) {
+  console.log(req.body.id)
   db.Appointment.findOne({
     where: { id: req.body.id }
   }).then(data => {
+    console.log(data)
     if (data) {
       console.log("update")
       data.update({        
         typeOfAppointment: req.body.typeOfAppointment,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
-        user_id: req.body.id
+        UserId: req.body.user_id,
+        user_id: req.body.user_id
       });
       res.json(data);
     } else {
@@ -102,7 +105,8 @@ router.post("/updateAppointment", function(req, res) {
           typeOfAppointment: req.body.typeOfAppointment,
           startDate: req.body.startDate,
           endDate: req.body.endDate,
-          UserId: req.body.id
+          UserId: req.body.user_id,
+          user_id: req.body.user_id
         });
         res.json("")
     }
