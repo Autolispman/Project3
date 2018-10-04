@@ -37,8 +37,8 @@ class CalendarPage extends Component {
     prom.then(results => {
       for (let i = 0; i < results.data.length; i++) {
         let obj = {
-          start: moment(new Date(results.data[i].startDate)).add(5, "hours"),
-          end: moment(new Date(results.data[i].endDate)).add(5, "hours"),
+          start: new Date(moment(results.data[i].startDate).add(5, "hours")),
+          end: new Date(moment(results.data[i].endDate).add(5, "hours")),
           title: results.data[i].typeOfAppointment + " " + results.data[i].User.firstName + " " + results.data[i].User.lastName,
           info: results.data[i]
         };
