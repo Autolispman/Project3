@@ -142,7 +142,7 @@ class Appointment extends Component {
         <nav>
           <div className="nav-wrapper indigo lighten-2">
             <a href="#!" className="brand-logo center">
-              <h5>Sam's Pet Care!</h5>
+              <h5>Sam's Pet Care</h5>
             </a>
           </div>
         </nav>
@@ -355,7 +355,7 @@ class Appointment extends Component {
                   onChange={this.handleOnChange}
                   value="PetTaxiPickUpDropOff"
                   checked={
-                    this.state.typeOfAppointment === "PetTaxiPickUpDropOfft"
+                    this.state.typeOfAppointment === "PetTaxiPickUpDropOff"
                   }
                   required={true}
                 />
