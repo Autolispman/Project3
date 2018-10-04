@@ -59,39 +59,49 @@ router.post("/updateUser", function(req, res) {
     where: { firstName: req.body.firstName, lastName: req.body.lastName }
   }).then(data => {
     if (data) {
-      data.update({
-        street1: req.body.street1,
-        street2: req.body.street2,
-        city: req.body.city,
-        state: req.body.state,
-        zipCode: req.body.zipCode
-      });
-      res.json(data);
-    } else {
-      res.send(
-        db.User.create({
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
+      data
+        .update({
           street1: req.body.street1,
           street2: req.body.street2,
           city: req.body.city,
           state: req.body.state,
           zipCode: req.body.zipCode
         })
-      );
+        .then(result => {
+          res.json(result);
+        })
+        .catch(err => {
+          res.json(err);
+        });
+    } else {
+      db.User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        street1: req.body.street1,
+        street2: req.body.street2,
+        city: req.body.city,
+        state: req.body.state,
+        zipCode: req.body.zipCode
+      })
+        .then(result => {
+          res.json(result);
+        })
+        .catch(err => {
+          res.json(err);
+        });
     }
   });
 });
 
 router.post("/updateAppointment", function(req, res) {
-  console.log(req.body.id)
+  console.log(req.body.id);
   db.Appointment.findOne({
     where: { id: req.body.id }
   }).then(data => {
-    console.log(data)
+    console.log(data);
     if (data) {
-      console.log("update")
-      data.update({        
+      console.log("update");
+      data.update({
         typeOfAppointment: req.body.typeOfAppointment,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
@@ -100,15 +110,15 @@ router.post("/updateAppointment", function(req, res) {
       });
       res.json(data);
     } else {
-      console.log("create")
-        db.Appointment.create({
-          typeOfAppointment: req.body.typeOfAppointment,
-          startDate: req.body.startDate,
-          endDate: req.body.endDate,
-          UserId: req.body.user_id,
-          user_id: req.body.user_id
-        });
-        res.json("")
+      console.log("create");
+      db.Appointment.create({
+        typeOfAppointment: req.body.typeOfAppointment,
+        startDate: req.body.startDate,
+        endDate: req.body.endDate,
+        UserId: req.body.user_id,
+        user_id: req.body.user_id
+      });
+      res.json("");
     }
   });
 });
