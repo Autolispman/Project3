@@ -21,11 +21,11 @@ class App extends Component {
 
   authListener() {
     firebase.auth().onAuthStateChanged((user) => {
-      if(user) {
-        this.setState({user})
+      if (user) {
+        this.setState({ user })
       }
       else {
-        this.setState({user: null})
+        this.setState({ user: null })
       }
     })
   }
