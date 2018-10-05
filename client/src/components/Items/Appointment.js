@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import API from "../../utils/API.js";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import "./appointment.css";
 
 class Appointment extends Component {
   state = {
