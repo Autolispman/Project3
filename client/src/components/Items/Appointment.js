@@ -362,18 +362,17 @@ class Appointment extends Component {
                 <span>Pet Taxi Pick Up/Drop Off</span>
               </label>
             </div>
+          </form>
+          <div className="grid-example col s12 m6">
             <button type="text" className="btn waves-effect waves-light">
               Create/Update Appointment
             </button>
-          </form>
-          <button
-            type="text"
-            className="btn waves-effect waves-light"
-            onClick={this.deleteAppointment}
-          >
-            Delete Appointment
-          </button>
-          <Link to="/calendar">Disregard Changes</Link>
+
+            <button type="text" className="btn waves-effect waves-light" onClick={this.deleteAppointment}>
+              Delete Appointment
+            </button>
+            <Link to="/calendar" className="btn waves-effect waves-light">Disregard Changes</Link>
+          </div>
         </div>
       </div>
     );
