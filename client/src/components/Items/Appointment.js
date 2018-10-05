@@ -151,7 +151,6 @@ class Appointment extends Component {
             method=""
             action=""
             className="sm-col-12"
-            onSubmit={this.createAppointment}
           >
             <label className="modalLabel">FirstName</label>
             <input
@@ -362,10 +361,9 @@ class Appointment extends Component {
             </div>
           </form>
           <div className="grid-example col s12 m6">
-            <button type="text" className="btn waves-effect waves-light">
+            <button type="text" className="btn waves-effect waves-light" onClick={this.createAppointment}>
               Create/Update Appointment
             </button>
-
             <button type="text" className="btn waves-effect waves-light" onClick={this.deleteAppointment}>
               Delete Appointment
             </button>
