@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import API from "../../utils/API.js";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import "./appointment.css";
 
 class Appointment extends Component {
   state = {
@@ -353,7 +354,9 @@ class Appointment extends Component {
                   //defaultValue="PetTaxiPickUpDropOff"
                   onChange={this.handleOnChange}
                   value="PetTaxiPickUpDropOff"
-                  checked={this.state.typeOfAppointment === "PetTaxiPickUpDropOff"}
+                  checked={
+                    this.state.typeOfAppointment === "PetTaxiPickUpDropOff"
+                  }
                   required={true}
                 />
                 <span>Pet Taxi Pick Up/Drop Off</span>

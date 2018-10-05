@@ -8,12 +8,10 @@ class Logout extends Component {
   }
 
   render() {
-    return (
-      <div className="container">        
+    return (      
         <button type="text" className="btn waves-effect waves-light" onClick={this.logout}>
           Logout
         </button>
-      </div>
     );
   }
 }
