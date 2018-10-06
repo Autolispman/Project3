@@ -71,7 +71,7 @@ class Appointment extends Component {
       startDate: this.state.startDate,
       endDate: this.state.endDate,
       typeOfAppointment: this.state.typeOfAppointment
-     };
+    };
 
     let prom = API.updateUser(userData);
     prom.then(result => {
