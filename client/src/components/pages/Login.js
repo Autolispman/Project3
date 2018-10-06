@@ -1,6 +1,6 @@
 //import React from "react"
 import React, { Component } from "react";
-import "../../App.css";
+import "../pages/login.css";
 import LoginItem from "../Items/LoginItem.js";
 import firebase from "../../config/firebase.js"
 
@@ -43,7 +43,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
+      <div className="loginpage">
         <nav>
           <div className="nav-wrapper indigo lighten-2">
             <a href="#!" className="brand-logo center"><h5>Sam's Pet Care</h5></a>
