@@ -1,7 +1,7 @@
 import React from "react";
 
 const AppointmentButton = props => (
-    <button className="btn waves-effect waves-light" onClick={props.newAppointment}>New Appointment</button>
+    <a className="btn waves-effect waves-light" onClick={props.newAppointment}>New Appointment</a>
 );
 
 export default AppointmentButton;

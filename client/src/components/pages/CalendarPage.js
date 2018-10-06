@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Calendar from "react-big-calendar";
 import moment from "moment";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+
 //import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import "../../App.css";
@@ -85,18 +86,19 @@ class CalendarPage extends Component {
 
   render() {
     return (
-
       <div>
-        <nav>
-          <div className="indigo lighten-2">
-            <div className="grid-example col s12 m6">
-              <a href="#" className="brand-logo center"><h5>Sam's Pet Care</h5></a>
-              <a className="buttons"><Logout /></a>
-              <AppointmentButton newAppointment={this.newAppointment} />
-            </div>
+        <nav className="nav-extended indigo lighten-2">
+          <div className="nav-wrapper">
+            <a href="#" className="brand-logo center">Sams Pet Care</a>
           </div>
-        </nav>
-        <div className="container">
+          <div className="nav-content">
+            <ul className="buttons tabs tabs-transparent">
+              <Logout />
+              <AppointmentButton newAppointment={this.newAppointment} />
+            </ul>
+          </div>
+        </nav >
+        <div className="calendar container">
           <DnDCalendar
             defaultDate={new Date()}
             defaultView="month"

@@ -9,9 +9,9 @@ class Logout extends Component {
 
   render() {
     return (      
-        <button type="text" className="btn waves-effect waves-light" onClick={this.logout}>
+        <a type="text" className="btn waves-effect waves-light" onClick={this.logout}>
           Logout
-        </button>
+        </a>
     );
   }
 }
