@@ -137,6 +137,8 @@ class Appointment extends Component {
     });
   };
 
+  //date picker
+
   render() {
     return (
       <div>
@@ -247,7 +249,7 @@ class Appointment extends Component {
               name="startDate"
               type="datetime-local"
               id="startDateId"
-              className=""
+              className="datepicker"
               placeholder="start date"
               required={true}
               pattern="^\d{1,2}\/\d{1,2}\/\d{4}$"
@@ -260,7 +262,7 @@ class Appointment extends Component {
               name="endDate"
               type="datetime-local"
               id="endDateId"
-              className=""
+              className="datepicker"
               placeholder="end date"
               required={true}
               pattern="^\d{1,2}\/\d{1,2}\/\d{4}$"
@@ -370,12 +372,12 @@ class Appointment extends Component {
           <div className="grid-example col s12 m6">
             <button
               type="text"
-              className="btn waves-effect waves-light"
+              className="btn waves-effect red"
               onClick={this.deleteAppointment}
             >
               Delete Appointment
             </button>
-            <Link to="/calendar" className="btn waves-effect waves-light">
+            <Link to="/calendar" className="btn waves-effect yellow darken-2">
               Disregard Changes
             </Link>
           </div>
