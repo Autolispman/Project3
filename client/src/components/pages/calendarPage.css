@@ -1,4 +1,9 @@
 .buttons {
-    margin-right: 10px;
-    margin-left: 35px;
-};
+    display: flex;
+    justify-content: center;
+    
+}
+
+.rbc-toolbar {
+    overflow: auto;
+}

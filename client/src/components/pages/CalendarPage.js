@@ -5,7 +5,6 @@ import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 
 //import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import "../../App.css";
 import "./calendarPage.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -111,6 +110,8 @@ class CalendarPage extends Component {
             onSelectEvent={this.selectedEvent}
           />
         </div>
+        <div className="cheese">
+          cheese</div>
       </div>
     );
   }
