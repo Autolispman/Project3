@@ -75,11 +75,11 @@ class Appointment extends Component {
 
     let prom = API.updateUser(userData);
     prom.then(result => {
-      appointmentData.user_id = result.data.id
+      appointmentData.user_id = result.data.id;
       let prom2 = API.updateAppointment(appointmentData);
       prom2.then(() => {
         window.location = "/calendar";
-      })
+      });
     });
 
     // const appointmentData = {
@@ -124,7 +124,7 @@ class Appointment extends Component {
           this.setState({ zipCode: results.data.zipCode });
         }
       }
-    })
+    });
   };
 
   handleOnChange = event => {
@@ -152,6 +152,7 @@ class Appointment extends Component {
             method=""
             action=""
             className="sm-col-12"
+            onSubmit={this.createAppointment}
           >
             <label className="modalLabel">FirstName</label>
             <input
@@ -362,15 +363,21 @@ class Appointment extends Component {
                 <span>Pet Taxi Pick Up/Drop Off</span>
               </label>
             </div>
-          </form>
-          <div className="grid-example col s12 m6">
-            <button type="text" className="btn waves-effect waves-light" onClick={this.createAppointment}>
+            <button type="text" className="btn waves-effect waves-light">
               Create/Update Appointment
             </button>
-            <button type="text" className="btn waves-effect waves-light" onClick={this.deleteAppointment}>
+          </form>
+          <div className="grid-example col s12 m6">
+            <button
+              type="text"
+              className="btn waves-effect waves-light"
+              onClick={this.deleteAppointment}
+            >
               Delete Appointment
             </button>
-            <Link to="/calendar" className="btn waves-effect waves-light">Disregard Changes</Link>
+            <Link to="/calendar" className="btn waves-effect waves-light">
+              Disregard Changes
+            </Link>
           </div>
         </div>
       </div>
