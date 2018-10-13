@@ -110,8 +110,6 @@ class CalendarPage extends Component {
             onSelectEvent={this.selectedEvent}
           />
         </div>
-        <div className="cheese">
-          cheese</div>
       </div>
     );
   }
