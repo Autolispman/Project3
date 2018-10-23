@@ -94,10 +94,15 @@ class Appointment extends Component {
   };
 
   deleteAppointment = () => {
-    let prom = API.deleteAppointment(this.state.info.id);
-    prom.then(data => {
-      window.location.pathname = "/calendar";
-    });
+    let conf = window.confirm(
+      `Do you really want to delete ${this.state.typeOfAppointment}`
+    );
+    if (conf) {
+      let prom = API.deleteAppointment(this.state.info.id);
+      prom.then(data => {
+        window.location.pathname = "/calendar";
+      });
+    }
   };
 
   queryForRepeatClient = () => {
@@ -304,11 +309,11 @@ class Appointment extends Component {
                   name="typeOfAppointment"
                   //defaultValue="PetOverNightSit"
                   onChange={this.handleOnChange}
-                  value="PetOverNightSit"
-                  checked={this.state.typeOfAppointment === "PetOverNightSit"}
+                  value="OverNightPetSit"
+                  checked={this.state.typeOfAppointment === "OverNightPetSit"}
                   required={true}
                 />
-                <span>Pet Over Night Sit</span>
+                <span>Overnight Pet Sit</span>
               </label>
               <br />
               <label>
@@ -317,11 +322,11 @@ class Appointment extends Component {
                   name="typeOfAppointment"
                   //defaultValue="PetBoarding"
                   onChange={this.handleOnChange}
-                  value="PetBoarding"
-                  checked={this.state.typeOfAppointment === "PetBoarding"}
+                  value="Boarding"
+                  checked={this.state.typeOfAppointment === "Boarding"}
                   required={true}
                 />
-                <span>Pet Boarding</span>
+                <span>Boarding</span>
               </label>
               <br />
               <label>
@@ -330,11 +335,11 @@ class Appointment extends Component {
                   name="typeOfAppointment"
                   //defaultValue="PetVisit"
                   onChange={this.handleOnChange}
-                  value="PetVisit"
-                  checked={this.state.typeOfAppointment === "PetVisit"}
+                  value="Visit"
+                  checked={this.state.typeOfAppointment === "Visit"}
                   required={true}
                 />
-                <span>Pet Vist</span>
+                <span>Visit</span>
               </label>
               <br />
               <label>
@@ -343,11 +348,11 @@ class Appointment extends Component {
                   name="typeOfAppointment"
                   // defaultValue="DogWalking"
                   onChange={this.handleOnChange}
-                  value="DogWalking"
-                  checked={this.state.typeOfAppointment === "DogWalking"}
+                  value="Walk"
+                  checked={this.state.typeOfAppointment === "Walk"}
                   required={true}
                 />
-                <span>Dog Walking</span>
+                <span>Walk</span>
               </label>
               <br />
               <label>
@@ -356,13 +361,11 @@ class Appointment extends Component {
                   name="typeOfAppointment"
                   //defaultValue="PetTaxiPickUpDropOff"
                   onChange={this.handleOnChange}
-                  value="PetTaxiPickUpDropOff"
-                  checked={
-                    this.state.typeOfAppointment === "PetTaxiPickUpDropOff"
-                  }
+                  value="TaxiPickUpDropOff"
+                  checked={this.state.typeOfAppointment === "TaxiPickUpDropOff"}
                   required={true}
                 />
-                <span>Pet Taxi Pick Up/Drop Off</span>
+                <span>Taxi Pick Up/Drop Off</span>
               </label>
             </div>
             <button type="text" className="btn waves-effect waves-light">
