@@ -94,10 +94,15 @@ class Appointment extends Component {
   };
 
   deleteAppointment = () => {
-    let prom = API.deleteAppointment(this.state.info.id);
-    prom.then(data => {
-      window.location.pathname = "/calendar";
-    });
+    let conf = window.confirm(
+      `Do you really want to delete ${this.state.typeOfAppointment}`
+    );
+    if (conf) {
+      let prom = API.deleteAppointment(this.state.info.id);
+      prom.then(data => {
+        window.location.pathname = "/calendar";
+      });
+    }
   };
 
   queryForRepeatClient = () => {
@@ -357,9 +362,7 @@ class Appointment extends Component {
                   //defaultValue="PetTaxiPickUpDropOff"
                   onChange={this.handleOnChange}
                   value="TaxiPickUpDropOff"
-                  checked={
-                    this.state.typeOfAppointment === "TaxiPickUpDropOff"
-                  }
+                  checked={this.state.typeOfAppointment === "TaxiPickUpDropOff"}
                   required={true}
                 />
                 <span>Taxi Pick Up/Drop Off</span>
