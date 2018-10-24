@@ -88,7 +88,7 @@ class CalendarPage extends Component {
       <div>
         <nav className="nav-extended indigo lighten-2">
           <div className="nav-wrapper">
-            <a href="#" className="brand-logo center"><h5>Sams Pet Care</h5></a>
+            <a href="#!" className="brand-logo center"><h5>Sams Pet Care</h5></a>
           </div>
           <div className="nav-content">
             <ul className="buttons tabs tabs-transparent">

@@ -29,6 +29,50 @@ module.exports = function(sequelize, DataTypes) {
     zipCode: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    cellPhone: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    vetClinicName: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    vetName: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    vetPhone: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    keyInstructions: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    gateCode: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    doorCode: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    alarmCode: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    wifiPassword: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    notes: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   });
 
