@@ -16,7 +16,18 @@ class Appointment extends Component {
     startDate: "",
     endDate: "",
     typeOfAppointment: "",
-    info: ""
+    info: "",
+    cellPhone: "",
+    email: "",
+    vetClinicName: "",
+    vetName: "",
+    vetPhone: "",
+    keyInstructions: "",
+    gateCode: "",
+    doorCode: "",
+    alarmCode: "",
+    wifiPassword: "",
+    notes: ""
   };
 
   componentDidMount() {
@@ -39,6 +50,17 @@ class Appointment extends Component {
           city: currentInfo.info.User.city,
           state: currentInfo.info.User.state,
           zipCode: currentInfo.info.User.zipCode,
+          cellPhone: currentInfo.info.User.cellPhone,
+          email: currentInfo.info.User.email,
+          vetClinicName: currentInfo.info.User.vetClinicName,
+          vetName: currentInfo.info.User.vetName,
+          vetPhone: currentInfo.info.User.vetPhone,
+          keyInstructions: currentInfo.info.User.keyInstructions,
+          gateCode: currentInfo.info.User.gateCode,
+          doorCode: currentInfo.info.User.doorCode,
+          alarmCode: currentInfo.info.User.alarmCode,
+          wifiPassword: currentInfo.info.User.wifiPassword,
+          notes: currentInfo.info.User.notes,
           startDate: moment(currentInfo.start).format("YYYY-MM-DDTHH:mm"),
           //startDate: "2018-09-04T00:01",
           endDate: moment(currentInfo.end).format("YYYY-MM-DDTHH:mm"),
@@ -63,7 +85,18 @@ class Appointment extends Component {
       street2: this.state.street2,
       city: this.state.city,
       state: this.state.state,
-      zipCode: this.state.zipCode
+      zipCode: this.state.zipCode,
+      cellPhone: this.state.cellPhone,
+      email: this.state.email,
+      vetClinicName: this.state.vetClinicName,
+      vetName: this.state.vetName,
+      vetPhone: this.state.vetPhone,
+      keyInstructions: this.state.keyInstructions,
+      gateCode: this.state.gateCode,
+      doorCode: this.state.doorCode,
+      alarmCode: this.state.alarmCode,
+      wifiPassword: this.state.wifiPassword,
+      notes: this.state.notes
     };
 
     const appointmentData = {
@@ -246,6 +279,141 @@ class Appointment extends Component {
               required={false}
               pattern="^\d{5}$|^\d{5}-\d{4}$"
               value={this.state.zipCode}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Cell Phone</label>
+            <input
+              name="cellPhone"
+              type="text"
+              id="cellPhoneId"
+              className=""
+              placeholder="cellPhone"
+              required={false}
+              pattern="^[2-9]\d{2}-\d{3}-\d{4}$"
+              value={this.state.cellPhone}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Email Address</label>
+            <input
+              name="email"
+              type="text"
+              id="emailId"
+              className=""
+              placeholder="email"
+              required={false}
+              pattern="(\w+?@\w+?\x2E.+)"
+              value={this.state.email}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Vet Clinic Name</label>
+            <input
+              name="vetClinicName"
+              type="text"
+              id="vetClinicNameId"
+              className=""
+              placeholder="vetClinicName"
+              required={false}
+              value={this.state.vetClinicName}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Vet Name</label>
+            <input
+              name="vetName"
+              type="text"
+              id="vetNameId"
+              className=""
+              placeholder="vetName"
+              required={false}
+              value={this.state.vetName}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Vet Phone</label>
+            <input
+              name="vetPhone"
+              type="text"
+              id="vetPhoneId"
+              className=""
+              placeholder="vetPhone"
+              required={false}
+              pattern="^[2-9]\d{2}-\d{3}-\d{4}$"
+              value={this.state.vetPhone}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Key Instructions</label>
+            <input
+              name="keyInstructions"
+              type="text"
+              id="keyInstructionsId"
+              className=""
+              placeholder="keyInstructions"
+              required={false}
+              value={this.state.keyInstructions}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Gate Code</label>
+            <input
+              name="gateCode"
+              type="text"
+              id="gateCodeId"
+              className=""
+              placeholder="gateCode"
+              required={false}
+              value={this.state.gateCode}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Door Code</label>
+            <input
+              name="doorCode"
+              type="text"
+              id="doorCodeId"
+              className=""
+              placeholder="doorCode"
+              required={false}
+              value={this.state.doorCode}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Alarm Code</label>
+            <input
+              name="alarmCode"
+              type="text"
+              id="alarmCodeId"
+              className=""
+              placeholder="alarmCode"
+              required={false}
+              value={this.state.alarmCode}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Wifi Password</label>
+            <input
+              name="wifiPassword"
+              type="text"
+              id="wifiPasswordId"
+              className=""
+              placeholder="wifiPassword"
+              required={false}
+              value={this.state.wifiPassword}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Notes</label>
+            <textarea
+              name="notes"
+              type="text"
+              id="notesId"
+              className=""
+              placeholder="notes"
+              required={false}
+              value={this.state.notes}
               onChange={this.handleOnChange}
             />
             <br />

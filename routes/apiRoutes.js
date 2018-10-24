@@ -65,7 +65,18 @@ router.post("/updateUser", function(req, res) {
           street2: req.body.street2,
           city: req.body.city,
           state: req.body.state,
-          zipCode: req.body.zipCode
+          zipCode: req.body.zipCode,
+          cellPhone: req.body.cellPhone,
+          email: req.body.email,
+          vetClinicName: req.body.vetClinicName,
+          vetName: req.body.vetName,
+          vetPhone: req.body.vetPhone,
+          keyInstructions: req.body.keyInstructions,
+          gateCode: req.body.gateCode,
+          doorCode: req.body.doorCode,
+          alarmCode: req.body.alarmCode,
+          wifiPassword: req.body.wifiPassword,
+          notes: req.body.notes
         })
         .then(result => {
           res.json(result);
@@ -81,7 +92,18 @@ router.post("/updateUser", function(req, res) {
         street2: req.body.street2,
         city: req.body.city,
         state: req.body.state,
-        zipCode: req.body.zipCode
+        zipCode: req.body.zipCode,
+        cellPhone: req.body.cellPhone,
+        email: req.body.email,
+        vetClinicName: req.body.vetClinicName,
+        vetName: req.body.vetName,
+        vetPhone: req.body.vetPhone,
+        keyInstructions: req.body.keyInstructions,
+        gateCode: req.body.gateCode,
+        doorCode: req.body.doorCode,
+        alarmCode: req.body.alarmCode,
+        wifiPassword: req.body.wifiPassword,
+        notes: req.body.notes
       })
         .then(result => {
           res.json(result);

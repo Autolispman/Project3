@@ -66,7 +66,18 @@ function updateUser(userData) {
       street2: userData.street2,
       city: userData.city,
       state: userData.state,
-      zipCode: userData.zipCode
+      zipCode: userData.zipCode,
+      cellPhone: userData.cellPhone,
+      email: userData.email,
+      vetClinicName: userData.vetClinicName,
+      vetName: userData.vetName,
+      vetPhone: userData.vetPhone,
+      keyInstructions: userData.keyInstructions,
+      gateCode: userData.gateCode,
+      doorCode: userData.doorCode,
+      alarmCode: userData.alarmCode,
+      wifiPassword: userData.wifiPassword,
+      notes: userData.notes
     })
     .then(function(result, err) {
       if (result) {
