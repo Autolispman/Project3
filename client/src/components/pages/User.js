@@ -407,7 +407,7 @@ class User extends Component {
               onChange={this.handleOnChange}
             />
             <br />
-            <label>Notes</label>
+            <label>Client Notes</label>
             <textarea
               name="notes"
               type="text"
@@ -429,7 +429,7 @@ class User extends Component {
               className="btn waves-effect red"
               onClick={this.deleteUser}
             >
-              Delete Appointment
+              Delete Client
             </button>
             <Link to="/client" className="btn waves-effect yellow darken-2">
               Disregard Changes
