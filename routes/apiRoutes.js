@@ -143,7 +143,8 @@ router.post("/updateAppointment", function(req, res) {
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         UserId: req.body.user_id,
-        user_id: req.body.user_id
+        user_id: req.body.user_id,
+        appointmentNotes: req.body.appointmentNotes
       });
       res.json(data);
     } else {
@@ -153,32 +154,13 @@ router.post("/updateAppointment", function(req, res) {
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         UserId: req.body.user_id,
-        user_id: req.body.user_id
+        user_id: req.body.user_id,
+        appointmentNotes: req.body.appointmentNotes
       });
       res.json("");
     }
   });
 });
-
-// router.post("/createAppointment", function(req, res) {
-//   db.Appointment.findOrCreate({
-//     where: {
-//       id: req.body.id
-//     },
-//     defaults: {
-//       typeOfAppointment: req.body.typeOfAppointment,
-//       startDate: req.body.startDate,
-//       endDate: req.body.endDate,
-//       user_id: req.body.id
-//     }
-//   }).then(function(data, error) {
-//     if (data) {
-//       res.json(data);
-//     } else {
-//       res.json(error);
-//     }
-//   });
-// });
 
 router.delete("/deleteAppointment/:id", function(req, res) {
   db.Appointment.destroy({

@@ -12,6 +12,10 @@ module.exports = function(sequelize, DataTypes) {
     endDate: {
       type: DataTypes.DATE,
       allowNull: true
+    },
+    appointmentNotes: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   });
 

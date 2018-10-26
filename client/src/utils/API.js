@@ -57,75 +57,61 @@ function loginUser(loginCredentials) {
 
 function updateUser(userData) {
   let p = new Promise(function(data, error) {
-  axios
-    .post("/api/updateUser", {
-      id: userData.id,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      street1: userData.street1,
-      street2: userData.street2,
-      city: userData.city,
-      state: userData.state,
-      zipCode: userData.zipCode,
-      cellPhone: userData.cellPhone,
-      email: userData.email,
-      vetClinicName: userData.vetClinicName,
-      vetName: userData.vetName,
-      vetPhone: userData.vetPhone,
-      keyInstructions: userData.keyInstructions,
-      gateCode: userData.gateCode,
-      doorCode: userData.doorCode,
-      alarmCode: userData.alarmCode,
-      wifiPassword: userData.wifiPassword,
-      notes: userData.notes
-    })
-    .then(function(result, err) {
-      if (result) {
-        data(result);
-      } else {
-        error(err);
-      }
-    });
-  })
+    axios
+      .post("/api/updateUser", {
+        id: userData.id,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        street1: userData.street1,
+        street2: userData.street2,
+        city: userData.city,
+        state: userData.state,
+        zipCode: userData.zipCode,
+        cellPhone: userData.cellPhone,
+        email: userData.email,
+        vetClinicName: userData.vetClinicName,
+        vetName: userData.vetName,
+        vetPhone: userData.vetPhone,
+        keyInstructions: userData.keyInstructions,
+        gateCode: userData.gateCode,
+        doorCode: userData.doorCode,
+        alarmCode: userData.alarmCode,
+        wifiPassword: userData.wifiPassword,
+        notes: userData.notes
+      })
+      .then(function(result, err) {
+        if (result) {
+          data(result);
+        } else {
+          error(err);
+        }
+      });
+  });
   return p;
 }
 
 function updateAppointment(userAppointment) {
+  console.log(userAppointment)
   let p = new Promise(function(data, error) {
-  axios
-    .post("/api/updateAppointment", {
-      id: userAppointment.id,
-      startDate: userAppointment.startDate,
+    axios
+      .post("/api/updateAppointment", {
+        id: userAppointment.id,
+        startDate: userAppointment.startDate,
         endDate: userAppointment.endDate,
         typeOfAppointment: userAppointment.typeOfAppointment,
-        user_id: userAppointment.user_id
-    })
-    .then(function(result, err) {
-      if (result) {
-        data(result);
-      } else {
-        error(err);
-      }
-    });
-  })
+        user_id: userAppointment.user_id,
+        appointmentNotes: userAppointment.appointmentNotes
+      })
+      .then(function(result, err) {
+        if (result) {
+          data(result);
+        } else {
+          error(err);
+        }
+      });
+  });
   return p;
 }
-
-// function createAppointment(appointmentData) {
-//   let p = new Promise(function(data, error) {
-//     axios
-//       .post("/api/createAppointment", {
-//         id: appointmentData.id,
-//         startDate: appointmentData.startDate,
-//         endDate: appointmentData.endDate,
-//         typeOfAppointment: appointmentData.typeOfAppointment
-//       })
-//       .then(function(data, error) {
-//         window.location = "/calendar";
-//       });
-//   });
-//   return p;
-// }
 
 function getAllAppointments() {
   let p = new Promise(function(data, error) {
@@ -170,15 +156,13 @@ function deleteAppointment(appointId) {
 
 function deleteUser(userId) {
   let p = new Promise(function(data, error) {
-    axios
-      .delete("/api/deleteUser/" + userId)
-      .then(function(result, err) {
-        if (result) {
-          data(result);
-        } else {
-          error("");
-        }
-      });
+    axios.delete("/api/deleteUser/" + userId).then(function(result, err) {
+      if (result) {
+        data(result);
+      } else {
+        error("");
+      }
+    });
   });
   return p;
 }

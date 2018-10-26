@@ -27,7 +27,8 @@ class Appointment extends Component {
     doorCode: "",
     alarmCode: "",
     wifiPassword: "",
-    notes: ""
+    notes: "",
+    appointmentNotes: ""
   };
 
   componentDidMount() {
@@ -61,6 +62,7 @@ class Appointment extends Component {
           alarmCode: currentInfo.info.User.alarmCode,
           wifiPassword: currentInfo.info.User.wifiPassword,
           notes: currentInfo.info.User.notes,
+          appointmentNotes: currentInfo.info.appointmentNotes,
           startDate: moment(currentInfo.start).format("YYYY-MM-DDTHH:mm"),
           //startDate: "2018-09-04T00:01",
           endDate: moment(currentInfo.end).format("YYYY-MM-DDTHH:mm"),
@@ -96,14 +98,16 @@ class Appointment extends Component {
       doorCode: this.state.doorCode,
       alarmCode: this.state.alarmCode,
       wifiPassword: this.state.wifiPassword,
-      notes: this.state.notes
+      notes: this.state.notes,
+      appointmentNotes: this.state.appointmentNotes
     };
 
     const appointmentData = {
       id: this.state.info.id,
       startDate: this.state.startDate,
       endDate: this.state.endDate,
-      typeOfAppointment: this.state.typeOfAppointment
+      typeOfAppointment: this.state.typeOfAppointment,
+      appointmentNotes: this.state.appointmentNotes
     };
 
     let prom = API.updateUser(userData);
@@ -114,16 +118,6 @@ class Appointment extends Component {
         window.location = "/calendar";
       });
     });
-
-    // const appointmentData = {
-    //   //id: this.state.info.id,
-    //   id: 1,
-    //   startDate: Date.now(),
-    //   endDate: Date.now(),
-    //   typeOfAppointment: this.state.typeOfAppointment
-    //  };
-
-    // API.updateAppointment(appointmentData)
   };
 
   deleteAppointment = () => {
@@ -193,6 +187,9 @@ class Appointment extends Component {
         }
         if (this.state.notes === "" || this.state.notes === undefined) {
           this.setState({ notes: results.data.notes });
+        }
+        if (this.state.appointmentNotes === "" || this.state.appointmentNotes === undefined) {
+          this.setState({ appointmentNotes: results.data.appointmentNotes });
         }
       }
     });
@@ -438,7 +435,7 @@ class Appointment extends Component {
               onChange={this.handleOnChange}
             />
             <br />
-            <label>Notes</label>
+            <label>Client Notes</label>
             <textarea
               name="notes"
               type="text"
@@ -447,6 +444,18 @@ class Appointment extends Component {
               placeholder="notes"
               required={false}
               value={this.state.notes}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>appointmentData Notes</label>
+            <textarea
+              name="appointmentNotes"
+              type="text"
+              id="appointmentNotesId"
+              className=""
+              placeholder="appointmentNotes"
+              required={false}
+              value={this.state.appointmentNotes}
               onChange={this.handleOnChange}
             />
             <br />

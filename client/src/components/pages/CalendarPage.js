@@ -10,8 +10,8 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import AppointmentButton from "../Items/AppointmentButton.js";
-import Logout from "../Items/Logout.js"
-import ClientButton from "../Items/ClientButton.js"
+import Logout from "../Items/Logout.js";
+import ClientButton from "../Items/ClientButton.js";
 import API from "../../utils/API";
 
 Calendar.setLocalizer(Calendar.momentLocalizer(moment));
@@ -41,7 +41,12 @@ class CalendarPage extends Component {
         let obj = {
           start: new Date(moment(results.data[i].startDate).add(5, "hours")),
           end: new Date(moment(results.data[i].endDate).add(5, "hours")),
-          title: results.data[i].typeOfAppointment + " " + results.data[i].User.firstName + " " + results.data[i].User.lastName,
+          title:
+            results.data[i].typeOfAppointment +
+            " " +
+            results.data[i].User.firstName +
+            " " +
+            results.data[i].User.lastName,
           info: results.data[i]
         };
         console.log(obj);
@@ -65,34 +70,36 @@ class CalendarPage extends Component {
   };
 
   newAppointment = () => {
-    let curDate = moment(Date.now())
-      .format("YYYY-MM-DDTHH:mm:ss") + ".000Z"
+    let curDate = moment(Date.now()).format("YYYY-MM-DDTHH:mm:ss") + ".000Z";
     let currentInfo = {
       //start: "2018-09-27T00:00:00.000Z",
       start: new Date(Date.now()),
       end: curDate
-    }
-    window.localStorage.setItem("currentInfo", JSON.stringify(currentInfo))
-    window.location.pathname = "/appointment"
+    };
+    window.localStorage.setItem("currentInfo", JSON.stringify(currentInfo));
+    window.location.pathname = "/appointment";
   };
 
   selectedEvent = event => {
     // this.setState(this.props.currentInfo: event),
     // () => console.log(this.props.currentInfo)
-    window.localStorage.setItem("currentInfo", JSON.stringify(event))
-    window.location.pathname = "/appointment"
-  }
+    //console.log(event)
+    window.localStorage.setItem("currentInfo", JSON.stringify(event));
+    window.location.pathname = "/appointment";
+  };
 
   client = () => {
-    window.location.pathname = "/client"
-  }
+    window.location.pathname = "/client";
+  };
 
   render() {
     return (
       <div>
         <nav className="nav-extended indigo lighten-2">
           <div className="nav-wrapper">
-            <a href="#!" className="brand-logo center"><h5>Sams Pet Care</h5></a>
+            <a href="#!" className="brand-logo center">
+              <h5>Sams Pet Care</h5>
+            </a>
           </div>
           <div className="nav-content">
             <ul className="buttons tabs tabs-transparent">
@@ -101,7 +108,7 @@ class CalendarPage extends Component {
               <ClientButton client={this.client} />
             </ul>
           </div>
-        </nav >
+        </nav>
         <div className="calendar container">
           <DnDCalendar
             defaultDate={new Date()}
