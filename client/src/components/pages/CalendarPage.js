@@ -11,6 +11,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import AppointmentButton from "../Items/AppointmentButton.js";
 import Logout from "../Items/Logout.js"
+import ClientButton from "../Items/ClientButton.js"
 import API from "../../utils/API";
 
 Calendar.setLocalizer(Calendar.momentLocalizer(moment));
@@ -78,9 +79,12 @@ class CalendarPage extends Component {
   selectedEvent = event => {
     // this.setState(this.props.currentInfo: event),
     // () => console.log(this.props.currentInfo)
-    console.log(event)
     window.localStorage.setItem("currentInfo", JSON.stringify(event))
     window.location.pathname = "/appointment"
+  }
+
+  client = () => {
+    window.location.pathname = "/client"
   }
 
   render() {
@@ -94,6 +98,7 @@ class CalendarPage extends Component {
             <ul className="buttons tabs tabs-transparent">
               <Logout />
               <AppointmentButton newAppointment={this.newAppointment} />
+              <ClientButton client={this.client} />
             </ul>
           </div>
         </nav >

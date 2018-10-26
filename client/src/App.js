@@ -7,6 +7,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import Login from "./components/pages/Login.js"
 import CalendarPage from "./components/pages/CalendarPage.js"
 import Appointment from "./components/Items/Appointment.js"
+import Client from "./components/pages/Client.js"
 import firebase from "./config/firebase.js"
 
 class App extends Component {
@@ -60,6 +61,7 @@ class App extends Component {
             <Route exact path="/" component={CalendarPage} />
             <Route exact path ="/calendar" component ={CalendarPage}/>
             <Route exact path ="/appointment" component ={Appointment}/>
+            <Route exact path ="/client" component ={Client}/>
           </Switch>
         </Router>) : (<Login/>)}
       </div>
