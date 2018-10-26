@@ -30,10 +30,9 @@ class User extends Component {
   };
 
   componentDidMount() {
-    //this.setStateHelper();
     let userData = {
       firstName: window.localStorage.getItem("firstName"),
-      lastName: window.localStorage.getItem("lastName")
+      lastName: window.localStorage.getItem("lastName")      
     };
     let prom = API.getUserByFirstAndLastName(userData);
     prom.then(result => {
@@ -64,6 +63,8 @@ class User extends Component {
         notes: result.data.notes
       });
     });
+    window.localStorage.setItem("firstName", "")
+    window.localStorage.setItem("lastName", "")
   }
 
   createUser = event => {
