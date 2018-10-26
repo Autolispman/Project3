@@ -74,6 +74,8 @@ router.post("/updateUser", function(req, res) {
     if (data) {
       data
         .update({
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
           street1: req.body.street1,
           street2: req.body.street2,
           city: req.body.city,
@@ -180,6 +182,18 @@ router.post("/updateAppointment", function(req, res) {
 
 router.delete("/deleteAppointment/:id", function(req, res) {
   db.Appointment.destroy({
+    where: { id: req.params.id }
+  }).then(function(data, error) {
+    if (data) {
+      res.json(data);
+    } else {
+      res.json(error);
+    }
+  });
+});
+
+router.delete("/deleteUser/:id", function(req, res) {
+  db.User.destroy({
     where: { id: req.params.id }
   }).then(function(data, error) {
     if (data) {

@@ -8,6 +8,7 @@ import Login from "./components/pages/Login.js"
 import CalendarPage from "./components/pages/CalendarPage.js"
 import Appointment from "./components/Items/Appointment.js"
 import Client from "./components/pages/Client.js"
+import User from "./components/pages/User.js"
 import firebase from "./config/firebase.js"
 
 class App extends Component {
@@ -62,6 +63,7 @@ class App extends Component {
             <Route exact path ="/calendar" component ={CalendarPage}/>
             <Route exact path ="/appointment" component ={Appointment}/>
             <Route exact path ="/client" component ={Client}/>
+            <Route exact path ="/user" component ={User}/>
           </Switch>
         </Router>) : (<Login/>)}
       </div>
