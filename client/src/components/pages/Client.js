@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API.js";
 import ClientItem from "../Items/ClientItem.js";
+import HomeButton from "../Items/HomeButton.js";
 import NewUserButton from "../Items/NewUserButton.js";
 class Client extends Component {
   state = {
@@ -78,6 +79,10 @@ class Client extends Component {
     window.location.pathname = "/user";
   }
 
+  goHome = () => {
+    window.location.pathname = "/";
+  }
+
   render() {
     return (
       <div>
@@ -89,6 +94,8 @@ class Client extends Component {
           </div>
           <div className="nav-content">
             <ul className="buttons tabs tabs-transparent">
+              <HomeButton
+              goHome={this.goHome} />
               <NewUserButton
               newClient={this.newClient} />
             </ul>
