@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API.js";
 import ClientItem from "../Items/ClientItem.js";
+import Logout from "../Items/Logout.js";
 class Client extends Component {
   state = {
     firstName: "",
@@ -51,28 +52,41 @@ class Client extends Component {
       ) {
         arr.push(element);
         this.setState({ filteredUsers: arr });
-      }
-      else {
+      } else {
         if (
-            element.firstName
-              .toLowerCase()
-              .startsWith(event.target.value.toLowerCase())
-          ) {
-            arr.push(element);
-            this.setState({ filteredUsers: arr });
-          }
+          element.firstName
+            .toLowerCase()
+            .startsWith(event.target.value.toLowerCase())
+        ) {
+          arr.push(element);
+          this.setState({ filteredUsers: arr });
+        }
       }
     });
+  };
+
+  editClient = event => {
+    let tag = event.target;
+    let firstName = tag.getAttribute("data-firstname");
+    let lastName = tag.getAttribute("data-lastname");
+    window.localStorage.setItem("firstName", firstName);
+    window.localStorage.setItem("lastName", lastName);
+    window.location.pathname = "/user";
   };
 
   render() {
     return (
       <div>
-        <nav>
-          <div className="nav-wrapper indigo lighten-2">
+        <nav className="nav-extended indigo lighten-2">
+          <div className="nav-wrapper">
             <a href="#!" className="brand-logo center">
               <h5>Sam's Pet Care</h5>
             </a>
+          </div>
+          <div className="nav-content">
+            <ul className="buttons tabs tabs-transparent">
+              <Logout />
+            </ul>
           </div>
         </nav>
         <label>Filter</label>
@@ -87,6 +101,7 @@ class Client extends Component {
               key={user.id}
               firstName={user.firstName}
               lastName={user.lastName}
+              editClient={this.editClient}
             />
           ))}
         </div>

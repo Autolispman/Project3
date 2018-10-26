@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import API from "../../utils/API.js";
-import moment from "moment";
 import { Link } from "react-router-dom";
-import "./appointment.css";
+import "../Items/appointment.css";
 
-class Appointment extends Component {
+class User extends Component {
   state = {
     firstName: "",
     lastName: "",
@@ -31,54 +30,46 @@ class Appointment extends Component {
   };
 
   componentDidMount() {
-    this.setStateHelper();
+    //this.setStateHelper();
+    let userData = {
+      firstName: window.localStorage.getItem("firstName"),
+      lastName: window.localStorage.getItem("lastName")
+    };
+    let prom = API.getUserByFirstAndLastName(userData);
+    prom.then(result => {
+      console.log(result);
+      this.setState({
+        id: result.data.id,
+        firstName: result.data.firstName,
+        lastName: result.data.lastName,
+        street1: result.data.street1,
+        street2: result.data.street2,
+        city: result.data.city,
+        state: result.data.state,
+        zipCode: result.data.zipCode,
+        startDate: result.data.startDate,
+        endDate: result.data.endDate,
+        typeOfAppointment: result.data.typeOfAppointment,
+        info: result.data.info,
+        cellPhone: result.data.cellPhone,
+        email: result.data.email,
+        vetClinicName: result.data.vetClinicName,
+        vetName: result.data.vetName,
+        vetPhone: result.data.vetPhone,
+        keyInstructions: result.data.keyInstructions,
+        gateCode: result.data.gateCode,
+        doorCode: result.data.doorCode,
+        alarmCode: result.data.alarmCode,
+        wifiPassword: result.data.wifiPassword,
+        notes: result.data.notes
+      });
+    });
   }
 
-  setStateHelper = () => {
-    try {
-      let currentInfo = window.localStorage.getItem("currentInfo");
-      if (currentInfo !== null) {
-        currentInfo = JSON.parse(currentInfo);
-        //console.log(currentInfo.info.typeOfAppointment);
-        //console.log(moment(currentInfo.start).format("YYYY-MM-DDTHH:mm"))
-        //console.log(currentInfo.info)
-        this.setState({
-          firstName: currentInfo.info.User.firstName,
-          lastName: currentInfo.info.User.lastName,
-          street1: currentInfo.info.User.street1,
-          street2: currentInfo.info.User.street2,
-          city: currentInfo.info.User.city,
-          state: currentInfo.info.User.state,
-          zipCode: currentInfo.info.User.zipCode,
-          cellPhone: currentInfo.info.User.cellPhone,
-          email: currentInfo.info.User.email,
-          vetClinicName: currentInfo.info.User.vetClinicName,
-          vetName: currentInfo.info.User.vetName,
-          vetPhone: currentInfo.info.User.vetPhone,
-          keyInstructions: currentInfo.info.User.keyInstructions,
-          gateCode: currentInfo.info.User.gateCode,
-          doorCode: currentInfo.info.User.doorCode,
-          alarmCode: currentInfo.info.User.alarmCode,
-          wifiPassword: currentInfo.info.User.wifiPassword,
-          notes: currentInfo.info.User.notes,
-          startDate: moment(currentInfo.start).format("YYYY-MM-DDTHH:mm"),
-          //startDate: "2018-09-04T00:01",
-          endDate: moment(currentInfo.end).format("YYYY-MM-DDTHH:mm"),
-          typeOfAppointment: currentInfo.info.typeOfAppointment,
-          info: currentInfo.info
-        });
-      }
-      window.localStorage.setItem("currentInfo", null);
-      //console.log(this.state.info)
-    } catch (err) {
-      window.localStorage.setItem("currentInfo", null);
-    }
-  };
-
-  createAppointment = event => {
+  createUser = event => {
     event.preventDefault();
     const userData = {
-      id: this.state.info.id,
+      id: this.state.id,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       street1: this.state.street1,
@@ -99,41 +90,22 @@ class Appointment extends Component {
       notes: this.state.notes
     };
 
-    const appointmentData = {
-      id: this.state.info.id,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate,
-      typeOfAppointment: this.state.typeOfAppointment
-    };
-
     let prom = API.updateUser(userData);
     prom.then(result => {
-      appointmentData.user_id = result.data.id;
-      let prom2 = API.updateAppointment(appointmentData);
-      prom2.then(() => {
-        window.location = "/calendar";
-      });
+      window.location = "/client";
     });
-
-    // const appointmentData = {
-    //   //id: this.state.info.id,
-    //   id: 1,
-    //   startDate: Date.now(),
-    //   endDate: Date.now(),
-    //   typeOfAppointment: this.state.typeOfAppointment
-    //  };
-
-    // API.updateAppointment(appointmentData)
   };
 
-  deleteAppointment = () => {
+  deleteUser = () => {
     let conf = window.confirm(
-      `Do you really want to delete ${this.state.typeOfAppointment}`
+      `Do you really want to delete ${this.state.firstName}, ${
+        this.state.lastName
+      }`
     );
     if (conf) {
-      let prom = API.deleteAppointment(this.state.info.id);
+      let prom = API.deleteUser(this.state.id);
       prom.then(data => {
-        window.location.pathname = "/calendar";
+        window.location.pathname = "/client";
       });
     }
   };
@@ -162,53 +134,49 @@ class Appointment extends Component {
           this.setState({ zipCode: results.data.zipCode });
         }
         if (this.state.cellPhone === "" || this.state.cellPhone === undefined) {
-          this.setState({ cellPhone: results.data.cellPhone });
-        }
-        if (this.state.email === "" || this.state.email === undefined) {
-          this.setState({ email: results.data.email });
-        }
-        if (this.state.vetClinicName === "" || this.state.vetClinicName === undefined) {
-          this.setState({ vetClinicName: results.data.vetClinicName });
-        }
-        if (this.state.vetName === "" || this.state.vetName === undefined) {
-          this.setState({ vetName: results.data.vetName });
-        }
-        if (this.state.vetPhone === "" || this.state.vetPhone === undefined) {
-          this.setState({ vetPhone: results.data.vetPhone });
-        }
-        if (this.state.keyInstructions === "" || this.state.keyInstructions === undefined) {
-          this.setState({ keyInstructions: results.data.keyInstructions });
-        }
-        if (this.state.gateCode === "" || this.state.gateCode === undefined) {
-          this.setState({ gateCode: results.data.gateCode });
-        }
-        if (this.state.doorCode === "" || this.state.doorCode === undefined) {
-          this.setState({ doorCode: results.data.doorCode });
-        }
-        if (this.state.alarmCode === "" || this.state.alarmCode === undefined) {
-          this.setState({ alarmCode: results.data.alarmCode });
-        }
-        if (this.state.wifiPassword === "" || this.state.wifiPassword === undefined) {
-          this.setState({ wifiPassword: results.data.wifiPassword });
-        }
-        if (this.state.notes === "" || this.state.notes === undefined) {
-          this.setState({ notes: results.data.notes });
-        }
+            this.setState({ cellPhone: results.data.cellPhone });
+          }
+          if (this.state.email === "" || this.state.email === undefined) {
+            this.setState({ email: results.data.email });
+          }
+          if (this.state.vetClinicName === "" || this.state.vetClinicName === undefined) {
+            this.setState({ vetClinicName: results.data.vetClinicName });
+          }
+          if (this.state.vetName === "" || this.state.vetName === undefined) {
+            this.setState({ vetName: results.data.vetName });
+          }
+          if (this.state.vetPhone === "" || this.state.vetPhone === undefined) {
+            this.setState({ vetPhone: results.data.vetPhone });
+          }
+          if (this.state.keyInstructions === "" || this.state.keyInstructions === undefined) {
+            this.setState({ keyInstructions: results.data.keyInstructions });
+          }
+          if (this.state.gateCode === "" || this.state.gateCode === undefined) {
+            this.setState({ gateCode: results.data.gateCode });
+          }
+          if (this.state.doorCode === "" || this.state.doorCode === undefined) {
+            this.setState({ doorCode: results.data.doorCode });
+          }
+          if (this.state.alarmCode === "" || this.state.alarmCode === undefined) {
+            this.setState({ alarmCode: results.data.alarmCode });
+          }
+          if (this.state.wifiPassword === "" || this.state.wifiPassword === undefined) {
+            this.setState({ wifiPassword: results.data.wifiPassword });
+          }
+          if (this.state.notes === "" || this.state.notes === undefined) {
+            this.setState({ notes: results.data.notes });
+          }
       }
     });
   };
 
   handleOnChange = event => {
-    //console.log(this.state.info)
-    //console.log(this.state.id)
     let { name, value } = event.target;
 
     this.setState({
       [name]: value
     });
   };
-
-  //date picker
 
   render() {
     return (
@@ -218,14 +186,14 @@ class Appointment extends Component {
             <a href="#!" className="brand-logo center">
               <h5>Sam's Pet Care</h5>
             </a>
-          </div>
+          </div>          
         </nav>
         <div className="container">
           <form
             method=""
             action=""
             className="sm-col-12"
-            onSubmit={this.createAppointment}
+            onSubmit={this.createUser}
           >
             <label className="modalLabel">FirstName</label>
             <input
@@ -450,138 +418,19 @@ class Appointment extends Component {
               onChange={this.handleOnChange}
             />
             <br />
-            <label>Start Date (ex: 4/27/2010)</label>
-            <input
-              name="startDate"
-              type="datetime-local"
-              id="startDateId"
-              className="datepicker"
-              placeholder="start date"
-              required={true}
-              pattern="^\d{1,2}\/\d{1,2}\/\d{4}$"
-              value={this.state.startDate}
-              onChange={this.handleOnChange}
-            />
-            <br />
-            <label>End Date (ex: 4/27/2010)</label>
-            <input
-              name="endDate"
-              type="datetime-local"
-              id="endDateId"
-              className="datepicker"
-              placeholder="end date"
-              required={true}
-              pattern="^\d{1,2}\/\d{1,2}\/\d{4}$"
-              value={this.state.endDate}
-              onChange={this.handleOnChange}
-            />
-            <br />
-            <label>Type of Appointment</label>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  name="typeOfAppointment"
-                  //defaultValue="MeetAndGreet"
-                  onChange={this.handleOnChange}
-                  value="MeetAndGreet"
-                  checked={this.state.typeOfAppointment === "MeetAndGreet"}
-                  required={true}
-                />
-                <span>Meet And Greet</span>
-              </label>
-              <br />
-              <label>
-                <input
-                  type="radio"
-                  name="typeOfAppointment"
-                  //defaultValue="HouseSit"
-                  onChange={this.handleOnChange}
-                  value="HouseSit"
-                  checked={this.state.typeOfAppointment === "HouseSit"}
-                  required={true}
-                />
-                <span>House Sit</span>
-              </label>
-              <br />
-              <label>
-                <input
-                  type="radio"
-                  name="typeOfAppointment"
-                  //defaultValue="PetOverNightSit"
-                  onChange={this.handleOnChange}
-                  value="OverNightPetSit"
-                  checked={this.state.typeOfAppointment === "OverNightPetSit"}
-                  required={true}
-                />
-                <span>Overnight Pet Sit</span>
-              </label>
-              <br />
-              <label>
-                <input
-                  type="radio"
-                  name="typeOfAppointment"
-                  //defaultValue="PetBoarding"
-                  onChange={this.handleOnChange}
-                  value="Boarding"
-                  checked={this.state.typeOfAppointment === "Boarding"}
-                  required={true}
-                />
-                <span>Boarding</span>
-              </label>
-              <br />
-              <label>
-                <input
-                  type="radio"
-                  name="typeOfAppointment"
-                  //defaultValue="PetVisit"
-                  onChange={this.handleOnChange}
-                  value="Visit"
-                  checked={this.state.typeOfAppointment === "Visit"}
-                  required={true}
-                />
-                <span>Visit</span>
-              </label>
-              <br />
-              <label>
-                <input
-                  type="radio"
-                  name="typeOfAppointment"
-                  // defaultValue="DogWalking"
-                  onChange={this.handleOnChange}
-                  value="Walk"
-                  checked={this.state.typeOfAppointment === "Walk"}
-                  required={true}
-                />
-                <span>Walk</span>
-              </label>
-              <br />
-              <label>
-                <input
-                  type="radio"
-                  name="typeOfAppointment"
-                  //defaultValue="PetTaxiPickUpDropOff"
-                  onChange={this.handleOnChange}
-                  value="TaxiPickUpDropOff"
-                  checked={this.state.typeOfAppointment === "TaxiPickUpDropOff"}
-                  required={true}
-                />
-                <span>Taxi Pick Up/Drop Off</span>
-              </label>
-            </div>
             <button type="text" className="btn waves-effect waves-light">
-              Create/Update Appointment
+              Create/Update User
             </button>
           </form>
           <div className="grid-example col s12 m6">
             <button
               type="text"
               className="btn waves-effect red"
-              onClick={this.deleteAppointment}
+              onClick={this.deleteUser}
             >
               Delete Appointment
             </button>
-            <Link to="/calendar" className="btn waves-effect yellow darken-2">
+            <Link to="/client" className="btn waves-effect yellow darken-2">
               Disregard Changes
             </Link>
           </div>
@@ -591,4 +440,4 @@ class Appointment extends Component {
   }
 }
 
-export default Appointment;
+export default User;

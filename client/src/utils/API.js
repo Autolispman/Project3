@@ -168,6 +168,21 @@ function deleteAppointment(appointId) {
   return p;
 }
 
+function deleteUser(userId) {
+  let p = new Promise(function(data, error) {
+    axios
+      .delete("/api/deleteUser/" + userId)
+      .then(function(result, err) {
+        if (result) {
+          data(result);
+        } else {
+          error("");
+        }
+      });
+  });
+  return p;
+}
+
 function getUserByFirstAndLastName(firstAndLastName) {
   //console.log(firstAndLastName)
   let p = new Promise(function(data, error) {
@@ -191,5 +206,6 @@ export default {
   getUserByFirstAndLastName: getUserByFirstAndLastName,
   updateUser: updateUser,
   updateAppointment: updateAppointment,
-  getAllUsers: getAllUsers
+  getAllUsers: getAllUsers,
+  deleteUser: deleteUser
 };
