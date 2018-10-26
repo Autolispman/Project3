@@ -23,9 +23,22 @@ router.post("/login", function(req, res) {
   });
 
 router.get("/allAppointments", function(req, res) {
-  console.log("hello");
+  //console.log("hello");
   db.Appointment.findAll({
     include: [db.User]
+  }).then(function(data) {
+    if (data) {
+      res.send(data);
+    } else {
+      res.send("error");
+    }
+  });
+});
+
+router.get("/allUsers", function(req, res) {
+  //console.log("hello");
+  db.User.findAll({
+    order: ["lastName"]
   }).then(function(data) {
     if (data) {
       res.send(data);

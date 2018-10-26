@@ -140,6 +140,19 @@ function getAllAppointments() {
   return p;
 }
 
+function getAllUsers() {
+  let p = new Promise(function(data, error) {
+    axios.get("/api/allUsers").then(function(result, err) {
+      if (result) {
+        data(result);
+      } else {
+        error(err);
+      }
+    });
+  });
+  return p;
+}
+
 function deleteAppointment(appointId) {
   let p = new Promise(function(data, error) {
     axios
@@ -177,5 +190,6 @@ export default {
   deleteAppointment: deleteAppointment,
   getUserByFirstAndLastName: getUserByFirstAndLastName,
   updateUser: updateUser,
-  updateAppointment: updateAppointment
+  updateAppointment: updateAppointment,
+  getAllUsers: getAllUsers
 };
