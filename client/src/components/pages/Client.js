@@ -42,11 +42,25 @@ class Client extends Component {
   runFilter = event => {
     this.setState({ filter: event.target.value });
     this.setState({ filteredUsers: [] });
-    let arr = []
+    let arr = [];
     this.state.users.forEach(element => {
-      if (element.lastName.toLowerCase().startsWith(event.target.value.toLowerCase())) {
-          arr.push(element)
-        this.setState({filteredUsers: arr})
+      if (
+        element.lastName
+          .toLowerCase()
+          .startsWith(event.target.value.toLowerCase())
+      ) {
+        arr.push(element);
+        this.setState({ filteredUsers: arr });
+      }
+      else {
+        if (
+            element.firstName
+              .toLowerCase()
+              .startsWith(event.target.value.toLowerCase())
+          ) {
+            arr.push(element);
+            this.setState({ filteredUsers: arr });
+          }
       }
     });
   };
@@ -62,7 +76,11 @@ class Client extends Component {
           </div>
         </nav>
         <label>Filter</label>
-        <input type="Text" onChange={this.runFilter} value={this.state.filter} />
+        <input
+          type="Text"
+          onChange={this.runFilter}
+          value={this.state.filter}
+        />
         <div className="container">
           {this.state.filteredUsers.map(user => (
             <ClientItem
