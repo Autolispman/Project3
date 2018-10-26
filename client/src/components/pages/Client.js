@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import API from "../../utils/API.js";
-import ClientItem from "../Items/ClientItem.js"
+import ClientItem from "../Items/ClientItem.js";
 class Client extends Component {
   state = {
     firstName: "",
@@ -25,16 +25,31 @@ class Client extends Component {
     alarmCode: "",
     wifiPassword: "",
     notes: "",
-    users: []
+    users: [],
+    filter: "",
+    filteredUsers: []
   };
 
   componentDidMount() {
     let prom = API.getAllUsers();
     prom.then(results => {
-        console.log(results.data)
-        this.setState({users: results.data})
-    })  
+      console.log(results.data);
+      this.setState({ users: results.data });
+      this.setState({ filteredUsers: results.data });
+    });
   }
+
+  runFilter = event => {
+    this.setState({ filter: event.target.value });
+    this.setState({ filteredUsers: [] });
+    let arr = []
+    this.state.users.forEach(element => {
+      if (element.lastName.toLowerCase().startsWith(event.target.value.toLowerCase())) {
+          arr.push(element)
+        this.setState({filteredUsers: arr})
+      }
+    });
+  };
 
   render() {
     return (
@@ -46,14 +61,17 @@ class Client extends Component {
             </a>
           </div>
         </nav>
-        <div className="container" />
-        {this.state.users.map(user => (
+        <label>Filter</label>
+        <input type="Text" onChange={this.runFilter} value={this.state.filter} />
+        <div className="container">
+          {this.state.filteredUsers.map(user => (
             <ClientItem
               key={user.id}
               firstName={user.firstName}
               lastName={user.lastName}
             />
           ))}
+        </div>
       </div>
     );
   }
