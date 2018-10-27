@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import API from "../../utils/API.js";
 import { Link } from "react-router-dom";
 import "../Items/appointment.css";
+import PetItem from "../Items/PetItem.js"
+import NewPetButton from "../Items/NewPetButton.js"
 
 class User extends Component {
   state = {
@@ -182,12 +184,17 @@ class User extends Component {
   render() {
     return (
       <div>
-        <nav>
-          <div className="nav-wrapper indigo lighten-2">
+        <nav className="nav-extended indigo lighten-2">
+          <div className="nav-wrapper">
             <a href="#!" className="brand-logo center">
               <h5>Sam's Pet Care</h5>
             </a>
-          </div>          
+          </div>
+          <div className="nav-content">
+            <ul className="buttons tabs tabs-transparent">
+              <NewPetButton />
+            </ul>
+          </div>
         </nav>
         <div className="container">
           <form
@@ -418,11 +425,13 @@ class User extends Component {
               value={this.state.notes}
               onChange={this.handleOnChange}
             />
-            <br />
+            <br />   
+            <br />         
             <button type="text" className="btn waves-effect waves-light">
               Create/Update User
             </button>
           </form>
+          <br />
           <div className="grid-example col s12 m6">
             <button
               type="text"
@@ -435,6 +444,10 @@ class User extends Component {
               Disregard Changes
             </Link>
           </div>
+          <br />
+          <PetItem></PetItem>
+          <br />
+          <br />
         </div>
       </div>
     );
