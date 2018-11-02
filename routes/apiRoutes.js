@@ -22,11 +22,11 @@ router.post("/login", function(req, res) {
 router.get("/allAppointments", function(req, res) {
   db.Appointment.findAll({
     include: [db.User]
-  }).then(function(data) {
+  }).then(function(data, error) {
     if (data) {
       res.send(data);
     } else {
-      res.send("error");
+      res.send(error);
     }
   });
 });
@@ -34,11 +34,11 @@ router.get("/allAppointments", function(req, res) {
 router.get("/allUsers", function(req, res) {
   db.User.findAll({
     order: ["lastName"]
-  }).then(function(data) {
+  }).then(function(data, error) {
     if (data) {
       res.send(data);
     } else {
-      res.send("error");
+      res.send(error);
     }
   });
 });
@@ -230,18 +230,18 @@ router.delete("/deleteUser/:id", function(req, res) {
 router.post("/getUserByFirstAndLastName", function(req, res) {
   db.User.findOne({
     where: { firstName: req.body.firstName, lastName: req.body.lastName }
-  }).then(function(data) {
+  }).then(function(data, error) {
     if (data) {
       res.send(data);
     } else {
-      res.send("error");
+      res.send(error);
     }
   });
 });
 
 router.post("/getPetByNameAndUserId", function(req, res) {
   db.Pet.findOne({
-    where: { petName: req.body.petName, user_id: req.body.userId},
+    where: { petName: req.body.petName, UserId: req.body.userId},
     include: [db.User]
   }).then(function(data, error) {
     if (data) {
@@ -255,11 +255,11 @@ router.post("/getPetByNameAndUserId", function(req, res) {
 router.post("/getPetsByUserId", function(req, res) {
   db.Pet.findAll({
     where: { user_id: req.body.userId},
-  }).then(function(data) {
+  }).then(function(data, error) {
     if (data) {
       res.send(data);
     } else {
-      res.send("error");
+      res.send(error);
     }
   });
 });
