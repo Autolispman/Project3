@@ -2,14 +2,11 @@ const router = require("express").Router();
 var db = require("../models");
 
 router.post("/login", function(req, res) {
-  console.log(req.body);
   //send the user the route so it'll be redirected in the front end (can't post into a GET request from a POST)
   res.json("/calendar");
 }),
   router.post("/signup", function(req, res) {
-    console.log(req.body.username);
-    console.log(req.body.password);
-    db.Admin.create({
+     db.Admin.create({
       username: req.body.username,
       password: req.body.password
     })
@@ -23,7 +20,6 @@ router.post("/login", function(req, res) {
   });
 
 router.get("/allAppointments", function(req, res) {
-  //console.log("hello");
   db.Appointment.findAll({
     include: [db.User]
   }).then(function(data) {
@@ -36,7 +32,6 @@ router.get("/allAppointments", function(req, res) {
 });
 
 router.get("/allUsers", function(req, res) {
-  //console.log("hello");
   db.User.findAll({
     order: ["lastName"]
   }).then(function(data) {
@@ -72,8 +67,7 @@ router.post("/updateUser", function(req, res) {
     where: { firstName: req.body.firstName, lastName: req.body.lastName }
   }).then(data => {
     if (data) {
-      data
-        .update({
+      data.update({
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           street1: req.body.street1,
@@ -130,14 +124,61 @@ router.post("/updateUser", function(req, res) {
   });
 });
 
+router.post("/updatePet", function(req, res) {
+  console.log("updatPet")
+  console.log(req.body.id)
+  console.log(req.body.userId)
+  db.Pet.findOne({
+    where: { id: req.body.id, user_id: req.body.userId }
+  }).then(data => {
+    if (data) {
+      data.update({
+          petName: req.body.petName,
+          breed: req.body.breed,
+          age: req.body.age,
+          feedingInstructions: req.body.feedingInstructions,
+          medications: req.body.medications,
+          healthIssues: req.body.healthIssues,
+          foodAllergies: req.body.foodAllergies,
+          notes: req.body.notes,
+          user_id: req.body.userId,
+          UserId: req.body.userId
+        })
+        .then(result => {
+          res.json(result);
+        })
+        .catch(err => {
+          res.json(err);
+        });
+    } else {
+      console.log("db.Pet.create")
+      console.log(req.body)
+      db.Pet.create({
+        petName: req.body.petName,
+        breed: req.body.breed,
+        age: req.body.age,
+        feedingInstructions: req.body.feedingInstructions,
+        medications: req.body.medications,
+        healthIssues: req.body.healthIssues,
+        foodAllergies: req.body.foodAllergies,
+        notes: req.body.notes,
+        user_id: req.body.userId
+      })
+        .then(result => {
+          res.json(result);
+        })
+        .catch(err => {
+          res.json(err);
+        });
+    }
+  });
+});
+
 router.post("/updateAppointment", function(req, res) {
-  console.log(req.body.id);
   db.Appointment.findOne({
     where: { id: req.body.id }
   }).then(data => {
-    console.log(data);
     if (data) {
-      console.log("update");
       data.update({
         typeOfAppointment: req.body.typeOfAppointment,
         startDate: req.body.startDate,
@@ -148,7 +189,6 @@ router.post("/updateAppointment", function(req, res) {
       });
       res.json(data);
     } else {
-      console.log("create");
       db.Appointment.create({
         typeOfAppointment: req.body.typeOfAppointment,
         startDate: req.body.startDate,
@@ -189,6 +229,31 @@ router.delete("/deleteUser/:id", function(req, res) {
 router.post("/getUserByFirstAndLastName", function(req, res) {
   db.User.findOne({
     where: { firstName: req.body.firstName, lastName: req.body.lastName }
+  }).then(function(data) {
+    if (data) {
+      res.send(data);
+    } else {
+      res.send("error");
+    }
+  });
+});
+
+router.post("/getPetByNameAndUserId", function(req, res) {
+  db.Pet.findOne({
+    where: { petName: req.body.petName, user_id: req.body.userId},
+    include: [db.User]
+  }).then(function(data, error) {
+    if (data) {
+      res.send(data);
+    } else {
+      res.send(error);
+    }
+  });
+});
+
+router.post("/getPetsByUserId", function(req, res) {
+  db.Pet.findAll({
+    where: { user_id: req.body.userId},
   }).then(function(data) {
     if (data) {
       res.send(data);

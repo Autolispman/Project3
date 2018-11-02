@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import API from "../../utils/API.js";
 import { Link } from "react-router-dom";
 import "../Items/appointment.css";
-import PetItem from "../Items/PetItem.js"
-import NewPetButton from "../Items/NewPetButton.js"
+import PetItem from "../Items/PetItem.js";
+import NewPetButton from "../Items/NewPetButton.js";
 
 class User extends Component {
   state = {
+    id: "",
     firstName: "",
     lastName: "",
     street1: "",
@@ -28,17 +29,17 @@ class User extends Component {
     doorCode: "",
     alarmCode: "",
     wifiPassword: "",
-    notes: ""
+    notes: "",
+    pets: []
   };
 
   componentDidMount() {
     let userData = {
       firstName: window.localStorage.getItem("firstName"),
-      lastName: window.localStorage.getItem("lastName")      
+      lastName: window.localStorage.getItem("lastName")
     };
     let prom = API.getUserByFirstAndLastName(userData);
     prom.then(result => {
-      console.log(result);
       this.setState({
         id: result.data.id,
         firstName: result.data.firstName,
@@ -64,9 +65,14 @@ class User extends Component {
         wifiPassword: result.data.wifiPassword,
         notes: result.data.notes
       });
+      let user = {userId: result.data.id}
+      let promPets = API.getPetsByUserId(user)
+      promPets.then(result => {
+          this.setState({ pets: result.data})
+      });
     });
-    window.localStorage.setItem("firstName", "")
-    window.localStorage.setItem("lastName", "")
+    window.localStorage.setItem("firstName", "");
+    window.localStorage.setItem("lastName", "");
   }
 
   createUser = event => {
@@ -92,7 +98,6 @@ class User extends Component {
       wifiPassword: this.state.wifiPassword,
       notes: this.state.notes
     };
-
     let prom = API.updateUser(userData);
     prom.then(result => {
       window.location = "/client";
@@ -121,6 +126,9 @@ class User extends Component {
     let prom = API.getUserByFirstAndLastName(firstLastName);
     prom.then(results => {
       if (this.state.firstName !== "" && this.state.lastName !== "") {
+        if (this.state.id === "" || this.state.id === undefined) {
+          this.setState({ id: results.data.id });
+        }
         if (this.state.street1 === "" || this.state.street1 === undefined) {
           this.setState({ street1: results.data.street1 });
         }
@@ -137,38 +145,47 @@ class User extends Component {
           this.setState({ zipCode: results.data.zipCode });
         }
         if (this.state.cellPhone === "" || this.state.cellPhone === undefined) {
-            this.setState({ cellPhone: results.data.cellPhone });
-          }
-          if (this.state.email === "" || this.state.email === undefined) {
-            this.setState({ email: results.data.email });
-          }
-          if (this.state.vetClinicName === "" || this.state.vetClinicName === undefined) {
-            this.setState({ vetClinicName: results.data.vetClinicName });
-          }
-          if (this.state.vetName === "" || this.state.vetName === undefined) {
-            this.setState({ vetName: results.data.vetName });
-          }
-          if (this.state.vetPhone === "" || this.state.vetPhone === undefined) {
-            this.setState({ vetPhone: results.data.vetPhone });
-          }
-          if (this.state.keyInstructions === "" || this.state.keyInstructions === undefined) {
-            this.setState({ keyInstructions: results.data.keyInstructions });
-          }
-          if (this.state.gateCode === "" || this.state.gateCode === undefined) {
-            this.setState({ gateCode: results.data.gateCode });
-          }
-          if (this.state.doorCode === "" || this.state.doorCode === undefined) {
-            this.setState({ doorCode: results.data.doorCode });
-          }
-          if (this.state.alarmCode === "" || this.state.alarmCode === undefined) {
-            this.setState({ alarmCode: results.data.alarmCode });
-          }
-          if (this.state.wifiPassword === "" || this.state.wifiPassword === undefined) {
-            this.setState({ wifiPassword: results.data.wifiPassword });
-          }
-          if (this.state.notes === "" || this.state.notes === undefined) {
-            this.setState({ notes: results.data.notes });
-          }
+          this.setState({ cellPhone: results.data.cellPhone });
+        }
+        if (this.state.email === "" || this.state.email === undefined) {
+          this.setState({ email: results.data.email });
+        }
+        if (
+          this.state.vetClinicName === "" ||
+          this.state.vetClinicName === undefined
+        ) {
+          this.setState({ vetClinicName: results.data.vetClinicName });
+        }
+        if (this.state.vetName === "" || this.state.vetName === undefined) {
+          this.setState({ vetName: results.data.vetName });
+        }
+        if (this.state.vetPhone === "" || this.state.vetPhone === undefined) {
+          this.setState({ vetPhone: results.data.vetPhone });
+        }
+        if (
+          this.state.keyInstructions === "" ||
+          this.state.keyInstructions === undefined
+        ) {
+          this.setState({ keyInstructions: results.data.keyInstructions });
+        }
+        if (this.state.gateCode === "" || this.state.gateCode === undefined) {
+          this.setState({ gateCode: results.data.gateCode });
+        }
+        if (this.state.doorCode === "" || this.state.doorCode === undefined) {
+          this.setState({ doorCode: results.data.doorCode });
+        }
+        if (this.state.alarmCode === "" || this.state.alarmCode === undefined) {
+          this.setState({ alarmCode: results.data.alarmCode });
+        }
+        if (
+          this.state.wifiPassword === "" ||
+          this.state.wifiPassword === undefined
+        ) {
+          this.setState({ wifiPassword: results.data.wifiPassword });
+        }
+        if (this.state.notes === "" || this.state.notes === undefined) {
+          this.setState({ notes: results.data.notes });
+        }
       }
     });
   };
@@ -179,6 +196,17 @@ class User extends Component {
     this.setState({
       [name]: value
     });
+  };
+
+  newPet = event => {
+    let userData = {
+      id: null,
+      userId: this.state.id,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName
+    };
+    window.localStorage.setItem("petInfo", JSON.stringify(userData));
+    window.location.pathname = "/pet";
   };
 
   render() {
@@ -192,7 +220,7 @@ class User extends Component {
           </div>
           <div className="nav-content">
             <ul className="buttons tabs tabs-transparent">
-              <NewPetButton />
+              <NewPetButton newPet={this.newPet} />
             </ul>
           </div>
         </nav>
@@ -425,8 +453,8 @@ class User extends Component {
               value={this.state.notes}
               onChange={this.handleOnChange}
             />
-            <br />   
-            <br />         
+            <br />
+            <br />
             <button type="text" className="btn waves-effect waves-light">
               Create/Update User
             </button>
@@ -445,8 +473,20 @@ class User extends Component {
             </Link>
           </div>
           <br />
-          <PetItem></PetItem>
+          {this.state.pets.map(pet => (
+            <PetItem
+              key={pet.id}
+              petName={pet.petName}
+              breed={pet.breed}
+              age={pet.age}
+              feedingInstructions={pet.feedingInstructions}
+              medications={pet.medications}
+              healthIssues={pet.healthIssues}
+              notes={pet.notes}
+            />
+          ))}
           <br />
+          <NewPetButton newPet={this.newPet} />
           <br />
         </div>
       </div>
