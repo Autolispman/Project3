@@ -90,8 +90,34 @@ function updateUser(userData) {
   return p;
 }
 
+function updatePet(petData) {
+  console.log(petData)
+  let p = new Promise(function(data, error) {
+    axios
+      .post("/api/updatePet", {
+        id: petData.id,
+        petName: petData.petName,
+        breed: petData.breed,
+        age: petData.age,
+        feedingInstructions: petData.feedingInstructions,
+        medications: petData.medications,
+        healthIssues: petData.healthIssues,
+        foodAllergies: petData.foodAllergies,
+        notes: petData.notes,
+        userId: petData.userId
+      })
+      .then(function(result, err) {
+        if (result) {
+          data(result);
+        } else {
+          error(err);
+        }
+      });
+  });
+  return p;
+}
+
 function updateAppointment(userAppointment) {
-  console.log(userAppointment)
   let p = new Promise(function(data, error) {
     axios
       .post("/api/updateAppointment", {
@@ -183,6 +209,37 @@ function getUserByFirstAndLastName(firstAndLastName) {
   return p;
 }
 
+function getPetByNameAndUserId(petId) {
+  //console.log(firstAndLastName)
+  let p = new Promise(function(data, error) {
+    axios
+      .post("/api/getPetByNameAndUserId", petId)
+      .then(function(result, err) {
+        if (result) {
+          data(result);
+        } else {
+          error("");
+        }
+      });
+  });
+  return p;
+}
+
+function getPetsByUserId(userId) {
+  let p = new Promise(function(data, error) {
+    axios
+      .post("/api/getPetsByUserId", userId)
+      .then(function(result, err) {
+        if (result) {
+          data(result);
+        } else {
+          error("");
+        }
+      });
+  });
+  return p;
+}
+
 export default {
   loginUser: loginUser,
   getAllAppointments: getAllAppointments,
@@ -191,5 +248,8 @@ export default {
   updateUser: updateUser,
   updateAppointment: updateAppointment,
   getAllUsers: getAllUsers,
-  deleteUser: deleteUser
+  deleteUser: deleteUser,
+  getPetByNameAndUserId: getPetByNameAndUserId,
+  updatePet: updatePet,
+  getPetsByUserId: getPetsByUserId
 };
