@@ -140,9 +140,9 @@ router.post("/updatePet", function(req, res) {
           medications: req.body.medications,
           healthIssues: req.body.healthIssues,
           foodAllergies: req.body.foodAllergies,
-          notes: req.body.notes,
+          notes: req.body.notes,          
+          UserId: req.body.userId,
           user_id: req.body.userId,
-          UserId: req.body.userId
         })
         .then(result => {
           res.json(result);
@@ -161,9 +161,9 @@ router.post("/updatePet", function(req, res) {
         medications: req.body.medications,
         healthIssues: req.body.healthIssues,
         foodAllergies: req.body.foodAllergies,
-        notes: req.body.notes,
+        notes: req.body.notes,        
+        UserId: req.body.userId,
         user_id: req.body.userId,
-        UserId: req.body.userId
       })
         .then(result => {
           res.json(result);
