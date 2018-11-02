@@ -254,7 +254,7 @@ router.post("/getPetByNameAndUserId", function(req, res) {
 
 router.post("/getPetsByUserId", function(req, res) {
   db.Pet.findAll({
-    where: { user_id: req.body.userId},
+    where: { UserId: req.body.userId},
   }).then(function(data, error) {
     if (data) {
       res.send(data);
