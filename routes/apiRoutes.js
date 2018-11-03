@@ -129,7 +129,7 @@ router.post("/updatePet", function(req, res) {
   console.log(req.body.id)
   console.log(req.body.userId)
   db.Pet.findOne({
-    where: { id: req.body.id, user_id: req.body.userId }
+    where: { id: req.body.id, UserId: req.body.userId }
   }).then(data => {
     if (data) {
       data.update({
