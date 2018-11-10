@@ -264,4 +264,16 @@ router.post("/getPetsByUserId", function(req, res) {
   });
 });
 
+router.delete("/deletePet/:id", function(req, res) {
+  db.Pet.destroy({
+    where: { id: req.params.id }
+  }).then(function(data, error) {
+    if (data) {
+      res.json(data);
+    } else {
+      res.json(error);
+    }
+  });
+});
+
 module.exports = router;
