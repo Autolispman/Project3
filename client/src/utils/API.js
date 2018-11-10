@@ -240,6 +240,19 @@ function getPetsByUserId(userId) {
   return p;
 }
 
+function deletePet(petId) {
+  let p = new Promise(function(data, error) {
+    axios.delete("/api/deletePet/" + petId).then(function(result, err) {
+      if (result) {
+        data(result);
+      } else {
+        error("");
+      }
+    });
+  });
+  return p;
+}
+
 export default {
   loginUser: loginUser,
   getAllAppointments: getAllAppointments,
@@ -251,5 +264,6 @@ export default {
   deleteUser: deleteUser,
   getPetByNameAndUserId: getPetByNameAndUserId,
   updatePet: updatePet,
-  getPetsByUserId: getPetsByUserId
+  getPetsByUserId: getPetsByUserId,
+  deletePet: deletePet
 };

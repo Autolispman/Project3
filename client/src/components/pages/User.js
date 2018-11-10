@@ -65,7 +65,7 @@ class User extends Component {
         wifiPassword: result.data.wifiPassword,
         notes: result.data.notes
       });
-      let user = {userId: result.data.id}
+      let user = {userId: result.data.id}      
       let promPets = API.getPetsByUserId(user)
       promPets.then(result => {
           this.setState({ pets: result.data})
