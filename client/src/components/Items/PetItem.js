@@ -8,6 +8,8 @@ const PetItem = props => (
               type="text"
               className="btn waves-effect red"
               onClick={props.deletePet}
+              data-petname={props.petName}
+              data-petid={props.petId}
             >
               Delete Pet
             </button>

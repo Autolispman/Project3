@@ -65,15 +65,19 @@ class User extends Component {
         wifiPassword: result.data.wifiPassword,
         notes: result.data.notes
       });
-      let user = {userId: result.data.id}      
-      let promPets = API.getPetsByUserId(user)
-      promPets.then(result => {
-          this.setState({ pets: result.data})
-      });
+      this.getClientsPets(result.data.id);
     });
     window.localStorage.setItem("firstName", "");
     window.localStorage.setItem("lastName", "");
   }
+
+  getClientsPets = id => {
+    let user = { userId: id };
+    let promPets = API.getPetsByUserId(user);
+    promPets.then(result => {
+      this.setState({ pets: result.data });
+    });
+  };
 
   createUser = event => {
     event.preventDefault();
@@ -207,6 +211,20 @@ class User extends Component {
     };
     window.localStorage.setItem("petInfo", JSON.stringify(userData));
     window.location.pathname = "/pet";
+  };
+
+  deletePet = event => {
+    let button = event.target;
+    console.log(button)
+    let conf = window.confirm(
+      `Do you really want to delete ${button.getAttribute("data-petname")}`
+    );
+    if (conf) {
+      let prom = API.deletePet(parseInt(button.getAttribute("data-petid"), 0));
+      prom.then(data => {
+        this.getClientsPets(this.state.id);
+      });
+    }
   };
 
   render() {
@@ -476,6 +494,7 @@ class User extends Component {
           {this.state.pets.map(pet => (
             <PetItem
               key={pet.id}
+              petId={pet.id}
               petName={pet.petName}
               breed={pet.breed}
               age={pet.age}
@@ -483,6 +502,7 @@ class User extends Component {
               medications={pet.medications}
               healthIssues={pet.healthIssues}
               notes={pet.notes}
+              deletePet={this.deletePet}
             />
           ))}
           <br />
