@@ -94,6 +94,7 @@ router.post("/updateUser", function(req, res) {
           res.json(err);
         });
     } else {
+      console.log("create")
       db.User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
