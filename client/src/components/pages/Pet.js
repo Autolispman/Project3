@@ -17,34 +17,42 @@ class Pet extends Component {
     userId: ""
   };
 
-   componentDidMount() {
+  componentDidMount() {
     let userData = window.localStorage.getItem("petInfo");
-    userData = JSON.parse(userData)
-    this.setState({
-      id: userData.id,
-      userId: userData.userId,
-      firstName: userData.firstName,
-      lastName: userData.lastName
-    })
-  //   let prom = API.getPetByIdAndUserId(userData);
-  //   prom.then(result => {
-  //     console.log(result);
-  //     this.setState({
-  //       id: result.data.id,
-  //       petName: result.data.petName,
-  //       breed: result.data.breed,
-  //       age: result.data.age,
-  //       feedingInstructions: result.data.feedingInstructions,
-  //       medications: result.data.medications,
-  //       healthIssues: result.data.healthIssues,
-  //       foodAllergies: result.data.foodAllergies,
-  //       notes: result.data.notes,
-  //       userId: result.data.userId
-  //     });
-  //   });
-  //   window.localStorage.setItem("petName", "");
-  //   window.localStorage.setItem("userId", "");
-   }
+    userData = JSON.parse(userData);
+    this.setState(
+      {
+        id: userData.id,
+        userId: userData.userId,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        petName: userData.petName
+      },
+      () => {
+        console.log(userData.petName)
+        this.queryForRepeatPet();
+      }
+    );
+
+    //   let prom = API.getPetByIdAndUserId(userData);
+    //   prom.then(result => {
+    //     console.log(result);
+    //     this.setState({
+    //       id: result.data.id,
+    //       petName: result.data.petName,
+    //       breed: result.data.breed,
+    //       age: result.data.age,
+    //       feedingInstructions: result.data.feedingInstructions,
+    //       medications: result.data.medications,
+    //       healthIssues: result.data.healthIssues,
+    //       foodAllergies: result.data.foodAllergies,
+    //       notes: result.data.notes,
+    //       userId: result.data.userId
+    //     });
+    //   });
+    //   window.localStorage.setItem("petName", "");
+    //   window.localStorage.setItem("userId", "");
+  }
 
   createPet = event => {
     event.preventDefault();
@@ -91,7 +99,7 @@ class Pet extends Component {
       // console.log(results.data.feedingInstructions)
       // console.log(this.state.feedingInstructions)
       if (this.state.petName !== "") {
-        this.setState({ id: results.data.id})
+        this.setState({ id: results.data.id });
         if (this.state.breed === "" || this.state.breed === undefined) {
           this.setState({ breed: results.data.breed });
         }
@@ -102,7 +110,9 @@ class Pet extends Component {
           this.state.feedingInstructions === "" ||
           this.state.feedingInstructions === undefined
         ) {
-          this.setState({ feedingInstructions: results.data.feedingInstructions });
+          this.setState({
+            feedingInstructions: results.data.feedingInstructions
+          });
         }
         if (
           this.state.medications === "" ||
@@ -236,7 +246,7 @@ class Pet extends Component {
               required={false}
               value={this.state.foodAllergies}
               onChange={this.handleOnChange}
-            />            
+            />
             <br />
             <label>Pet Notes</label>
             <textarea

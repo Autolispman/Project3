@@ -207,7 +207,21 @@ class User extends Component {
       id: null,
       userId: this.state.id,
       firstName: this.state.firstName,
-      lastName: this.state.lastName
+      lastName: this.state.lastName,
+    };
+    window.localStorage.setItem("petInfo", JSON.stringify(userData));
+    window.location.pathname = "/pet";
+  };
+
+  editPet = event => {
+    let button = event.target;
+    console.log(button)
+    let userData = {
+      id: null,
+      userId: this.state.id,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      petName: button.getAttribute("data-petname")
     };
     window.localStorage.setItem("petInfo", JSON.stringify(userData));
     window.location.pathname = "/pet";
@@ -220,7 +234,7 @@ class User extends Component {
       `Do you really want to delete ${button.getAttribute("data-petname")}`
     );
     if (conf) {
-      let prom = API.deletePet(parseInt(button.getAttribute("data-petid"), 0));
+      let prom = API.deletePet(parseInt(button.getAttribute("data-petid"), 10));
       prom.then(data => {
         this.getClientsPets(this.state.id);
       });
@@ -502,6 +516,7 @@ class User extends Component {
               medications={pet.medications}
               healthIssues={pet.healthIssues}
               notes={pet.notes}
+              editPet={this.editPet}
               deletePet={this.deletePet}
             />
           ))}
