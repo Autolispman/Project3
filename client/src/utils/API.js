@@ -69,6 +69,8 @@ function updateUser(userData) {
         zipCode: userData.zipCode,
         cellPhone: userData.cellPhone,
         email: userData.email,
+        emergencyContactName: userData.emergencyContactName,
+        emergencyContactNumber: userData.emergencyContactNumber,
         vetClinicName: userData.vetClinicName,
         vetName: userData.vetName,
         vetPhone: userData.vetPhone,
@@ -91,7 +93,7 @@ function updateUser(userData) {
 }
 
 function updatePet(petData) {
-  console.log(petData)
+  console.log(petData);
   let p = new Promise(function(data, error) {
     axios
       .post("/api/updatePet", {
@@ -212,30 +214,26 @@ function getUserByFirstAndLastName(firstAndLastName) {
 function getPetByNameAndUserId(petId) {
   //console.log(firstAndLastName)
   let p = new Promise(function(data, error) {
-    axios
-      .post("/api/getPetByNameAndUserId", petId)
-      .then(function(result, err) {
-        if (result) {
-          data(result);
-        } else {
-          error("");
-        }
-      });
+    axios.post("/api/getPetByNameAndUserId", petId).then(function(result, err) {
+      if (result) {
+        data(result);
+      } else {
+        error("");
+      }
+    });
   });
   return p;
 }
 
 function getPetsByUserId(userId) {
   let p = new Promise(function(data, error) {
-    axios
-      .post("/api/getPetsByUserId", userId)
-      .then(function(result, err) {
-        if (result) {
-          data(result);
-        } else {
-          error("");
-        }
-      });
+    axios.post("/api/getPetsByUserId", userId).then(function(result, err) {
+      if (result) {
+        data(result);
+      } else {
+        error("");
+      }
+    });
   });
   return p;
 }

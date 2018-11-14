@@ -6,7 +6,7 @@ router.post("/login", function(req, res) {
   res.json("/calendar");
 }),
   router.post("/signup", function(req, res) {
-     db.Admin.create({
+    db.Admin.create({
       username: req.body.username,
       password: req.body.password
     })
@@ -67,7 +67,8 @@ router.post("/updateUser", function(req, res) {
     where: { firstName: req.body.firstName, lastName: req.body.lastName }
   }).then(data => {
     if (data) {
-      data.update({
+      data
+        .update({
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           street1: req.body.street1,
@@ -77,6 +78,8 @@ router.post("/updateUser", function(req, res) {
           zipCode: req.body.zipCode,
           cellPhone: req.body.cellPhone,
           email: req.body.email,
+          emergencyContactName: req.body.emergencyContactName,
+          emergencyContactNumber: req.body.emergencyContactNumber,
           vetClinicName: req.body.vetClinicName,
           vetName: req.body.vetName,
           vetPhone: req.body.vetPhone,
@@ -94,7 +97,7 @@ router.post("/updateUser", function(req, res) {
           res.json(err);
         });
     } else {
-      console.log("create")
+      console.log("create");
       db.User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -105,6 +108,8 @@ router.post("/updateUser", function(req, res) {
         zipCode: req.body.zipCode,
         cellPhone: req.body.cellPhone,
         email: req.body.email,
+        emergencyContactName: req.body.emergencyContactName,
+        emergencyContactNumber: req.body.emergencyContactNumber,
         vetClinicName: req.body.vetClinicName,
         vetName: req.body.vetName,
         vetPhone: req.body.vetPhone,
@@ -126,14 +131,12 @@ router.post("/updateUser", function(req, res) {
 });
 
 router.post("/updatePet", function(req, res) {
-  console.log("updatPet")
-  console.log(req.body.id)
-  console.log(req.body.userId)
   db.Pet.findOne({
     where: { id: req.body.id, user_id: req.body.userId }
   }).then(data => {
     if (data) {
-      data.update({
+      data
+        .update({
           petName: req.body.petName,
           breed: req.body.breed,
           age: req.body.age,
@@ -141,9 +144,9 @@ router.post("/updatePet", function(req, res) {
           medications: req.body.medications,
           healthIssues: req.body.healthIssues,
           foodAllergies: req.body.foodAllergies,
-          notes: req.body.notes,          
+          notes: req.body.notes,
           //UserId: req.body.userId,
-          user_id: req.body.userId,
+          user_id: req.body.userId
         })
         .then(result => {
           res.json(result);
@@ -152,8 +155,8 @@ router.post("/updatePet", function(req, res) {
           res.json(err);
         });
     } else {
-      console.log("db.Pet.create")
-      console.log(req.body)
+      console.log("db.Pet.create");
+      console.log(req.body);
       db.Pet.create({
         petName: req.body.petName,
         breed: req.body.breed,
@@ -162,8 +165,8 @@ router.post("/updatePet", function(req, res) {
         medications: req.body.medications,
         healthIssues: req.body.healthIssues,
         foodAllergies: req.body.foodAllergies,
-        notes: req.body.notes,        
-        user_id: req.body.userId,
+        notes: req.body.notes,
+        user_id: req.body.userId
         //user_id: req.body.userId,
       })
         .then(result => {
@@ -240,7 +243,7 @@ router.post("/getUserByFirstAndLastName", function(req, res) {
 
 router.post("/getPetByNameAndUserId", function(req, res) {
   db.Pet.findOne({
-    where: { petName: req.body.petName, user_id: req.body.userId},
+    where: { petName: req.body.petName, user_id: req.body.userId },
     include: [db.User]
   }).then(function(data, error) {
     if (data) {
@@ -253,7 +256,7 @@ router.post("/getPetByNameAndUserId", function(req, res) {
 
 router.post("/getPetsByUserId", function(req, res) {
   db.Pet.findAll({
-    where: { user_id: req.body.userId},
+    where: { user_id: req.body.userId }
   }).then(function(data, error) {
     if (data) {
       res.send(data);
