@@ -21,6 +21,8 @@ class User extends Component {
     info: "",
     cellPhone: "",
     email: "",
+    emergencyContactName: "",
+    emergencyContactNumber: "",
     vetClinicName: "",
     vetName: "",
     vetPhone: "",
@@ -55,6 +57,8 @@ class User extends Component {
         info: result.data.info,
         cellPhone: result.data.cellPhone,
         email: result.data.email,
+        emergencyContactName: result.data.emergencyContactName,
+        emergencyContactNumber: result.data.emergencyContactNumber,
         vetClinicName: result.data.vetClinicName,
         vetName: result.data.vetName,
         vetPhone: result.data.vetPhone,
@@ -92,6 +96,8 @@ class User extends Component {
       zipCode: this.state.zipCode,
       cellPhone: this.state.cellPhone,
       email: this.state.email,
+      emergencyContactName: this.state.emergencyContactName,
+      emergencyContactNumber: this.state.emergencyContactNumber,
       vetClinicName: this.state.vetClinicName,
       vetName: this.state.vetName,
       vetPhone: this.state.vetPhone,
@@ -154,6 +160,12 @@ class User extends Component {
         if (this.state.email === "" || this.state.email === undefined) {
           this.setState({ email: results.data.email });
         }
+        if (this.state.emergencyContactName === "" || this.state.emergencyContactName === undefined) {
+          this.setState({ emergencyContactName: results.data.emergencyContactName });
+        }
+        if (this.state.emergencyContactNumber === "" || this.state.emergencyContactNumber === undefined) {
+          this.setState({ emergencyContactNumber: results.data.emergencyContactNumber });
+        }
         if (
           this.state.vetClinicName === "" ||
           this.state.vetClinicName === undefined
@@ -207,7 +219,7 @@ class User extends Component {
       id: null,
       userId: this.state.id,
       firstName: this.state.firstName,
-      lastName: this.state.lastName,
+      lastName: this.state.lastName
     };
     window.localStorage.setItem("petInfo", JSON.stringify(userData));
     window.location.pathname = "/pet";
@@ -215,7 +227,7 @@ class User extends Component {
 
   editPet = event => {
     let button = event.target;
-    console.log(button)
+    console.log(button);
     let userData = {
       id: null,
       userId: this.state.id,
@@ -229,7 +241,7 @@ class User extends Component {
 
   deletePet = event => {
     let button = event.target;
-    console.log(button)
+    console.log(button);
     let conf = window.confirm(
       `Do you really want to delete ${button.getAttribute("data-petname")}`
     );
@@ -377,6 +389,30 @@ class User extends Component {
               onChange={this.handleOnChange}
             />
             <br />
+            <label>Emergency Contact Name</label>
+            <input
+              name="emergencyContactName"
+              type="text"
+              id="emergencyContactNameId"
+              className=""
+              placeholder="emergencyContactName"
+              required={false}
+              value={this.state.emergencyContactName}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Emergency Contact Number</label>
+            <input
+              name="emergencyContactNumber"
+              type="text"
+              id="emergencyContactNumberId"
+              className=""
+              placeholder="emergencyContactNumber"
+              required={false}
+              pattern="^[2-9]\d{2}-\d{3}-\d{4}$"
+              value={this.state.emergencyContactNumber}
+              onChange={this.handleOnChange}
+            />
             <label>Vet Clinic Name</label>
             <input
               name="vetClinicName"
