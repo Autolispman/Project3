@@ -100,7 +100,7 @@ function updatePet(petData) {
         id: petData.id,
         petName: petData.petName,
         breed: petData.breed,
-        age: petData.age,
+        birthday: petData.birthday,
         gender: petData.gender,
         fixed: petData.fixed,
         crateTrained: petData.crateTrained,

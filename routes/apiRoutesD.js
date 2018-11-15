@@ -139,7 +139,7 @@ router.post("/updatePet", function(req, res) {
         .update({
           petName: req.body.petName,
           breed: req.body.breed,
-          age: req.body.age,
+          birthday: req.body.birthday,
           gender: req.body.gender,
           fixed: req.body.fixed,
           crateTrained: req.body.crateTrained,
@@ -164,7 +164,7 @@ router.post("/updatePet", function(req, res) {
       db.Pet.create({
         petName: req.body.petName,
         breed: req.body.breed,
-        age: req.body.age,
+        birthday: req.body.birthday,
         gender: req.body.gender,
         fixed: req.body.fixed,
         crateTrained: req.body.crateTrained,
