@@ -548,6 +548,10 @@ class User extends Component {
               petName={pet.petName}
               breed={pet.breed}
               age={pet.age}
+              gender={pet.gender}
+              fixed={pet.fixed}
+              crateTrained={pet.crateTrained}
+              houseTrained={pet.houseTrained}
               feedingInstructions={pet.feedingInstructions}
               medications={pet.medications}
               healthIssues={pet.healthIssues}
