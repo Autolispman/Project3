@@ -8,7 +8,7 @@ class Pet extends Component {
     id: "",
     petName: "",
     breed: "",
-    age: null,
+    birthday: null,
     gender: "",
     fixed: "",
     crateTrained: "",
@@ -64,7 +64,7 @@ class Pet extends Component {
       id: this.state.id,
       petName: this.state.petName,
       breed: this.state.breed,
-      age: this.state.age,
+      birthday: this.state.birthday,
       gender: this.state.gender,
       fixed: this.state.fixed,
       crateTrained: this.state.crateTrained,
@@ -112,8 +112,8 @@ class Pet extends Component {
         if (this.state.breed === "" || this.state.breed === undefined) {
           this.setState({ breed: results.data.breed });
         }
-        if (this.state.age === null || this.state.age === undefined) {
-          this.setState({ age: results.data.age });
+        if (this.state.birthday === null || this.state.birthday === undefined) {
+          this.setState({ birthday: results.data.birthday });
         }
         if (this.state.gender === "" || this.state.gender === undefined) {
           this.setState({
@@ -223,15 +223,15 @@ class Pet extends Component {
               onChange={this.handleOnChange}
             />
             <br />
-            <label>Age</label>
+            <label>Birthday</label>
             <input
-              name="age"
+              name="birthday"
               type="text"
-              id="ageInputId"
+              id="birthdayInputId"
               className=""
-              placeholder="age"
+              placeholder="birthday"
               required={false}
-              value={this.state.age}
+              value={this.state.birthday}
               onChange={this.handleOnChange}
             />
             <br />
