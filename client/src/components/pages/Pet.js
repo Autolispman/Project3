@@ -9,6 +9,10 @@ class Pet extends Component {
     petName: "",
     breed: "",
     age: null,
+    gender: "",
+    fixed: "",
+    crateTrained: "",
+    houseTrained: "",
     feedingInstructions: "",
     medications: "",
     healthIssues: "",
@@ -29,7 +33,7 @@ class Pet extends Component {
         petName: userData.petName
       },
       () => {
-        console.log(userData.petName)
+        console.log(userData.petName);
         this.queryForRepeatPet();
       }
     );
@@ -61,6 +65,10 @@ class Pet extends Component {
       petName: this.state.petName,
       breed: this.state.breed,
       age: this.state.age,
+      gender: this.state.gender,
+      fixed: this.state.fixed,
+      crateTrained: this.state.crateTrained,
+      houseTrained: this.state.houseTrained,
       feedingInstructions: this.state.feedingInstructions,
       medications: this.state.medications,
       healthIssues: this.state.healthIssues,
@@ -70,6 +78,7 @@ class Pet extends Component {
     };
     window.localStorage.setItem("firstName", this.state.firstName);
     window.localStorage.setItem("lastName", this.state.lastName);
+    console.log(userData)
     let prom = API.updatePet(userData);
     prom.then(result => {
       window.location = "/user";
@@ -95,7 +104,7 @@ class Pet extends Component {
     };
     let prom = API.getPetByNameAndUserId(petData);
     prom.then(results => {
-      // console.log(results)
+       console.log(results.data.crateTrained)
       // console.log(results.data.feedingInstructions)
       // console.log(this.state.feedingInstructions)
       if (this.state.petName !== "") {
@@ -105,6 +114,32 @@ class Pet extends Component {
         }
         if (this.state.age === null || this.state.age === undefined) {
           this.setState({ age: results.data.age });
+        }
+        if (this.state.gender === "" || this.state.gender === undefined) {
+          this.setState({
+            gender: results.data.gender
+          });
+        }
+        if (this.state.fixed === "" || this.state.fixed === undefined) {
+          this.setState({
+            fixed: results.data.fixed
+          });
+        }
+        if (
+          this.state.crateTrained === "" ||
+          this.state.crateTrained === undefined
+        ) {
+          this.setState({
+            crateTrained: results.data.crateTrained
+          });
+        }
+        if (
+          this.state.houseTrained === "" ||
+          this.state.houseTrained === undefined
+        ) {
+          this.setState({
+            houseTrained: results.data.houseTrained
+          });
         }
         if (
           this.state.feedingInstructions === "" ||
@@ -197,6 +232,110 @@ class Pet extends Component {
               placeholder="age"
               required={false}
               value={this.state.age}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>Gender</label>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  //defaultValue="PetTaxiPickUpDropOff"
+                  onChange={this.handleOnChange}
+                  value="Male"
+                  checked={this.state.gender === "Male"}
+                  required={true}
+                />
+                <span>Male</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  //defaultValue="PetTaxiPickUpDropOff"
+                  onChange={this.handleOnChange}
+                  value="Female"
+                  checked={this.state.gender === "Female"}
+                  required={true}
+                />
+                <span>Female</span>
+              </label>
+            </div>
+            <hr></hr>
+            <label>Fixed?</label>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="fixed"
+                  //defaultValue="PetTaxiPickUpDropOff"
+                  onChange={this.handleOnChange}
+                  value="Spayed"
+                  checked={this.state.fixed === "Spayed"}
+                  required={true}
+                />
+                <span>Spayed</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="fixed"
+                  //defaultValue="PetTaxiPickUpDropOff"
+                  onChange={this.handleOnChange}
+                  value="Neutered"
+                  checked={this.state.fixed === "Neutered"}
+                  required={true}
+                />
+                <span>Neutered</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="fixed"
+                  //defaultValue="PetTaxiPickUpDropOff"
+                  onChange={this.handleOnChange}
+                  value="Neither"
+                  checked={this.state.fixed === "Neither"}
+                  required={true}
+                />
+                <span>Neither</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="fixed"
+                  //defaultValue="PetTaxiPickUpDropOff"
+                  onChange={this.handleOnChange}
+                  value="Unknown"
+                  checked={this.state.fixed === "Unknown"}
+                  required={true}
+                />
+                <span>Unknown</span>
+              </label>
+            </div>
+            <hr></hr>
+            <label>Crate Trained</label>
+            <textarea
+              name="crateTrained"
+              type="text"
+              id="crateTrainedInputId"
+              className=""
+              placeholder="crateTrained"
+              required={false}
+              value={this.state.crateTrained}
+              onChange={this.handleOnChange}
+            />
+            <br />
+            <label>House Trained</label>
+            <textarea
+              name="houseTrained"
+              type="text"
+              id="houseTrainedInputId"
+              className=""
+              placeholder="houseTrained"
+              required={false}
+              value={this.state.houseTrained}
               onChange={this.handleOnChange}
             />
             <br />

@@ -13,6 +13,22 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true
     },
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    fixed: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    crateTrained: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    houseTrained: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
     feedingInstructions: {
       type: DataTypes.TEXT,
       allowNull: true
