@@ -32,7 +32,8 @@ class User extends Component {
     alarmCode: "",
     wifiPassword: "",
     notes: "",
-    pets: []
+    pets: [],
+    petsShowDetail: []
   };
 
   componentDidMount() {
@@ -79,7 +80,14 @@ class User extends Component {
     let user = { userId: id };
     let promPets = API.getPetsByUserId(user);
     promPets.then(result => {
-      this.setState({ pets: result.data });
+      this.setState({ pets: result.data }, () => {
+        let showDetails = [];
+        let petIds = [];
+        for (let i = 0; i < this.state.pets.length; i++) {
+          petIds.push(this.state.pets[i].id);
+          showDetails.push(false);
+        }
+      });
     });
   };
 
@@ -160,11 +168,21 @@ class User extends Component {
         if (this.state.email === "" || this.state.email === undefined) {
           this.setState({ email: results.data.email });
         }
-        if (this.state.emergencyContactName === "" || this.state.emergencyContactName === undefined) {
-          this.setState({ emergencyContactName: results.data.emergencyContactName });
+        if (
+          this.state.emergencyContactName === "" ||
+          this.state.emergencyContactName === undefined
+        ) {
+          this.setState({
+            emergencyContactName: results.data.emergencyContactName
+          });
         }
-        if (this.state.emergencyContactNumber === "" || this.state.emergencyContactNumber === undefined) {
-          this.setState({ emergencyContactNumber: results.data.emergencyContactNumber });
+        if (
+          this.state.emergencyContactNumber === "" ||
+          this.state.emergencyContactNumber === undefined
+        ) {
+          this.setState({
+            emergencyContactNumber: results.data.emergencyContactNumber
+          });
         }
         if (
           this.state.vetClinicName === "" ||
@@ -547,7 +565,7 @@ class User extends Component {
               petId={pet.id}
               petName={pet.petName}
               breed={pet.breed}
-              age={pet.age}
+              birthday={pet.birthday}
               gender={pet.gender}
               fixed={pet.fixed}
               crateTrained={pet.crateTrained}
