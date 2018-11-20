@@ -87,7 +87,7 @@ class Appointment extends Component {
   };
 
   getClientsPets = id => {
-    let user = { userId: this.state.info.UserId };
+    let user = { userId: this.state.info.user_id };
     console.log(user);
     let promPets = API.getPetsByUserId(user);
     promPets.then(result => {
