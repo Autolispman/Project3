@@ -162,7 +162,7 @@ router.post("/updatePet", function(req, res) {
         });
     } else {
       console.log("db.Pet.create");
-      console.log(req.body);
+      //console.log(req.body);
       db.Pet.create({
         petName: req.body.petName,
         breed: req.body.breed,
@@ -200,7 +200,8 @@ router.post("/updateAppointment", function(req, res) {
         endDate: req.body.endDate,
         UserId: req.body.user_id,
         user_id: req.body.user_id,
-        appointmentNotes: req.body.appointmentNotes
+        appointmentNotes: req.body.appointmentNotes,
+        petsToSit: req.body.petsToSit
       });
       res.json(data);
     } else {
@@ -210,7 +211,8 @@ router.post("/updateAppointment", function(req, res) {
         endDate: req.body.endDate,
         UserId: req.body.user_id,
         user_id: req.body.user_id,
-        appointmentNotes: req.body.appointmentNotes
+        appointmentNotes: req.body.appointmentNotes,
+        petsToSit: req.body.petsToSit
       });
       res.json("");
     }

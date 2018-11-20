@@ -16,6 +16,10 @@ module.exports = function(sequelize, DataTypes) {
     appointmentNotes: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    petsToSit: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   });
 
