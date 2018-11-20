@@ -97,7 +97,6 @@ router.post("/updateUser", function(req, res) {
           res.json(err);
         });
     } else {
-      console.log("create");
       db.User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -131,8 +130,11 @@ router.post("/updateUser", function(req, res) {
 });
 
 router.post("/updatePet", function(req, res) {
+  console.log("updatPet");
+  console.log(req.body.id);
+  console.log(req.body.userId);
   db.Pet.findOne({
-    where: { id: req.body.id, user_id: req.body.userId }
+    where: { id: req.body.id, UserId: req.body.userId }
   }).then(data => {
     if (data) {
       data
@@ -149,8 +151,8 @@ router.post("/updatePet", function(req, res) {
           healthIssues: req.body.healthIssues,
           foodAllergies: req.body.foodAllergies,
           notes: req.body.notes,
-          //UserId: req.body.userId,
-          user_id: req.body.userId
+          UserId: req.body.userId
+          //user_id: req.body.userId,
         })
         .then(result => {
           res.json(result);
@@ -174,7 +176,7 @@ router.post("/updatePet", function(req, res) {
         healthIssues: req.body.healthIssues,
         foodAllergies: req.body.foodAllergies,
         notes: req.body.notes,
-        user_id: req.body.userId
+        UserId: req.body.userId
         //user_id: req.body.userId,
       })
         .then(result => {
@@ -196,6 +198,7 @@ router.post("/updateAppointment", function(req, res) {
         typeOfAppointment: req.body.typeOfAppointment,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
+        UserId: req.body.user_id,
         user_id: req.body.user_id,
         appointmentNotes: req.body.appointmentNotes
       });
@@ -205,6 +208,7 @@ router.post("/updateAppointment", function(req, res) {
         typeOfAppointment: req.body.typeOfAppointment,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
+        UserId: req.body.user_id,
         user_id: req.body.user_id,
         appointmentNotes: req.body.appointmentNotes
       });
@@ -251,7 +255,7 @@ router.post("/getUserByFirstAndLastName", function(req, res) {
 
 router.post("/getPetByNameAndUserId", function(req, res) {
   db.Pet.findOne({
-    where: { petName: req.body.petName, user_id: req.body.userId },
+    where: { petName: req.body.petName, UserId: req.body.userId },
     include: [db.User]
   }).then(function(data, error) {
     if (data) {
@@ -264,7 +268,7 @@ router.post("/getPetByNameAndUserId", function(req, res) {
 
 router.post("/getPetsByUserId", function(req, res) {
   db.Pet.findAll({
-    where: { user_id: req.body.userId }
+    where: { UserId: req.body.userId }
   }).then(function(data, error) {
     if (data) {
       res.send(data);
