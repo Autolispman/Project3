@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import API from "../../utils/API.js";
 import moment from "moment";
 import { Link } from "react-router-dom";
-//import "./appointment.css";
+import "./appointment.css";
 import PetItem from "../Items/PetItem.js";
 
 class Appointment extends Component {
@@ -78,10 +78,10 @@ class Appointment extends Component {
           info: currentInfo.info
         });
       }
-      window.localStorage.setItem("currentInfo", null);
+      //window.localStorage.setItem("currentInfo", null);
       //console.log(this.state.info)
     } catch (err) {
-      window.localStorage.setItem("currentInfo", null);
+      //window.localStorage.setItem("currentInfo", null);
     }
   };
 
