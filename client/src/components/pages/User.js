@@ -33,7 +33,8 @@ class User extends Component {
     wifiPassword: "",
     notes: "",
     pets: [],
-    petsShowDetail: []
+    petsShowDetail: [],
+    showButtons: true
   };
 
   componentDidMount() {
@@ -80,14 +81,7 @@ class User extends Component {
     let user = { userId: id };
     let promPets = API.getPetsByUserId(user);
     promPets.then(result => {
-      this.setState({ pets: result.data }, () => {
-        let showDetails = [];
-        let petIds = [];
-        for (let i = 0; i < this.state.pets.length; i++) {
-          petIds.push(this.state.pets[i].id);
-          showDetails.push(false);
-        }
-      });
+      this.setState({ pets: result.data });
     });
   };
 
@@ -576,6 +570,7 @@ class User extends Component {
               notes={pet.notes}
               editPet={this.editPet}
               deletePet={this.deletePet}
+              showButtons={this.state.showButtons}
             />
           ))}
           <br />

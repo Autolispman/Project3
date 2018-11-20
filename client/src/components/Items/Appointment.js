@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import API from "../../utils/API.js";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import "./appointment.css";
+//import "./appointment.css";
+import PetItem from "../Items/PetItem.js";
 
 class Appointment extends Component {
   state = {
@@ -28,12 +29,19 @@ class Appointment extends Component {
     alarmCode: "",
     wifiPassword: "",
     notes: "",
-    appointmentNotes: ""
+    appointmentNotes: "",
+    pets: [],
+    showCheckbox: true
   };
 
   componentDidMount() {
-    this.setStateHelper();
+    this.setup();
   }
+
+  setup = async function() {
+    await this.setStateHelper();
+    this.getClientsPets();
+  };
 
   setStateHelper = () => {
     try {
@@ -75,6 +83,16 @@ class Appointment extends Component {
     } catch (err) {
       window.localStorage.setItem("currentInfo", null);
     }
+  };
+
+  getClientsPets = id => {
+    let user = { userId: this.state.info.user_id };
+    console.log(user);
+    let promPets = API.getPetsByUserId(user);
+    promPets.then(result => {
+      console.log(result);
+      this.setState({ pets: result.data });
+    });
   };
 
   createAppointment = event => {
@@ -161,7 +179,10 @@ class Appointment extends Component {
         if (this.state.email === "" || this.state.email === undefined) {
           this.setState({ email: results.data.email });
         }
-        if (this.state.vetClinicName === "" || this.state.vetClinicName === undefined) {
+        if (
+          this.state.vetClinicName === "" ||
+          this.state.vetClinicName === undefined
+        ) {
           this.setState({ vetClinicName: results.data.vetClinicName });
         }
         if (this.state.vetName === "" || this.state.vetName === undefined) {
@@ -170,7 +191,10 @@ class Appointment extends Component {
         if (this.state.vetPhone === "" || this.state.vetPhone === undefined) {
           this.setState({ vetPhone: results.data.vetPhone });
         }
-        if (this.state.keyInstructions === "" || this.state.keyInstructions === undefined) {
+        if (
+          this.state.keyInstructions === "" ||
+          this.state.keyInstructions === undefined
+        ) {
           this.setState({ keyInstructions: results.data.keyInstructions });
         }
         if (this.state.gateCode === "" || this.state.gateCode === undefined) {
@@ -182,13 +206,19 @@ class Appointment extends Component {
         if (this.state.alarmCode === "" || this.state.alarmCode === undefined) {
           this.setState({ alarmCode: results.data.alarmCode });
         }
-        if (this.state.wifiPassword === "" || this.state.wifiPassword === undefined) {
+        if (
+          this.state.wifiPassword === "" ||
+          this.state.wifiPassword === undefined
+        ) {
           this.setState({ wifiPassword: results.data.wifiPassword });
         }
         if (this.state.notes === "" || this.state.notes === undefined) {
           this.setState({ notes: results.data.notes });
         }
-        if (this.state.appointmentNotes === "" || this.state.appointmentNotes === undefined) {
+        if (
+          this.state.appointmentNotes === "" ||
+          this.state.appointmentNotes === undefined
+        ) {
           this.setState({ appointmentNotes: results.data.appointmentNotes });
         }
       }
@@ -577,6 +607,7 @@ class Appointment extends Component {
                 />
                 <span>Taxi Pick Up/Drop Off</span>
               </label>
+              <br />
             </div>
             <button type="text" className="btn waves-effect waves-light">
               Create/Update Appointment
@@ -593,6 +624,28 @@ class Appointment extends Component {
             <Link to="/calendar" className="btn waves-effect yellow darken-2">
               Disregard Changes
             </Link>
+          </div>
+          <div>
+          {this.state.pets.map(pet => (
+            <PetItem
+              key={pet.id}
+              petId={pet.id}
+              petName={pet.petName}
+              breed={pet.breed}
+              birthday={pet.birthday}
+              gender={pet.gender}
+              fixed={pet.fixed}
+              crateTrained={pet.crateTrained}
+              houseTrained={pet.houseTrained}
+              feedingInstructions={pet.feedingInstructions}
+              medications={pet.medications}
+              healthIssues={pet.healthIssues}
+              notes={pet.notes}
+              editPet={this.editPet}
+              deletePet={this.deletePet}
+              showCheckbox= {this.state.showCheckbox}
+            />
+          ))}
           </div>
         </div>
       </div>
