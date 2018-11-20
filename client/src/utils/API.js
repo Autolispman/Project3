@@ -132,7 +132,8 @@ function updateAppointment(userAppointment) {
         endDate: userAppointment.endDate,
         typeOfAppointment: userAppointment.typeOfAppointment,
         user_id: userAppointment.user_id,
-        appointmentNotes: userAppointment.appointmentNotes
+        appointmentNotes: userAppointment.appointmentNotes,
+        petsToSit: userAppointment.petsToSit
       })
       .then(function(result, err) {
         if (result) {

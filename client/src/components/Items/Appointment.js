@@ -32,7 +32,8 @@ class Appointment extends Component {
     notes: "",
     appointmentNotes: "",
     pets: [],
-    showCheckbox: true
+    showCheckbox: true,
+    petsAndMore: []
   };
 
   componentDidMount() {
@@ -91,13 +92,22 @@ class Appointment extends Component {
     console.log(user);
     let promPets = API.getPetsByUserId(user);
     promPets.then(result => {
-      console.log(result);
-      this.setState({ pets: result.data });
+      //console.log(result);
+      this.setState({ pets: result.data }, () => {
+        //console.log(this.state.pets);
+        let petsAndMore = [...this.state.pets];
+        for (let i = 0; i < petsAndMore.length; i++) {
+          petsAndMore[i] = { ...petsAndMore[i], checked: false };
+          //console.log(petsAndMore[i]);
+        }
+        this.setState({ petsAndMore: petsAndMore });
+      });
     });
   };
 
   createAppointment = event => {
     event.preventDefault();
+    let checkedPets = this.getCheckedPets();
     const userData = {
       id: this.state.info.id,
       firstName: this.state.firstName,
@@ -126,7 +136,8 @@ class Appointment extends Component {
       startDate: this.state.startDate,
       endDate: this.state.endDate,
       typeOfAppointment: this.state.typeOfAppointment,
-      appointmentNotes: this.state.appointmentNotes
+      appointmentNotes: this.state.appointmentNotes,
+      petsToSit: checkedPets
     };
 
     let prom = API.updateUser(userData);
@@ -239,7 +250,15 @@ class Appointment extends Component {
     });
   };
 
-  //date picker
+  getCheckedPets = () => {
+    let checkedPets = [];
+    for (let i = 0; i < this.state.petsAndMore.length; i++) {
+      if (this.state.petsAndMore[i].checked) {
+        checkedPets.push(this.state.petsAndMore[i].petName);
+      }
+    }
+    return checkedPets.toString()
+  };
 
   render() {
     return (

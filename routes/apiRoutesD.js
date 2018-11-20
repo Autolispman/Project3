@@ -197,7 +197,8 @@ router.post("/updateAppointment", function(req, res) {
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         user_id: req.body.user_id,
-        appointmentNotes: req.body.appointmentNotes
+        appointmentNotes: req.body.appointmentNotes,
+        petsToSit: req.body.petsToSit
       });
       res.json(data);
     } else {
@@ -206,7 +207,8 @@ router.post("/updateAppointment", function(req, res) {
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         user_id: req.body.user_id,
-        appointmentNotes: req.body.appointmentNotes
+        appointmentNotes: req.body.appointmentNotes,
+        petsToSit: req.body.petsToSit
       });
       res.json("");
     }
