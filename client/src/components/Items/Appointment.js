@@ -667,6 +667,7 @@ class Appointment extends Component {
               editPet={this.editPet}
               deletePet={this.deletePet}
               showCheckbox= {this.state.showCheckbox}
+              petsAndMore={this.state.petsAndMore}
             />
           ))}
           </div>
