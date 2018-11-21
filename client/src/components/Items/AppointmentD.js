@@ -33,7 +33,8 @@ class Appointment extends Component {
     appointmentNotes: "",
     pets: [],
     showCheckbox: true,
-    petsAndMore: []
+    petsAndMore: [],
+    petsToSit: []
   };
 
   componentDidMount() {
@@ -42,7 +43,8 @@ class Appointment extends Component {
 
   setup = async function() {
     await this.setStateHelper();
-    this.getClientsPets();
+    await this.getClientsPets();
+    console.log(this.state.info);
   };
 
   setStateHelper = () => {
@@ -77,6 +79,7 @@ class Appointment extends Component {
           //startDate: "2018-09-04T00:01",
           endDate: moment(currentInfo.end).format("YYYY-MM-DDTHH:mm"),
           typeOfAppointment: currentInfo.info.typeOfAppointment,
+          petsToSit: currentInfo.info.petsToSit,
           info: currentInfo.info
         });
       }
@@ -100,7 +103,18 @@ class Appointment extends Component {
           petsAndMore[i] = { ...petsAndMore[i], checked: false };
           //console.log(petsAndMore[i]);
         }
-        this.setState({ petsAndMore: petsAndMore });
+        let petsToSitSplit = this.state.petsToSit.split(",");
+        console.log(petsToSitSplit)
+        for (let i = 0; i < petsToSitSplit.length; i++) {
+          for (let j = 0; j < petsAndMore.length; j++) {
+            if (petsToSitSplit[i] === petsAndMore[j].petName) {
+              petsAndMore[j].checked = true;
+            }
+          }
+        }
+        this.setState({ petsAndMore: petsAndMore }, () => {
+          console.log(this.state.petsAndMore);
+        });
       });
     });
   };
@@ -257,7 +271,7 @@ class Appointment extends Component {
         checkedPets.push(this.state.petsAndMore[i].petName);
       }
     }
-    return checkedPets.toString()
+    return checkedPets.toString();
   };
 
   render() {
@@ -649,7 +663,7 @@ class Appointment extends Component {
             </Link>
           </div>
           <div>
-            {this.state.pets.map(pet => (
+            {this.state.petsAndMore.map(pet => (
               <PetItem
                 key={pet.id}
                 petId={pet.id}
@@ -668,6 +682,7 @@ class Appointment extends Component {
                 deletePet={this.deletePet}
                 showCheckbox={this.state.showCheckbox}
                 petsAndMore={this.state.petsAndMore}
+                checked={pet.checked}
               />
             ))}
           </div>
