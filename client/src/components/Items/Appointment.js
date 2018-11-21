@@ -100,7 +100,18 @@ class Appointment extends Component {
           petsAndMore[i] = { ...petsAndMore[i], checked: false };
           //console.log(petsAndMore[i]);
         }
-        this.setState({ petsAndMore: petsAndMore });
+        let petsToSitSplit = this.state.petsToSit.split(",");
+        console.log(petsToSitSplit)
+        for (let i = 0; i < petsToSitSplit.length; i++) {
+          for (let j = 0; j < petsAndMore.length; j++) {
+            if (petsToSitSplit[i] === petsAndMore[j].petName) {
+              petsAndMore[j].checked = true;
+            }
+          }
+        }
+        this.setState({ petsAndMore: petsAndMore }, () => {
+          console.log(this.state.petsAndMore);
+        });
       });
     });
   };
@@ -668,6 +679,7 @@ class Appointment extends Component {
               deletePet={this.deletePet}
               showCheckbox= {this.state.showCheckbox}
               petsAndMore={this.state.petsAndMore}
+              checked={pet.checked}
             />
           ))}
           </div>

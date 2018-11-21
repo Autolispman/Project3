@@ -7,6 +7,10 @@ class PetItem extends Component {
     checked: false
   };
 
+  componentDidMount() {
+    this.setState({checked: this.props.checked})
+  }
+
   toggleShowDetails = () => {
     this.setState(
       {
