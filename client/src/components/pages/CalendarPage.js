@@ -46,7 +46,9 @@ class CalendarPage extends Component {
             " " +
             results.data[i].User.firstName +
             " " +
-            results.data[i].User.lastName,
+            results.data[i].User.lastName +
+            " " +
+            results.data[i].petsToSit,
           info: results.data[i]
         };
         console.log(obj);
