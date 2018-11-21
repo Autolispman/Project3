@@ -102,18 +102,20 @@ class Appointment extends Component {
           petsAndMore[i] = { ...petsAndMore[i], checked: false };
           //console.log(petsAndMore[i]);
         }
-        let petsToSitSplit = this.state.petsToSit.toString().split(",");
-        console.log(petsToSitSplit)
-        for (let i = 0; i < petsToSitSplit.length; i++) {
-          for (let j = 0; j < petsAndMore.length; j++) {
-            if (petsToSitSplit[i] === petsAndMore[j].petName) {
-              petsAndMore[j].checked = true;
+        if (this.state.petsToSit !== null) {
+          let petsToSitSplit = this.state.petsToSit.toString().split(",");
+          console.log(petsToSitSplit);
+          for (let i = 0; i < petsToSitSplit.length; i++) {
+            for (let j = 0; j < petsAndMore.length; j++) {
+              if (petsToSitSplit[i] === petsAndMore[j].petName) {
+                petsAndMore[j].checked = true;
+              }
             }
           }
+          this.setState({ petsAndMore: petsAndMore }, () => {
+            console.log(this.state.petsAndMore);
+          });
         }
-        this.setState({ petsAndMore: petsAndMore }, () => {
-          console.log(this.state.petsAndMore);
-        });
       });
     });
   };
@@ -270,7 +272,7 @@ class Appointment extends Component {
         checkedPets.push(this.state.petsAndMore[i].petName);
       }
     }
-    return checkedPets.toString()
+    return checkedPets.toString();
   };
 
   render() {
@@ -662,28 +664,28 @@ class Appointment extends Component {
             </Link>
           </div>
           <div>
-          {this.state.pets.map(pet => (
-            <PetItem
-              key={pet.id}
-              petId={pet.id}
-              petName={pet.petName}
-              breed={pet.breed}
-              birthday={pet.birthday}
-              gender={pet.gender}
-              fixed={pet.fixed}
-              crateTrained={pet.crateTrained}
-              houseTrained={pet.houseTrained}
-              feedingInstructions={pet.feedingInstructions}
-              medications={pet.medications}
-              healthIssues={pet.healthIssues}
-              notes={pet.notes}
-              editPet={this.editPet}
-              deletePet={this.deletePet}
-              showCheckbox= {this.state.showCheckbox}
-              petsAndMore={this.state.petsAndMore}
-              checked={pet.checked}
-            />
-          ))}
+            {this.state.pets.map(pet => (
+              <PetItem
+                key={pet.id}
+                petId={pet.id}
+                petName={pet.petName}
+                breed={pet.breed}
+                birthday={pet.birthday}
+                gender={pet.gender}
+                fixed={pet.fixed}
+                crateTrained={pet.crateTrained}
+                houseTrained={pet.houseTrained}
+                feedingInstructions={pet.feedingInstructions}
+                medications={pet.medications}
+                healthIssues={pet.healthIssues}
+                notes={pet.notes}
+                editPet={this.editPet}
+                deletePet={this.deletePet}
+                showCheckbox={this.state.showCheckbox}
+                petsAndMore={this.state.petsAndMore}
+                checked={pet.checked}
+              />
+            ))}
           </div>
         </div>
       </div>

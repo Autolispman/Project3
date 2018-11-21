@@ -103,18 +103,20 @@ class Appointment extends Component {
           petsAndMore[i] = { ...petsAndMore[i], checked: false };
           //console.log(petsAndMore[i]);
         }
-        let petsToSitSplit = this.state.petsToSit.split(",");
-        console.log(petsToSitSplit)
-        for (let i = 0; i < petsToSitSplit.length; i++) {
-          for (let j = 0; j < petsAndMore.length; j++) {
-            if (petsToSitSplit[i] === petsAndMore[j].petName) {
-              petsAndMore[j].checked = true;
+        if (this.state.petsToSit !== null) {
+          let petsToSitSplit = this.state.petsToSit.split(",");
+          console.log(petsToSitSplit);
+          for (let i = 0; i < petsToSitSplit.length; i++) {
+            for (let j = 0; j < petsAndMore.length; j++) {
+              if (petsToSitSplit[i] === petsAndMore[j].petName) {
+                petsAndMore[j].checked = true;
+              }
             }
           }
+          this.setState({ petsAndMore: petsAndMore }, () => {
+            console.log(this.state.petsAndMore);
+          });
         }
-        this.setState({ petsAndMore: petsAndMore }, () => {
-          console.log(this.state.petsAndMore);
-        });
       });
     });
   };
