@@ -101,7 +101,7 @@ class Appointment extends Component {
           petsAndMore[i] = { ...petsAndMore[i], checked: false };
           //console.log(petsAndMore[i]);
         }
-        let petsToSitSplit = this.state.petsToSit.split(",");
+        let petsToSitSplit = this.state.petsToSit.toString().split(",");
         console.log(petsToSitSplit)
         for (let i = 0; i < petsToSitSplit.length; i++) {
           for (let j = 0; j < petsAndMore.length; j++) {
