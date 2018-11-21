@@ -38,9 +38,10 @@ class CalendarPage extends Component {
     let array = [];
     prom.then(results => {
       for (let i = 0; i < results.data.length; i++) {
+        let timeAdjust = moment(new Date()).isDST() ? 5 : 6      
         let obj = {
-          start: new Date(moment(results.data[i].startDate).add(5, "hours")),
-          end: new Date(moment(results.data[i].endDate).add(5, "hours")),
+          start: new Date(moment(results.data[i].startDate).add(timeAdjust, "hours")),
+          end: new Date(moment(results.data[i].endDate).add(timeAdjust, "hours")),
           title:
             results.data[i].typeOfAppointment +
             " " +
