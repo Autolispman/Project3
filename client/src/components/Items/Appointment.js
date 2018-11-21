@@ -664,7 +664,7 @@ class Appointment extends Component {
             </Link>
           </div>
           <div>
-            {this.state.pets.map(pet => (
+            {this.state.petsAndMore.map(pet => (
               <PetItem
                 key={pet.id}
                 petId={pet.id}
