@@ -33,7 +33,8 @@ class Appointment extends Component {
     appointmentNotes: "",
     pets: [],
     showCheckbox: true,
-    petsAndMore: []
+    petsAndMore: [],
+    petsToSit: []
   };
 
   componentDidMount() {
