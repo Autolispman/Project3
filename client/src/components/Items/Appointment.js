@@ -78,6 +78,7 @@ class Appointment extends Component {
           //startDate: "2018-09-04T00:01",
           endDate: moment(currentInfo.end).format("YYYY-MM-DDTHH:mm"),
           typeOfAppointment: currentInfo.info.typeOfAppointment,
+          petsToSit: currentInfo.info.petsToSit,
           info: currentInfo.info
         });
       }
