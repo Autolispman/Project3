@@ -1,0 +1,35 @@
+module.exports = function(sequelize, DataTypes) {
+    let Finance = sequelize.define("Finance", {
+      : {
+        type: DataTypes.STRING,
+        unique: false,
+        allowNull: false
+      },
+      startDate: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      endDate: {
+        type: DataTypes.DATE,
+        allowNull: true
+      },
+      appointmentNotes: {
+        type: DataTypes.TEXT,
+        allowNull: true
+      },
+      petsToSit: {
+        type: DataTypes.STRING,
+        allowNull: true
+      }
+    });
+  
+    Finance.associate = function(models) {
+      Finance.belongsTo(models.Appointment, {
+        foreignKey: {
+          allowNull: false
+        }
+      });
+    };
+    return Finance;
+  };
+  
