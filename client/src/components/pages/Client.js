@@ -101,6 +101,8 @@ class Client extends Component {
             </ul>
           </div>
         </nav>
+        <h4>Total number of clients {this.state.users.length}</h4>
+        <br></br>
         <label>Filter</label>
         <input
           type="Text"
