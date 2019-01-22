@@ -431,7 +431,7 @@ class Appointment extends Component {
               className=""
               placeholder="cellPhone"
               required={false}
-              pattern="^[2-9]\d{2}-\d{3}-\d{4}$"
+              //pattern="^[2-9]\d{2}-\d{3}-\d{4}$"
               value={this.state.cellPhone}
               onChange={this.handleOnChange}
             />
@@ -481,7 +481,7 @@ class Appointment extends Component {
               className=""
               placeholder="vetPhone"
               required={false}
-              pattern="^[2-9]\d{2}-\d{3}-\d{4}$"
+              //pattern="^[2-9]\d{2}-\d{3}-\d{4}$"
               value={this.state.vetPhone}
               onChange={this.handleOnChange}
             />
