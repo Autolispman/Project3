@@ -259,10 +259,19 @@ class Appointment extends Component {
     //console.log(this.state.info)
     //console.log(this.state.id)
     let { name, value } = event.target;
-
-    this.setState({
-      [name]: value
-    });
+    switch (name) {
+      case "cellPhone":
+        this.addHyphen(name, value);
+        break;
+        case "vetPhone":
+        this.addHyphen(name, value);
+        break;
+      default:
+        this.setState({
+          [name]: value
+        });
+        break;
+    }
   };
 
   getCheckedPets = () => {
@@ -273,6 +282,39 @@ class Appointment extends Component {
       }
     }
     return checkedPets.toString();
+  };
+
+  addHyphen = (name, value) => {
+    if (value.length === 4) {
+      if (value.substring(3, 4) !== "-") {
+        console.log(value.substring(3, 4));
+        value = value.substring(0, 3) + "-" + value.substring(3);
+      }
+    }
+    if (value.length === 8) {
+      if (value.substring(7, 8) !== "-") {
+        console.log(value.substring(7, 8));
+        value = value.substring(0, 7) + "-" + value.substring(7);
+      }
+    }
+    if(value.length > 12) {
+      value = value.substring(0, 12);
+    }
+
+    switch (name) {
+      case "cellPhone":
+        console.log(value);
+        this.setState({
+          cellPhone: value
+        });
+        break;
+        case "vetPhone":
+        console.log(value);
+        this.setState({
+          vetPhone: value
+        });
+        break;
+    }
   };
 
   render() {
@@ -401,7 +443,7 @@ class Appointment extends Component {
               className=""
               placeholder="email"
               required={false}
-              pattern="(\w+?@\w+?\x2E.+)"
+              //pattern="(\w+?@\w+?\x2E.+)"
               value={this.state.email}
               onChange={this.handleOnChange}
             />
