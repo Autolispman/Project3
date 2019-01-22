@@ -287,13 +287,11 @@ class Appointment extends Component {
   addHyphen = (name, value) => {
     if (value.length === 4) {
       if (value.substring(3, 4) !== "-") {
-        console.log(value.substring(3, 4));
         value = value.substring(0, 3) + "-" + value.substring(3);
       }
     }
     if (value.length === 8) {
       if (value.substring(7, 8) !== "-") {
-        console.log(value.substring(7, 8));
         value = value.substring(0, 7) + "-" + value.substring(7);
       }
     }
