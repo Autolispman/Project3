@@ -401,7 +401,7 @@ class Appointment extends Component {
               className=""
               placeholder="email"
               required={false}
-              pattern="(\w+?@\w+?\x2E.+)"
+              //pattern="(\w+?@\w+?\x2E.+)"
               value={this.state.email}
               onChange={this.handleOnChange}
             />
